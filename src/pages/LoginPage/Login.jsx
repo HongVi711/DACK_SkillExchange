@@ -1,11 +1,37 @@
 /* eslint-disable no-unused-vars */
-import React from 'react';
+import React, { useState } from 'react';
 import './Login.css';
 import { FaEnvelope, FaLock } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import { Link,useNavigate } from 'react-router-dom';
 import logo from '../../assets/logo.svg';
+import { loginUser, removeToken } from '../../services/authService';
 
 function LoginPage() {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+    const navigate = useNavigate();
+
+    const handleEmailChange = (e) => setEmail(e.target.value);
+    const handlePasswordChange = (e) => setPassword(e.target.value);
+
+    const handleLogin = async (e) => {
+        e.preventDefault();
+        setLoading(true);
+        setError(null);
+
+        try {
+            const result = await loginUser(email, password);
+            localStorage.setItem('token', result.token);
+            navigate('/'); // Chuyển hướng
+
+        } catch (err) {
+            setError(err.message || 'Đăng nhập thất bại. Vui lòng thử lại.');
+        } finally {
+            setLoading(false);
+        }
+    };
     return (
         <div className="loginContainer">
             {/* Header */}

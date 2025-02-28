@@ -135,7 +135,8 @@
 }
 
 .registerText {
-    text-align: center;
+    margin-left: 20px;
+    text-align: left;
 }
 
 .registerLink {

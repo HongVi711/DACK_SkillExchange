@@ -3,7 +3,8 @@ import React, { useState } from 'react';
 import './Register.css'; // Import CSS thông thường
 import { FaEnvelope, FaLock, FaUser, FaIdCard } from 'react-icons/fa';
 import logo from '../../assets/logo.svg';
-import { Link } from 'react-router-dom';
+import { Link,useNavigate } from 'react-router-dom';
+import { registerUser } from '../../services/authService';
 
 
 function RegisterPage() {
@@ -11,6 +12,9 @@ function RegisterPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+    const navigate = useNavigate();
 
     const handleFullNameChange = (event) => {
         setFullName(event.target.value);
@@ -28,14 +32,26 @@ function RegisterPage() {
         setConfirmPassword(event.target.value);
     };
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
         if (password !== confirmPassword) {
-            alert("Mật khẩu xác nhận không khớp!");
+            setError("Mật khẩu xác nhận không khớp!");
             return;
         }
-        console.log('Full Name:', fullName, 'Email:', email, 'Password:', password);
-        // Gửi dữ liệu đăng ký đến server ở đây (nếu cần)
+
+        setLoading(true);
+        setError(null);
+
+        try {
+            const result = await registerUser(fullName, email, password);
+            navigate('/login'); // Chuyen huong den trang dang nhap
+
+        } catch (err) {
+            setError(err.message || 'Đăng ký thất bại. Vui lòng thử lại.');
+
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
@@ -129,7 +145,7 @@ function RegisterPage() {
                                         onChange={handleConfirmPasswordChange}
                                         required
                                     />
-                                    <span className="inputIcon"><FaLock /></span>
+                                    <span className="inputIcon"><FaUser /></span>
                                 </div>
                             </div>
 
