@@ -23,7 +23,7 @@ function HomePage() {
 
   return (
     <div className="homePage">
-      <div className ="content">
+      <div className ="contents">
         <div className="overlay">
           <Header />
           <HeroSection />

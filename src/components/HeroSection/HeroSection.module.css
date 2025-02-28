@@ -17,7 +17,7 @@
   
   .content {
     text-align: center;    /* text-center */
-    color: rgb(255, 255, 255);          /* text-white */
+    color: rgb(52, 50, 50);          /* text-white */
     position: relative;    /* relative */
     z-index: 10;           /* z-10 */
   }
@@ -34,18 +34,14 @@
   }
   
   .ctaButton {
-    margin-top: 1.5rem;    /* mt-6 */
+    align-items: center;
     display: inline-block; /* inline-block */
-    background-color: green; /* bg-green-500 */
+    background-color: #1D8466; /* bg-green-500 */
     color: white;          /* text-white */
-    padding: 0.75rem 1.5rem; /* px-6 py-3 */
+    padding: 0.5rem 1.5rem; /* px-6 py-3 */
     border-radius: 0.5rem;  /* rounded-lg */
     font-size: 1.25rem;   /* text-lg */
     font-weight: 600;      /* font-semibold */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* shadow-lg */
     transition: background-color 0.2s; /* Tạo hiệu ứng chuyển màu */
-  }
-  
-  .ctaButton:hover {
-    background-color: darkgreen; /* hover:bg-green-600 */
   }
