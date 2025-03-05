@@ -1,6 +1,6 @@
 .heroSection {
     position: relative; /* relative */
-    height: 100vh;        /* h-screen */
+    min-height: 100vh;        /* h-screen */
     background-size: cover; /* bg-cover */
     background-position: center; /* bg-center */
     display: flex;        /* flex */
@@ -16,31 +16,33 @@
   }
   
   .content {
+    max-width: 100%;
+    width: 100%;
     text-align: center;    /* text-center */
-    color: rgb(52, 50, 50);          /* text-white */
+    color: rgb(255, 250, 250);          /* text-white */
     position: relative;    /* relative */
     z-index: 10;           /* z-10 */
   }
   
   .heading {
-    font-size: 3rem;      /* text-5xl (3rem = 48px nếu font-size gốc là 16px) */
+    font-size: 4rem;      /* text-5xl (3rem = 48px nếu font-size gốc là 16px) */
     font-weight: bold;    /* font-bold */
     margin-bottom: 0.5rem; /* Khoảng cách với description */
   }
   
   .description {
     margin-top: 1rem;      /* mt-4 */
-    font-size: 1.25rem;   /* text-lg (1.25rem = 20px nếu font-size gốc là 16px) */
+    font-size: 2rem;   /* text-lg (1.25rem = 20px nếu font-size gốc là 16px) */
   }
   
   .ctaButton {
     align-items: center;
     display: inline-block; /* inline-block */
-    background-color: #1D8466; /* bg-green-500 */
+    background-color: #22C55E; /* bg-green-500 */
     color: white;          /* text-white */
-    padding: 0.5rem 1.5rem; /* px-6 py-3 */
+    padding: 1rem 2.5rem; /* px-6 py-3 */
     border-radius: 0.5rem;  /* rounded-lg */
-    font-size: 1.25rem;   /* text-lg */
+    font-size: 2rem;   /* text-lg */
     font-weight: 600;      /* font-semibold */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* shadow-lg */
     transition: background-color 0.2s; /* Tạo hiệu ứng chuyển màu */

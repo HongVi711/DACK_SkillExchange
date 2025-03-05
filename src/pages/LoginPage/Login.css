@@ -1,110 +1,155 @@
-/* Bao toàn bộ trang đăng nhập */
-.loginContainer {
-    flex-direction: row;
+/* Box-sizing (BẮT BUỘC) */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/* Global Styles */
+html {
+    font-size: 62.5%;
+    /* 1rem = 10px */
+}
+
+body {
+    font-family: sans-serif;
+    font-size: 1.6rem;
+    line-height: 1.5;
+    color: #333;
+    margin: 0;
     display: flex;
-    width: 100%;
+    flex-direction: column;
     min-height: 100vh;
-    background-color: #f8f8f8;
-    flex-direction: column;
-    
+    /* XÓA background-image TỪ body */
 }
 
-/* Cột bên trái */
-.imageSection {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.loginImage {
-    margin-right: 50px;
-    /* margin-top: 100px; */
-    width: 1000px;
-    height: auto;
-    max-width: 65%;
-    object-fit: contain;
-    
-}
-
-/* Cột bên phải (form) */
-.formSection {
-    /* margin-right: 100px; */
-    min-height: 650px;
-    flex: 1;
+/* Bao toàn bộ trang */
+.loginContainer {
     display: flex;
     flex-direction: column;
+    min-height: 100vh;
+    /* Đặt ảnh nền và các thuộc tính VÀO ĐÂY */
+    background-image: url('../../assets/login.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    /* Nếu muốn */
+    /* THÊM DÒNG NÀY ĐỂ ĐỔ BÓNG */
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.4);
+    /* Đổ bóng cho ảnh nền */
+    /* box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.4);  KHÔNG dùng box-shadow ở đây */
+    /* Thêm padding-top để tránh header che form */
+    align-items: center;
+    /* Căn giữa theo chiều ngang */
     justify-content: center;
-    border: 1px solid #000000;
-    background-color: #fff;
-    border: none;
-    border-radius: 8px;
-    max-width: 450px;
-    margin: auto;
-    margin-right: 100px;
+    /* Căn giữa theo chiều dọc */
 
 }
 
-.appHeader {
-    /* Đổi tên class ở đây */
-    background-color: #fff;
+.login-logoContainer {
+    position: fixed; /* Cố định header */
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 999;
     display: flex;
     align-items: center;
-    padding: 15px 20px;
-    /* Điều chỉnh padding */
-    border-bottom: 10px solid #ddd;
-    /* Vạch chia */
-    /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
-    z-index: 1000;
-    border-radius: 2px;
+    padding: 0.5rem 1rem;
+    justify-content: flex-start;
+    background-color: rgba(255, 255, 255, 0.776); /* Trong suốt */
+    /* backdrop-filter: blur(10px); */ /*  Nếu cần làm mờ */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Đổ bóng */
+    padding-left: 40px;
 }
 
-/* Form Header */
-.formHeader {
-    background-color: #EEECEC;
-    padding: 20px;
+.login-logo {
+    
+    align-items: center;
+    height: 40px;
+    margin-right: 10px;
+}
+
+.login-logoText {
     text-align: center;
-    border-radius: 8px 8px 0 0;
-    border: 1px solid #a9a7a7;
+    font-size: 30px;
+    font-weight: bold;
+    color: #00e6ff;
+}
+
+/* KHÔNG cần .logoContainer a */
+
+/* Phần chứa form */
+.content {
+    display: flex;
+    flex-direction: column;
+    /* flex-grow: 1;  KHÔNG CẦN flex-grow */
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    /* padding-top: 6rem;  ĐÃ CHUYỂN LÊN .loginContainer */
+}
+
+/* Cột bên trái (ảnh minh họa): ẨN */
+.imageSection {
+    display: none;
+}
+
+/* Form */
+.formSection {
+    /* background-color: rgba(255, 255, 255, 0.95); */
+    /* border-radius: 0.8rem; */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /* Đổ bóng cho FORM */
+    max-width: 90%;
+    /* Rộng hơn trên mobile */
+    width: 100%;
+    /* padding: 2rem; */
+    /* Padding đã được tối ưu */
+    position: relative;
+    /* Đảm bảo z-index hoạt động */
+    z-index: 2;
+    /* Form nằm trên ảnh nền */
+}
+
+/* (Các phần còn lại của form, GIỮ NGUYÊN) */
+.formHeader {
+    background-color: #eee;
+    padding: 2rem;
+    text-align: center;
+    border-radius: 0.8rem 0.8rem 0 0;
+    border: 0.1rem solid #a9a7a7;
 }
 
 .formHeader h2 {
     text-align: left;
     margin: 0;
-    /* Loại bỏ margin mặc định của h2 */
-    font-size: 24px;
+    font-size: 2.4rem;
     color: #03C3DD;
-
 }
 
-/* Form Body */
 .formBody {
-    padding: 0 20px;
-    flex-grow: 1;
+    /* padding: 2rem; */
     display: flex;
-    /* Biến .formBody thành flex container */
     flex-direction: column;
-    /* Xếp các phần tử con theo chiều dọc */
     justify-content: center;
-    /* Căn giữa theo chiều ngang */
-    border-left: 1px solid #a9a7a7;
-    border-right: 1px solid #a9a7a7;
-    text-align: center;
+    border-left: 0.1rem solid #a9a7a7;
+    border-right: 0.1rem solid #a9a7a7;
 }
 
 .formGroup {
-
-    margin-left: 20px;
-    margin-bottom: 20px;
-    margin-right: 20px;
+    margin-bottom: 2rem;
 }
 
 .formGroup label {
     text-align: left;
     display: block;
-    margin-bottom: 5px;
+    margin-bottom: 0.5rem;
     font-weight: 600;
     color: #555;
+    font-size: 1.4rem;
 }
 
 .inputWrapper {
@@ -113,37 +158,41 @@
 
 .inputWrapper input {
     width: 100%;
-    padding: 10px;
-    padding-right: 45px;
+    padding: 1rem;
+    padding-right: 4.5rem;
     border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    box-sizing: border-box;
+    border-radius: 0.5rem;
+    font-size: 1.6rem;
     background-color: #fff;
-    /* Đổi màu nền */
     color: #333;
     outline: none;
-    border: 1px solid #a9a7a7;
+    border: 0.1rem solid #a9a7a7;
+}
+
+.inputWrapper input::placeholder {
+    color: #999;
 }
 
 .inputIcon {
     position: absolute;
-    right: 10px;
+    right: 1rem;
     top: 50%;
     transform: translateY(-50%);
     color: #999;
-    pointer-events: none;
+    font-size: 1.6rem;
 }
 
 .registerText {
     text-align: center;
+    margin-top: 1.5rem;
+    font-size: 1.4rem;
 }
 
 .registerLink {
+    font-size: 1.4rem;
     color: #03C3DD;
     text-decoration: none;
     font-weight: bold;
-
 }
 
 .registerLink:hover {
@@ -153,91 +202,82 @@
 .inputWrapper::before {
     content: "";
     position: absolute;
-    width: 2px;
+    width: 0.2rem;
     height: 100%;
-    background-color: #a9a7a7;
-    right: 40px;
-    /* Cách icon 1 khoảng */
+    right: 4rem;
     top: 50%;
     transform: translateY(-50%);
+    background-color: #a9a7a7;
 }
 
 /* Form Footer */
 .formFooter {
-    border: 1px solid #a9a7a7;
-    background-color: #EEECEC;
-    padding: 20px;
-    border-radius: 0 0 8px 8px;
+    border: 0.1rem solid #a9a7a7;
+    background-color: #eee;
+    /* padding: 2rem; */
     text-align: center;
-    /* Căn giữa nút */
-    border-top: 1px solid #a9a7a7;
-    /* margin-top: auto; KHÔNG CẦN margin-top: auto nữa, vì đã có flexbox của .formSection */
+    border-radius: 0 0 0.8rem 0.8rem;
 }
 
 .loginButton {
-    width: 40%;
-    padding: 10px;
-    background-color: #03C3DD;
+    width: 100%;
+    padding: 1rem;
+    background-color: #00e6ff;
     color: white;
     border: none;
-    border-radius: 5px;
-    font-size: 18px;
+    border-radius: 0.5rem;
+    font-size: 1.8rem;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    margin-left: 60%;
 }
 
 .loginButton:hover {
-    background-color: #4aa7cc;
+    background-color: #02b3c7;
 }
 
-.logoContainer {
-    display: flex;
-    align-items: center;
-    margin-left: 30px;
-    gap: 10px;
-}
-
-.logo {
-    height: 40px;
-    margin-right: 10px;
-}
-
-.logoText {
-    font-size: 20px;
-    font-weight: bold;
-    color: #01AAC1;
-}
-.logoContainer a {
-    display: flex;
-    align-items: center;  /* Giữ logo và text cùng một hàng */
-    text-decoration: none;  /* Loại bỏ gạch chân của Link */
-}
-/* Phần chứa ảnh và form */
-.content {
-    display: flex;
-    flex-direction: row;
-    /* Xếp ảnh và form theo chiều ngang */
-    flex-grow: 1;
-    /* Chiếm phần không gian còn lại */
-    margin-top: 20px;
-
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-    .loginContainer {
-        flex-direction: column;
+/* Responsive (Desktop) */
+@media (min-width: 769px) {
+    .appHeader {
+        padding: 0.5rem 2rem;
+        /* Padding gốc trên desktop */
+        max-width: 1200px;
+        /* Giới hạn chiều rộng tối đa */
+        margin-left: auto;
+        /* Căn giữa header */
+        margin-right: auto;
+        /* Căn giữa header */
     }
 
-    .imageSection {
-        margin-bottom: 20px;
-        width: 80%;
+    .logo {
+        height: 3rem;
+        /* Kích thước logo gốc */
+        margin-right: 1rem;
+    }
+
+    .logoText {
+        font-size: 2.5rem;
+        /* Kích thước chữ gốc */
+    }
+
+    .content {
+        padding-top: 8rem;
+        /* Tăng padding-top trên desktop */
     }
 
     .formSection {
-        width: 90%;
-        max-width: none;
-        margin: 20px auto;
+        max-width: 45rem;
+        /* Kích thước form ban đầu */
+        /* padding: 4rem; */
+        width: 40%;
+        /* Thu nhỏ lại */
+        margin-left: auto;
+        /* Căn giữa */
+        margin-right: auto;
+        /* Căn giữa */
+    }
+
+    .loginButton {
+        width: 40%;
+        margin-left: 60%;
     }
 }

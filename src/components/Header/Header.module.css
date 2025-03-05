@@ -1,121 +1,208 @@
-.navbar {
-  display: flex; 
-  justify-content: center; 
-  width: 100%;
-  list-style-type: none; 
-  margin: 0; 
+/* Header.css */
+
+/* Reset/Normalize (Nếu bạn có file reset riêng thì import ở đây) */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
 }
 
-.navbar a {
-  color: rgb(85, 85, 85);
-  text-decoration: none;
-  font-size: 18px;
-  display: block;
-  padding: 10px 0;
-}
-.navbar li {
-  width: 150px;
-}
+/* Global Styles (Nếu bạn có) */
 
-.navbar a:hover {
-  text-decoration: underline;
-}
-
+/* Sidebar/Header Container */
 .sidebar {
-  background-color: #FFFFFF;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%; /* Nếu muốn nó trải ngang màn hình */
-  z-index: 999;
-  display: flex;
-  align-items: center;
-  padding: 0.5rem 1rem;
-  --tw-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
-  --tw-shadow-colored: 0 1px 3px 0 var(--tw-shadow-color),
-    0 1px 2px -1px var(--tw-shadow-color);
-  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000),
-    var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
-}
-
-.logoContainer {
-  display: flex;
-  align-items: center;
-  margin-left: 30px;
-}
-
-.logo {
-  height: 40px;
-  margin-right: 10px;
-}
-
-.logoText {
-  font-size: 20px;
-  font-weight: bold;
-  color: #01AAC1;
-}
-.navbar a svg {
-  display: none;
-}
-.loginButton {
-  margin-right: 40px;
-  background-color: #6ec5e9;
-  color: white;
-  font-size: 14px;
-  padding: 10px 25px;
-  cursor: pointer;
-}
-.loginButton:hover {
-  background-color: #4aa7cc;
-}
-
-@media (max-width: 768px) {
-  .sidebar {
-    flex-direction: column; 
-    align-items: center; 
     position: fixed;
     top: 0;
     left: 0;
-    width: 80px;
-    background-color: #ffffff;
-    padding: 1rem 0;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    z-index: 10;
-    height: 100vh;
-    overflow-y: auto;
-    justify-content: flex-start; 
-  }
-
-  .logo {
-    margin-bottom: 1rem;
-  }
-
-  .navbar {
-    flex-direction: column;
-    align-items: center;
-    padding: 0; 
-    background-color: transparent; 
-    width: 100%; 
-  }
-
-  .navbar li {
-    margin-bottom: 0.5rem;
-    text-align: center;
-  }
-
-  .navbar a {
-    font-size: 1rem;
+    width: 100%;
+    /* Chiếm toàn bộ chiều rộng trên desktop */
+    z-index: 1000;
+    /* Cao hơn các phần tử khác, đảm bảo header luôn hiển thị */
     display: flex;
-    flex-direction: column;
     align-items: center;
-    padding: 0.5rem;
-  }
-
-  .navbar a span {
-    margin-top: 0.25rem;
-  }
-  .navbar a svg {
-    display: block;
-  }
-  
+    justify-content: space-between;
+    /* Đẩy logo sang trái, menu/button sang phải */
+    padding: 0.5rem 1rem;
+    /* Padding hợp lý */
+    background-color: rgba(255, 255, 255, 0.776);
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
+
+/* Logo Container */
+.logoContainer {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    /* Loại bỏ gạch chân nếu là Link */
+    color: inherit;
+    /* Kế thừa màu chữ */
+    margin-left: 30px;
+}
+
+.logo {
+    height: 45px;
+    /* margin-right: 10px; */
+}
+
+.logoText {
+    font-size: 30px;
+    font-weight: bold;
+    color: #00e6ff;
+}
+
+/* Navbar (Menu) */
+.navbar {
+    list-style-type: none;
+    /* Loại bỏ dấu chấm đầu dòng */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    /* Cho các item nằm ngang (desktop) */
+    align-items: center;
+    /* Căn giữa theo chiều dọc */
+}
+
+.navbar li {
+    /* Nếu cần khoảng cách giữa các item */
+    margin: 0 10px;
+}
+
+.navbar a {
+    color: rgb(85, 85, 85);
+    text-decoration: none;
+    /* font-size: 18px; */
+    display: flex;
+    align-items: center;
+    /* Chiếm toàn bộ diện tích của li */
+    padding: 10px 15px;
+    white-space: nowrap;
+    width: 100%;
+    /* Thêm: Chữ không bị xuống dòng */
+}
+
+.navbar a:hover {
+    text-decoration: underline;
+}
+
+.navbar a svg {
+    /* Ẩn icon trên desktop */
+    display: none;
+}
+
+/* Login Button */
+.loginButton {
+    margin-right: 20px;
+    background-color: #00e6ff;
+    color: white;
+    font-size: 18px;
+    padding: 10px 25px;
+    cursor: pointer;
+    border: none;
+    /* Thêm: Loại bỏ border */
+    border-radius: 5px;
+    /* Thêm: Bo tròn góc */
+    white-space: nowrap;
+    /* Thêm: Chữ không xuống dòng */
+}
+
+.loginButton:hover {
+    background-color: #4aa7cc;
+}
+
+/* Responsive (Mobile-First) */
+/* Mặc định là style cho mobile */
+
+@media (max-width: 768px) {
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 80px;
+        /* Sidebar thu hẹp */
+        flex-direction: column;
+        /* Các phần tử xếp chồng lên nhau */
+        align-items: center;
+        /* Căn giữa theo chiều ngang */
+        padding: 1rem 0;
+        /* Điều chỉnh padding */
+        height: 100vh;
+        /* Chiếm toàn bộ chiều cao */
+        overflow-y: auto;
+        /* Cho phép cuộn nếu nội dung dài */
+        justify-content: flex-start;
+        background-color: #ffffff;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        z-index: 10;
+    }
+
+    .logoContainer {
+        /* margin-bottom: 1rem;  Nếu cần khoảng cách giữa logo và menu */
+        margin-left: 0;
+        /* Reset margin-left */
+    }
+
+    .logo {
+        margin-bottom: 1rem;
+    }
+    .logoText{
+        display: none;
+    }
+    .navbar {
+        flex-direction: column;
+        /* Menu dọc */
+        align-items: center;
+        padding: 0;
+        background-color: transparent;
+        width: 100%;
+        /* Chiếm toàn bộ chiều rộng của sidebar */
+    }
+
+    .navbar li {
+        margin-bottom: 0.5rem;
+        text-align: center;
+        /* margin: 0; */
+    }
+
+    .navbar a {
+        font-size: 1rem;
+        /* Chữ nhỏ hơn */
+        display: flex;
+        /* Để icon và text nằm trên nhau */
+        flex-direction: column;
+        align-items: center;
+        padding: 0.5rem;
+        /* Padding nhỏ hơn */
+    }
+
+    .navbar a span {
+        margin-top: 0.25rem;
+        /* Khoảng cách giữa icon và text */
+    }
+
+    .navbar a svg {
+        display: block;
+        font-size: 1.7rem;
+        /* Hiển thị icon */
+        /* margin: 0; */
+        /* Reset margin */
+    }
+    .navbar a span {
+        font-weight: bold; /* Làm chữ đậm */
+        font-size: 1.5rem; /* Tăng kích thước chữ (điều chỉnh theo ý muốn) */
+    }
+    .loginButton {
+        display: none;
+        /* Ẩn nút login trên mobile */
+    }
+}
+@media (min-width: 769px) { /* Áp dụng style này khi màn hình lớn hơn 768px (desktop) */
+    .logo {
+        margin-right: 10px; /* Thêm margin-right cho logo trên desktop */
+    }
+    .navbar a svg {
+        font-size: 5.5rem; /* Tăng kích thước icon (desktop) */
+    }
+}
+/* Nếu có thêm breakpoint (ví dụ: tablet) */
+/* @media (min-width: 769px) and (max-width: 1024px) { ... } */

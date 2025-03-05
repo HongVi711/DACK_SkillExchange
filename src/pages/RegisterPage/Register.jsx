@@ -2,9 +2,10 @@
 import React, { useState } from 'react';
 import './Register.css'; // Import CSS thông thường
 import { FaEnvelope, FaLock, FaUser, FaIdCard } from 'react-icons/fa';
-import logo from '../../assets/logo.svg';
-import { Link,useNavigate } from 'react-router-dom';
+import logo from '../../assets/logo.svg'; // Không cần nữa, xóa đi
+import { Link, useNavigate } from 'react-router-dom';
 import { registerUser } from '../../services/authService';
+import Header from '../../components/Header'; // Import Header
 
 
 function RegisterPage() {
@@ -57,14 +58,17 @@ function RegisterPage() {
     return (
         <div className="registerContainer">
             {/* Header */}
-            <div className="appHeader">
-                <div className="logoContainer">
+            <Header /> {/* Dùng Header */}
+            {/* Xóa phần header cũ này đi
+            <div className="register-appHeader">
+                <div className="register-logoContainer">
                     <Link to={"/"}>
-                        <img src={logo} alt="Logo" className="logo" />
-                        <span className="logoText">Skill Exchange</span>
+                        <img src={logo} alt="Logo" className="register-logo" />
+                        <span className="register-logoText">Skill Exchange</span>
                     </Link>
                 </div>
             </div>
+            */}
 
             {/* Phần chứa ảnh và form */}
             <div className="content">
@@ -152,9 +156,9 @@ function RegisterPage() {
                             {/* Link đăng nhập */}
                             <p className="registerText">
                                 Bạn đã có tài khoản?&nbsp;
-                                <a href="/login" className="registerLink">
+                                <Link to="/login" className="registerLink">
                                     Đăng nhập ngay!
-                                </a>
+                                </Link>
                             </p>
 
 

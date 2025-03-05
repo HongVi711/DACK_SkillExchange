@@ -1,18 +1,19 @@
 .sidebar{
+    width: 100%;
     color: white;
     display: block;
     align-items: center;
     padding: 0.5rem 1rem;
-    background-color: #414141;
+    background-color: #00e6ff;
 }
 .ctaButton {
-    align-items: center;
+    margin-top: 1.0rem;
     display: inline-block; /* inline-block */
-    background-color: #1D8466; /* bg-green-500 */
+    background-color: #22C55E; /* bg-green-500 */
     color: white;          /* text-white */
-    padding: 0.25rem 1.0rem; /* px-6 py-3 */
+    padding: 1rem 2.5rem; /* px-6 py-3 */
     border-radius: 0.5rem;  /* rounded-lg */
-    font-size: 1.25rem;   /* text-lg */
+    font-size: 2rem;   /* text-lg */
     font-weight: 600;      /* font-semibold */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* shadow-lg */
     transition: background-color 0.2s; /* Tạo hiệu ứng chuyển màu */

@@ -2,7 +2,7 @@
 import React from 'react';
 import styles from './Header.module.css';
 import logo from '../../assets/logo.svg';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FaHome, FaSearch, FaBell, FaUser } from 'react-icons/fa';
 function Header() {
     const navigate = useNavigate();
@@ -13,14 +13,37 @@ function Header() {
     return (
         <div className={styles.sidebar}>
             <div className={styles.logoContainer}>
-                <img src={logo} alt="Logo" className={styles.logo} />
-                <span className={styles.logoText}>Skill&nbsp;Exchange</span>
+                <Link to="/">
+                    <img src={logo} alt="Logo" className={styles.logo} />
+                </Link>
+                <Link to="/" className={styles.logoText}>Skill&nbsp;Exchange</Link>
             </div>
+            {/* <img src={logo} alt="Logo" className={styles.logo} /> */}
             <ul className={styles.navbar}>
-                <li><a href="#"><FaHome />Home</a></li>
-                <li><a href="#"><FaSearch />About</a></li>
-                <li><a href="#"><FaBell />Services</a></li>
-                <li><a href="#"><FaUser />Contact</a></li>
+                <li>
+                    <Link to="/">
+                        <FaHome />
+                        <span>Trang chủ</span>
+                    </Link>
+                </li>
+                <li>
+                <Link to="/search">
+                        <FaSearch />
+                        <span>Tìm kiếm</span>
+                    </Link>
+                </li>
+                <li>
+                <Link to="/schedule">
+                        <FaBell />
+                        <span>Lịch học</span>
+                    </Link>
+                </li>
+                <li>
+                <Link to="/connect">
+                        <FaUser />
+                        <span>Kết nối</span>
+                    </Link>
+                </li>
             </ul>
             <button onClick={handleLoginClick} className={styles.loginButton}>
                 Đăng&nbsp;nhập

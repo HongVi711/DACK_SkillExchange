@@ -1,0 +1,163 @@
+/* src/pages/SearchPage/SearchPage.css */
+
+.search-page {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: #fff; /* Màu nền trắng cho toàn trang */
+}
+
+.search-content {
+    flex-grow: 1;
+    padding: 100px 2rem 2rem 2rem; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+/* Style cho container chung */
+.search-container {
+    position: relative;
+    padding-left: 30px;
+    padding-right: 30px;
+    background-color: #FFE8E8; /* Màu nền trắng */
+    padding: 20px;        /* Padding bên trong */
+    border-radius: 10px;  /* Bo góc */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Đổ bóng */
+    width: 88%;            /* Chiều rộng */
+    margin-bottom: 1rem; /* Khoảng cách với phần kết quả */
+}
+
+.title {
+    font-size: 25px;
+    text-align: left;
+    color: #000000;
+    margin-bottom: 1rem; /* Khoảng cách với ô tìm kiếm */
+}
+
+.search-bar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.search-input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    font-size: 16px;
+    width: 100%; /* Chiều rộng của input, tính theo % của .search-bar */
+    margin-right: 10px;
+}
+
+.search-filter {
+    display: flex;
+    justify-content: flex-start;
+    /* flex-wrap: wrap; */
+    align-items: center;
+    width: 100%;
+    /* margin-bottom: 1rem; */
+     /* Xóa width, để width của .search-container quyết định */
+}
+.result-title {
+    display: flex;
+    color: #333;     /* Hoặc màu bạn muốn */
+    margin-bottom: 1rem;
+    width: 88%;     /* Cùng chiều rộng với .search-container */
+    margin-bottom: 3rem;
+}
+.search-filter > * {
+    margin-right: 15px;
+    
+}
+
+.location-select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+     color: black; /* Thêm màu chữ đen */
+}
+/*select option*/
+.location-select option{
+   color: black;
+    background-color: white;
+}
+
+.search-button {
+    padding: 10px 20px;
+    background-color: #00e6ff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 10%;
+}
+
+.search-button:hover {
+    background-color: #4aa7cc;
+}
+
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    width: 100%; /* Để card tràn ra */
+    padding: 0 20px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .search-container {
+        width: 90%; /* Rộng hơn trên mobile */
+        padding: 10px; /* Giảm padding */
+    }
+
+    .search-bar {
+        flex-direction: column;
+    }
+
+    .search-input {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    .search-button {
+        width: 100%;
+    }
+
+    .search-filter {
+        flex-direction: column;
+        width: 100%; /* Chiếm toàn bộ chiều rộng của .search-container */
+    }
+
+    .location-select {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+     .search-content {
+    padding: 100px 1rem 1rem 1rem; /* Điều chỉnh padding trên mobile */
+  }
+  
+}
+
+/* Thêm style cho checkbox */
+.search-filter label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.search-filter label span {
+    margin-left: 8px;
+}
+/* Thêm style để các phần tử search-bar, search-filter, location-select, search-button, các chữ hiển thị có màu đen */
+.search-bar,
+.search-filter,
+.location-select,
+.search-button, .title, .card-container {
+    color: #333; /* Màu chữ đen (hoặc màu bạn muốn) */
+}
