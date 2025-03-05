@@ -1,13 +1,14 @@
 /* eslint-disable no-unused-vars */
 import React, { useState } from "react";
-import styles from "./Register.module.css"; // Import CSS thông thường
+import "./Register.css"; // Import CSS thông thường
 import { FaEnvelope, FaLock, FaUser, FaIdCard } from "react-icons/fa";
-import logo from "../assets/logo.svg";
+import logo from "../assets/logo.svg"; // Không cần nữa, xóa đi
 import { Link, useNavigate } from "react-router-dom";
 import authService from "../services/auth.service";
+import Header from "../components/Header"; // Import Header
 
 function RegisterPage() {
-  const [name, setName] = useState("");
+  const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -16,7 +17,7 @@ function RegisterPage() {
   const navigate = useNavigate();
 
   const handleFullNameChange = (event) => {
-    setName(event.target.value);
+    setFullName(event.target.value);
   };
 
   const handleEmailChange = (event) => {
@@ -43,7 +44,7 @@ function RegisterPage() {
 
     try {
       const result = await authService.register(
-        name,
+        fullName,
         email,
         password,
         confirmPassword
@@ -57,58 +58,60 @@ function RegisterPage() {
   };
 
   return (
-    <div className={styles.registerContainer}>
+    <div className="registerContainer">
       {/* Header */}
-      <div className={styles.appHeader}>
-        <div className={styles.logoContainer}>
-          <Link to={"/"}>
-            <img src={logo} alt="Logo" className={styles.logo} />
-            <span className={styles.logoText}>Skill Exchange</span>
-          </Link>
-        </div>
-      </div>
-
+      <Header /> {/* Dùng Header */}
+      {/* Xóa phần header cũ này đi
+            <div className="register-appHeader">
+                <div className="register-logoContainer">
+                    <Link to={"/"}>
+                        <img src={logo} alt="Logo" className="register-logo" />
+                        <span className="register-logoText">Skill Exchange</span>
+                    </Link>
+                </div>
+            </div>
+            */}
       {/* Phần chứa ảnh và form */}
-      <div className={styles.content}>
+      <div className="content">
         {/* Cột bên trái: Hình minh hoạ */}
-        <div className={styles.imageSection}>
+        <div className="imageSection">
           <img
             src="https://s3-alpha-sig.figma.com/img/5188/8abd/0c243b94019540f8bad3682b9f3e9f62?Expires=1741564800&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=eKM~UhxXFJPzKD-bWW4VSHU9Q7~hDDQECdKYxXtmevx00DYp0DrSwldVeaF3YaeA1oOeQHmr5aIzu6t1c8qYAmYebKAfg7T9jGaBzz7mCh5YhyGK84WAEWVDM2SJo6~dAM5Yfdt6iGaqVeiZlyM6~tNAlkIbMWbaSELQd4GItl2GEdbBXHPbEGhzG69-ljC90zAaqo4MHaYF53usdV6ageHwf7pfEJ99GsKgonNn81wFKsqV7SpU1LICzFsuUiDrVEzElF0Vwp63H4tWS1HDXoC51jIcSsR6kJqUy4fXGC~a4cU1h6cg7EhPJvWV~vmdJsMg1oAQ8VjJ0BquCsx-nw__"
             alt="Register Illustration"
-            className={styles.loginImage}
+            className="loginImage"
           />
         </div>
 
         {/* Cột bên phải: Form đăng ký */}
-        <div className={styles.formSection}>
+        <div className="formSection">
           {/* Header của form */}
-          <div className={styles.formHeader}>
+          <div className="formHeader">
             <h2>Đăng ký tài khoản</h2>
           </div>
-          <div className={styles.formBody}>
+          <div className="formBody">
             <form onSubmit={handleSubmit}>
               {/* Tên hiển thị */}
-              <div className={styles.formGroup}>
+              <div className="formGroup">
                 <label htmlFor="fullName">Tên hiển thị</label>
-                <div className={styles.inputWrapper}>
+                <div className="inputWrapper">
                   <input
                     type="text"
                     id="fullName"
                     placeholder="Nhập tên hiển thị..."
-                    value={name}
+                    value={fullName}
                     onChange={handleFullNameChange}
                     required
                   />
-                  <span className={styles.inputIcon}>
+                  <span className="inputIcon">
                     <FaIdCard />
                   </span>
                 </div>
               </div>
 
               {/* Email */}
-              <div className={styles.formGroup}>
+              <div className="formGroup">
                 <label htmlFor="email">Email</label>
-                <div className={styles.inputWrapper}>
+                <div className="inputWrapper">
                   <input
                     type="email"
                     id="email"
@@ -117,16 +120,16 @@ function RegisterPage() {
                     onChange={handleEmailChange}
                     required
                   />
-                  <span className={styles.inputIcon}>
+                  <span className="inputIcon">
                     <FaEnvelope />
                   </span>
                 </div>
               </div>
 
               {/* Mật khẩu */}
-              <div className={styles.formGroup}>
+              <div className="formGroup">
                 <label htmlFor="password">Mật khẩu</label>
-                <div className={styles.inputWrapper}>
+                <div className="inputWrapper">
                   <input
                     type="password"
                     id="password"
@@ -135,16 +138,16 @@ function RegisterPage() {
                     onChange={handlePasswordChange}
                     required
                   />
-                  <span className={styles.inputIcon}>
+                  <span className="inputIcon">
                     <FaLock />
                   </span>
                 </div>
               </div>
 
               {/* Xác nhận mật khẩu */}
-              <div className={styles.formGroup}>
+              <div className="formGroup">
                 <label htmlFor="confirmPassword">Xác nhận mật khẩu</label>
-                <div className={styles.inputWrapper}>
+                <div className="inputWrapper">
                   <input
                     type="password"
                     id="confirmPassword"
@@ -153,24 +156,24 @@ function RegisterPage() {
                     onChange={handleConfirmPasswordChange}
                     required
                   />
-                  <span className={styles.inputIcon}>
+                  <span className="inputIcon">
                     <FaUser />
                   </span>
                 </div>
               </div>
 
               {/* Link đăng nhập */}
-              <p className={styles.registerText}>
+              <p className="registerText">
                 Bạn đã có tài khoản?&nbsp;
-                <a href="/login" className={styles.registerLink}>
+                <Link to="/login" className="registerLink">
                   Đăng nhập ngay!
-                </a>
+                </Link>
               </p>
             </form>
           </div>
           {/* Nút đăng ký */}
-          <div className={styles.formFooter}>
-            <button type="submit" className={styles.registerButton}>
+          <div className="formFooter">
+            <button type="submit" className="registerButton">
               Đăng ký
             </button>
           </div>
