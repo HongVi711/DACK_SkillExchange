@@ -12,6 +12,7 @@
   position: absolute;
   right: 10px;
   align-content: center;
+  text-align: center;
 }
 
 .ctaButton:hover {

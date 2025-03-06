@@ -14,18 +14,15 @@ const register = (name, email, password, confirmPassword) => {
   });
 };
 
-const login = (email, password) => {
-  return axios
-    .post(API_URL + "login", {
-      email,
-      password,
-    })
-    .then((response) => {
-      if (response.data.token) {
-        localStorage.setItem("user", JSON.stringify(response.data.token)); // Lưu thông tin người dùng vào localStorage
-      }
-      return response.data;
-    });
+const login = async (email, password) => {
+  const response = await axios.post(API_URL + "login", {
+    email,
+    password,
+  });
+  if (response.data.token) {
+    localStorage.setItem("user", JSON.stringify(response.data.token)); // Lưu thông tin người dùng vào localStorage
+  }
+  return response.data;
 };
 
 const logout = async () => {

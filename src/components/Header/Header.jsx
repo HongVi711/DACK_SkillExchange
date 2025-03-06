@@ -6,6 +6,7 @@ import { FaHome, FaSearch, FaCalendar, FaUserFriends } from "react-icons/fa";
 import RegisterButton from "../RegisterButton";
 
 function Header() {
+  const isMobile = window.innerWidth <= 768;
   return (
     <div className={styles.sidebar}>
       <a href="/">
@@ -18,7 +19,7 @@ function Header() {
         <li>
           <a href="/">
             <FaHome />
-            Trang chủ
+            <span>Trang chủ</span>
           </a>
         </li>
         <li>

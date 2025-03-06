@@ -12,7 +12,7 @@ function Layout({ children }) {
 
   return (
     <div className="content">
-      <div className={`${isHomePage ? "overlay" : ""}`}>
+      <div className={`${isHomePage ? "overlayLayout" : ""}`}>
         <Header />
         {isHomePage && <HeroSection />}
       </div>

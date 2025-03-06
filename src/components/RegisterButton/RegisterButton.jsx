@@ -80,7 +80,7 @@ function RegisterButton() {
         registerConfirmPassword
       );
       toggleModal(); // Ẩn modal sau khi đăng ký thành công
-      navigate("/login"); // Chuyển đến trang login
+      showLoginForm();
     } catch (error) {
       const message =
         (error.response &&

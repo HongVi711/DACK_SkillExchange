@@ -1,0 +1,229 @@
+/* Box-sizing (BẮT BUỘC) */
+.Login *,
+.Login *::before,
+.Login *::after {
+  box-sizing: border-box;
+}
+
+.Login {
+  font-size: 16px; /* Thay 1.6rem bằng 16px để không phụ thuộc html */
+  line-height: 1.5;
+  color: #333;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Bao toàn bộ trang */
+.loginContainer {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-image: url("../../assets/images/registerimg.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  align-items: center;
+  justify-content: center;
+}
+
+.loginLogoContainer {
+  position: fixed; /* Cố định header */
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  justify-content: flex-start;
+  background-color: rgba(255, 255, 255, 0.776); /* Trong suốt */
+  /* backdrop-filter: blur(10px); */ /*  Nếu cần làm mờ */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Đổ bóng */
+  padding-left: 40px;
+}
+
+.loginLogo {
+  align-items: center;
+  height: 40px;
+  margin-right: 10px;
+}
+
+.loginLogoText {
+  text-align: center;
+  font-size: 30px;
+  font-weight: bold;
+  color: #00e6ff;
+}
+
+/* KHÔNG cần .logoContainer a */
+
+/* Phần chứa form */
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  padding-top: 60px;
+}
+
+/* Cột bên trái (ảnh minh họa): ẨN */
+.imageSection {
+  display: none;
+}
+
+/* Form */
+.formSection {
+  background-color: rgba(255, 255, 255, 0.95);
+  border-radius: 0.8rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 320px; /* Giảm từ 40rem (400px) xuống 320px */
+  width: 100%;
+  position: relative;
+  z-index: 2;
+}
+
+/* (Các phần còn lại của form, GIỮ NGUYÊN) */
+.formHeader {
+  background-color: #eee;
+  padding: 10px; /* Giảm từ 1.5rem (15px) xuống 10px */
+  text-align: center;
+  border-radius: 0.8rem 0.8rem 0 0;
+  border: 1px solid #a9a7a7; /* Chuyển sang px cho đồng nhất */
+}
+
+.formHeader h2 {
+  text-align: left;
+  margin: 0;
+  font-size: 20px; /* Giảm từ 2.4rem (24px) xuống 20px */
+  color: #00e6ff;
+  font-weight: bold;
+}
+
+.formBody {
+  padding: 10px; /* Giảm từ 1.5rem (15px) xuống 10px */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-left: 1px solid #a9a7a7;
+  border-right: 1px solid #a9a7a7;
+}
+
+.formGroup {
+  margin-bottom: 15px; /* Giảm từ 2rem (20px) xuống 15px */
+}
+
+.formGroup label {
+  text-align: left;
+  display: block;
+  margin-bottom: 4px; /* Giảm từ 0.5rem (5px) xuống 4px */
+  font-weight: 600;
+  color: #555;
+  font-size: 12px; /* Giảm từ 1.4rem (14px) xuống 12px */
+}
+
+.inputWrapper {
+  position: relative;
+}
+
+.inputWrapper input {
+  width: 100%;
+  padding: 8px; /* Giảm từ 0.8rem (8px) nhưng giữ hợp lý */
+  padding-right: 40px; /* Điều chỉnh cho icon, từ 4rem (40px) */
+  border: 1px solid #a9a7a7;
+  border-radius: 5px; /* Chuyển sang px */
+  font-size: 11px; /* Giảm từ 1.4rem (14px) xuống 14px nhưng giữ dễ đọc */
+  background-color: #fff;
+  color: #333;
+  outline: none;
+}
+
+.inputWrapper input::placeholder {
+  color: #999;
+}
+
+.inputIcon {
+  position: absolute;
+  right: 10px; /* Chuyển từ 1rem (10px) */
+  top: 50%;
+  transform: translateY(-50%);
+  color: #999;
+  font-size: 20px; /* Từ 2rem (20px) */
+}
+
+.registerText {
+  text-align: center;
+  margin-top: 15px; /* Từ 1.5rem (15px) */
+  font-size: 12px; /* Giảm từ 1.4rem (14px) xuống 12px */
+}
+
+.registerLink {
+  font-size: 12px; /* Giảm từ 1.4rem (14px) xuống 12px */
+  color: #00e6ff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.registerLink:hover {
+  text-decoration: underline;
+}
+
+.inputWrapper::before {
+  content: "";
+  position: absolute;
+  width: 1px; /* Từ 0.1rem (1px) */
+  height: 100%;
+  right: 40px; /* Từ 4rem (40px) */
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: #a9a7a7;
+}
+
+/* Form Footer */
+.formFooter {
+  border: 1px solid #a9a7a7;
+  background-color: #eee;
+  padding: 10px; /* Giảm từ 1.5rem (15px) xuống 10px */
+  text-align: center;
+  border-radius: 0 0 0.8rem 0.8rem;
+}
+
+.loginButton {
+  width: 100%;
+  padding: 8px; /* Giảm từ 1rem (10px) xuống 8px */
+  background-color: #00e6ff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px; /* Giảm từ 1.8rem (18px) xuống 16px */
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.loginButton:hover {
+  background-color: #02b3c7;
+}
+
+/* Responsive (Desktop) */
+@media (min-width: 768px) {
+  .loginContainer {
+    padding-top: 0;
+  }
+
+  .formSection {
+    max-width: 360px; /* Giảm từ 45rem (450px) xuống 360px */
+    width: 40%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .loginButton {
+    width: 40%;
+    margin-left: 60%;
+  }
+}

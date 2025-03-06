@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import authService from "../services/auth.service";
-import Toast from "../utils/Toast";
-import Loading from "../components/Loading";
-import userService from "../services/user.service";
+import authService from "../../services/auth.service";
+import Toast from "../../utils/Toast";
+import Loading from "../../components/Loading";
+import userService from "../../services/user.service";
 
 function Profile() {
   const { state } = useLocation();

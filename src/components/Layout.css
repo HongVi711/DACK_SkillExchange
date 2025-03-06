@@ -4,7 +4,7 @@
   /* font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; */
 }
 
-.overlay {
+.overlayLayout {
   inset: 0; /* inset-0 (top: 0, right: 0, bottom: 0, left: 0) */
   /* opacity: 0.5;          */
   background-image: url("/src/assets/images/banner.jpg");
@@ -13,7 +13,7 @@
   background-position: center; /* Canh giữa ảnh */
 }
 
-.overlay::after {
+.overlayLayout::after {
   content: "";
   position: absolute;
   inset: 0; /* Trải đều khắp sidebar */
@@ -21,7 +21,7 @@
   z-index: 0; /* Đảm bảo nằm dưới nội dung */
 }
 
-.overlay * {
+.overlayLayout > * {
   position: relative;
   z-index: 1; /* Đảm bảo nội dung nằm trên lớp phủ */
 }
