@@ -1,0 +1,106 @@
+/* src/components/UserCard/UserCard.module.css */
+
+.card {
+  
+  width: 250px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  text-align: left;
+  position: relative;
+  margin-bottom: 40px;
+}
+
+.closeBtn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: #333;
+  /* Màu chữ đen cho nút X */
+
+}
+
+.cardAvatar {
+  /* Đổi .avatar thành .cardAvatar (cho đúng với JSX) */
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  /* margin-bottom: 10px; */
+  margin-left: auto;
+  /* Thêm để căn giữa ảnh */
+  margin-right: auto;
+  /* Thêm để căn giữa ảnh */
+  display: block;
+  /* Thêm để loại bỏ khoảng trống thừa dưới ảnh */
+}
+
+.cardContent {
+  text-align: left;
+}
+
+.cardName {
+  /* Thêm style cho tên */
+  font-size: 1.5rem;
+  /* Cỡ chữ */
+  font-weight: bold;
+  /* In đậm */
+  margin-bottom: 5px;
+  /* Khoảng cách với phần dưới */
+  color: #333;
+  text-align: center;
+}
+
+.cardJob {
+  font-size: 1.6rem;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.cardMajor {
+  margin-bottom: 0px;
+}
+.cardLearn {
+  /* font-size: 1,5rem; */
+  margin-bottom: 20px;
+  color: #333;
+  /* text-align: left;  Không cần dòng này nữa */
+}
+
+.cardMajor span{
+    color: #02C225;
+  font-weight: bold;
+}
+.cardLearn span {
+  color: #0086DA; /* Màu xanh cho phần sau dấu hai chấm */
+  font-weight: bold;
+  margin-bottom: 330px;
+}
+
+
+.connectButton {
+  /* Sửa tên class (thêm "ton") */
+  background-color: #ffffff;
+  /* Màu xanh */
+  color: #1665B0;
+  border: 1.5px solid #1665B0;
+  padding: 8px 12px;
+  border-radius: 20px;
+  /* Bo tròn nhiều hơn */
+  cursor: pointer;
+  font-size: 2rem;
+  /* Chỉnh lại size chữ */
+  font-weight: bold;
+  margin-top: 10px;
+  width: 100%;
+  /* Chiếm toàn bộ chiều rộng của card */
+  display: block;
+}
+
+.connectButton:hover {
+  background-color: #4aa7cc;
+}
