@@ -23,6 +23,68 @@ function Profile() {
 
   const fileInputRef = useRef(null);
 
+  // Thêm state cho địa chỉ
+  const [provinces, setProvinces] = useState([]);
+  const [districts, setDistricts] = useState([]);
+  const [wards, setWards] = useState([]);
+  const [selectedProvince, setSelectedProvince] = useState("");
+  const [selectedDistrict, setSelectedDistrict] = useState("");
+  const [selectedWard, setSelectedWard] = useState("");
+
+  // Fetch danh sách tỉnh/thành phố khi component mount
+  useEffect(() => {
+    const fetchProvinces = async () => {
+      try {
+        const response = await fetch("https://provinces.open-api.vn/api/p/");
+        const data = await response.json();
+        setProvinces(data);
+      } catch (error) {
+        console.error("Error fetching provinces:", error);
+      }
+    };
+    fetchProvinces();
+  }, []);
+
+  // Fetch quận/huyện khi chọn tỉnh/thành phố
+  useEffect(() => {
+    const fetchDistricts = async () => {
+      if (selectedProvince) {
+        try {
+          const response = await fetch(
+            `https://provinces.open-api.vn/api/p/${selectedProvince}?depth=2`
+          );
+          const data = await response.json();
+          setDistricts(data.districts);
+          setWards([]); // Reset wards khi đổi province
+          setSelectedDistrict(""); // Reset district khi đổi province
+          setSelectedWard(""); // Reset ward khi đổi province
+        } catch (error) {
+          console.error("Error fetching districts:", error);
+        }
+      }
+    };
+    fetchDistricts();
+  }, [selectedProvince]);
+
+  // Fetch phường/xã khi chọn quận/huyện
+  useEffect(() => {
+    const fetchWards = async () => {
+      if (selectedDistrict) {
+        try {
+          const response = await fetch(
+            `https://provinces.open-api.vn/api/d/${selectedDistrict}?depth=2`
+          );
+          const data = await response.json();
+          setWards(data.wards);
+          setSelectedWard(""); // Reset ward khi đổi district
+        } catch (error) {
+          console.error("Error fetching wards:", error);
+        }
+      }
+    };
+    fetchWards();
+  }, [selectedDistrict]);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -50,6 +112,14 @@ function Profile() {
             address: user.address || "",
             skills: user.skills || [],
           });
+          if (user.address) {
+            const addressParts = user.address.split(", ");
+            if (addressParts.length >= 3) {
+              const provinceName = addressParts[addressParts.length - 1];
+              const province = provinces.find((p) => p.name === provinceName);
+              if (province) setSelectedProvince(province.code);
+            }
+          }
         } else {
           navigate(`/`);
           throw new Error(
@@ -71,7 +141,7 @@ function Profile() {
     };
 
     fetchData();
-  }, [initialUser, navigate]);
+  }, [initialUser, navigate, provinces]);
 
   const handleAvatarChange = async (e) => {
     const file = e.target.files[0];
@@ -133,11 +203,22 @@ function Profile() {
     e.preventDefault();
     try {
       setLoading(true);
+      // Tạo chuỗi address từ các combobox
+      const province = provinces.find(
+        (p) => p.code === parseInt(selectedProvince)
+      );
+      const district = districts.find(
+        (d) => d.code === parseInt(selectedDistrict)
+      );
+      const ward = wards.find((w) => w.code === parseInt(selectedWard));
 
+      const fullAddress = [ward?.name, district?.name, province?.name]
+        .filter(Boolean)
+        .join(", ");
       const userInfo = {
         name: formData.name,
         phone: formData.phone,
-        address: formData.address,
+        address: fullAddress || formData.address,
       };
       const skills = formData.skills;
 
@@ -260,15 +341,50 @@ function Profile() {
                     className="border rounded p-1 ml-2 w-3/4"
                   />
                 </p>
-                <p className="text-gray-700">
+                <p className="text-gray-700 mb-2">
                   <strong>Địa chỉ:</strong>
-                  <input
-                    type="text"
-                    name="address"
-                    value={formData.address}
-                    onChange={handleInputChange}
-                    className="border rounded p-1 ml-2 w-3/4"
-                  />
+                  <select
+                    value={selectedProvince}
+                    onChange={(e) => setSelectedProvince(e.target.value)}
+                    className="border rounded p-1 ml-2 w-3/4 mt-1"
+                  >
+                    <option value="">Chọn tỉnh/thành phố</option>
+                    {provinces.map((province) => (
+                      <option key={province.code} value={province.code}>
+                        {province.name}
+                      </option>
+                    ))}
+                  </select>
+                </p>
+                <p className="text-gray-700 mb-2">
+                  <select
+                    value={selectedDistrict}
+                    onChange={(e) => setSelectedDistrict(e.target.value)}
+                    className="border rounded p-1 ml-2 w-3/4 mt-1"
+                    disabled={!selectedProvince}
+                  >
+                    <option value="">Chọn quận/huyện</option>
+                    {districts.map((district) => (
+                      <option key={district.code} value={district.code}>
+                        {district.name}
+                      </option>
+                    ))}
+                  </select>
+                </p>
+                <p className="text-gray-700">
+                  <select
+                    value={selectedWard}
+                    onChange={(e) => setSelectedWard(e.target.value)}
+                    className="border rounded p-1 ml-2 w-3/4 mt-1"
+                    disabled={!selectedDistrict}
+                  >
+                    <option value="">Chọn phường/xã</option>
+                    {wards.map((ward) => (
+                      <option key={ward.code} value={ward.code}>
+                        {ward.name}
+                      </option>
+                    ))}
+                  </select>
                 </p>
               </>
             ) : (

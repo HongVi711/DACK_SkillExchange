@@ -19,6 +19,9 @@ function RegisterButton() {
   const [registerPassword, setRegisterPassword] = useState("");
   const [registerConfirmPassword, setRegisterConfirmPassword] = useState("");
   const [registerError, setRegisterError] = useState("");
+  const [showRegisterPassword, setShowRegisterPassword] = useState(false);
+  const [showRegisterConfirmPassword, setShowRegisterConfirmPassword] =
+    useState(false);
 
   // State cho form đăng nhập
   const [loginEmail, setLoginEmail] = useState("");
@@ -427,17 +430,44 @@ function RegisterButton() {
                         alignItems: "center",
                         border: "1px solid #ccc",
                         borderRadius: "4px",
+                        position: "relative",
                       }}
                     >
                       <input
-                        type="password"
+                        type={showRegisterPassword ? "text" : "password"}
                         name="password"
                         required
                         style={{ flex: 1, border: "none", padding: "8px" }}
                         value={registerPassword}
                         onChange={(e) => setRegisterPassword(e.target.value)}
                       />
-                      <span style={{ padding: "8px" }}>🔒</span>
+                      <button
+                        type="button"
+                        onClick={() =>
+                          setShowRegisterPassword(!showRegisterPassword)
+                        }
+                        style={{
+                          position: "absolute",
+                          right: "10px",
+                          top: "50%",
+                          transform: "translateY(-50%)",
+                          border: "none",
+                          background: "transparent",
+                          cursor: "pointer",
+                          padding: "0",
+                          color: "#666",
+                          outline: "none",
+                          transition: "color 0.2s", // Hiệu ứng chuyển màu
+                        }}
+                        onMouseEnter={(e) => (e.target.style.color = "#000")} // Hover
+                        onMouseLeave={(e) => (e.target.style.color = "#666")} // Rời chuột
+                      >
+                        {showRegisterPassword ? (
+                          <FaEyeSlash size={20} />
+                        ) : (
+                          <FaEye size={20} />
+                        )}
+                      </button>
                     </div>
                   </div>
                   <div style={{ marginBottom: "10px" }}>
@@ -448,10 +478,11 @@ function RegisterButton() {
                         alignItems: "center",
                         border: "1px solid #ccc",
                         borderRadius: "4px",
+                        position: "relative",
                       }}
                     >
                       <input
-                        type="password"
+                        type={showRegisterConfirmPassword ? "text" : "password"}
                         name="confirmPassword"
                         required
                         style={{ flex: 1, border: "none", padding: "8px" }}
@@ -460,7 +491,35 @@ function RegisterButton() {
                           setRegisterConfirmPassword(e.target.value)
                         }
                       />
-                      <span style={{ padding: "8px" }}>👤</span>
+                      <button
+                        type="button"
+                        onClick={() =>
+                          setShowRegisterConfirmPassword(
+                            !showRegisterConfirmPassword
+                          )
+                        }
+                        style={{
+                          position: "absolute",
+                          right: "10px",
+                          top: "50%",
+                          transform: "translateY(-50%)",
+                          border: "none",
+                          background: "transparent",
+                          cursor: "pointer",
+                          padding: "0",
+                          color: "#666",
+                          outline: "none",
+                          transition: "color 0.2s", // Hiệu ứng chuyển màu
+                        }}
+                        onMouseEnter={(e) => (e.target.style.color = "#000")} // Hover
+                        onMouseLeave={(e) => (e.target.style.color = "#666")} // Rời chuột
+                      >
+                        {showRegisterConfirmPassword ? (
+                          <FaEyeSlash size={20} />
+                        ) : (
+                          <FaEye size={20} />
+                        )}
+                      </button>
                     </div>
                   </div>
                   <p style={{ textAlign: "center", marginBottom: "5px" }}>

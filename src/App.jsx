@@ -6,6 +6,7 @@ import Register from "./pages/Register";
 import Profile from "./pages/Profile";
 import LoginPage from "./pages/Login";
 import Home from "./pages/Home";
+import SearchPage from "./pages/Search";
 
 function App() {
   return (
@@ -24,6 +25,14 @@ function App() {
           element={
             <Layout>
               <Profile />
+            </Layout>
+          }
+        />
+        <Route
+          path="/search"
+          element={
+            <Layout>
+              <SearchPage />
             </Layout>
           }
         />
