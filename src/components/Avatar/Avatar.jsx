@@ -35,7 +35,7 @@ function Avatar({ user, onLogout }) {
       .catch((error) => {
         console.log("Lỗi khi lấy ảnh:", error);
       });
-  }, []);
+  }, [user]);
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);

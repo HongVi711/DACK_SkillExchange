@@ -1,10 +1,23 @@
-/* eslint-disable react/prop-types */
-/* eslint-disable no-unused-vars */
-// src/components/UserCard/UserCard.jsx
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./UserCard.module.css";
+import userService from "../../services/user.service";
 
-function UserCard({ avatar, name, address, skills }) {
+function UserCard({ avatar, name, address, skills, userid }) {
+  const [userIds, setUserIds] = useState([]);
+
+  useEffect(() => {
+    const fetchUserIds = async () => {
+      try {
+        const UserIds = await userService.getUserIDs();
+        setUserIds(UserIds.data?.userIds || []);
+      } catch (error) {
+        console.error("Error fetching user IDs:", error);
+      }
+    };
+    fetchUserIds();
+  }, []);
+  // Check if the current userid exists in userIds array
+  const isConnected = userIds.includes(userid);
   return (
     <div className={styles.card}>
       <div className={styles.cardTop}>
@@ -23,7 +36,11 @@ function UserCard({ avatar, name, address, skills }) {
         <p className={styles.cardLearn}>
           Địa chỉ: <span>{address}</span>
         </p>
-        <button className={styles.connectButton}>Kết nối</button>{" "}
+        {isConnected ? (
+          <button className={styles.connectButton}>Nhắn tin</button>
+        ) : (
+          <button className={styles.connectButton}>Kết nối</button>
+        )}
       </div>
     </div>
   );

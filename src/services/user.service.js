@@ -6,7 +6,6 @@ const API_URL = "http://localhost:5008/api/users/"; //Thay đổi URL này
 const auth_Header = authHeader();
 
 const updateUser = (formData) => {
-  console.log("Data: ", formData);
   return axios.put(API_URL + "update-profile", formData, {
     headers: auth_Header,
   });
@@ -38,11 +37,19 @@ const getAvatarUser = async (userId) => {
   return response.data;
 };
 
+const getUserIDs = async () => {
+  const response = await axios.get(API_URL + "getUserID", {
+    headers: auth_Header,
+  });
+  return response.data;
+};
+
 const userService = {
   updateUser,
   updateUserSkills,
   searchUser,
   getAvatarUser,
+  getUserIDs,
 };
 
 export default userService;

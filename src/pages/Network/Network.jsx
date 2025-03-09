@@ -1,11 +1,11 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react";
 import UserCard from "../../components/UserCard";
-import styles from "../Search/Search.module.css";
+import styles from "./Network.module.css";
 import userService from "../../services/user.service"; // Điều chỉnh đường dẫn import
-import Loading from "./../../components/Loading/index";
+import Loading from "./../../components/Loading";
 
-function SearchPage() {
+function Network() {
   const [skillName, setSkillName] = useState(""); // Đổi tên setSearchTerm thành setSkillname cho đồng bộ
   const [selectedOptions, setSelectedOptions] = useState([]);
   const [users, setUsers] = useState([]);
@@ -108,6 +108,15 @@ function SearchPage() {
         </div>
 
         <div className={styles.searchFilter}>
+          {/* <select
+            value={location}
+            onChange={(e) => setLocation(e.target.value)}
+            className={styles.locationSelect}
+          >
+            <option value="">Tất cả địa điểm</option>
+            <option value="Hà Nội">Hà Nội</option>
+            <option value="Hồ Chí Minh">TP. Hồ Chí Minh</option>
+          </select> */}
           <select
             value={selectedProvince}
             onChange={(e) => setSelectedProvince(e.target.value)}
@@ -157,7 +166,6 @@ function SearchPage() {
                 }
                 address={user.address}
                 avatar={photos[user._id] || "default-avatar-url"} // Fallback image
-                userid={user._id}
               />
             ))}
           </div>
@@ -167,4 +175,4 @@ function SearchPage() {
   );
 }
 
-export default SearchPage;
+export default Network;

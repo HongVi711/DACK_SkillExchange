@@ -7,6 +7,7 @@ import Profile from "./pages/Profile";
 import LoginPage from "./pages/Login";
 import Home from "./pages/Home";
 import SearchPage from "./pages/Search";
+import ResetPassword from "./pages/ResetPassword";
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
             </Layout>
           }
         />
+        <Route path="/reset-password/:token" element={<ResetPassword />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="*" element={<NotFound />} /> {/* Route cho trang 404 */}
