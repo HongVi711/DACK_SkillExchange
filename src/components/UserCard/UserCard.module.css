@@ -1,0 +1,87 @@
+/* src/components/UserCard/UserCard.module.css */
+
+.card {
+  border: 1px solid #f5eeee;
+  width: 250px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  text-align: left;
+  position: relative;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 250px;
+}
+
+.cardAvatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}
+
+.cardContent {
+  text-align: left;
+}
+
+.cardName {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 3px;
+  color: #333;
+  text-align: center;
+}
+
+.cardJob {
+  font-size: 1.2rem;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+.cardMajor {
+  margin-bottom: 0px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cardLearn {
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.cardMajor span {
+  color: #02c225;
+  font-weight: bold;
+}
+
+.cardLearn span {
+  color: #0086da;
+  font-weight: bold;
+}
+
+.connectButton {
+  background-color: #ffffff;
+  color: #1665b0;
+  border: 1.5px solid #1665b0;
+  padding: 5px 8px;
+  border-radius: 15px;
+  cursor: pointer;
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-top: 5px;
+  width: 100%;
+  display: block;
+  align-self: flex-end;
+}
+
+.connectButton:hover {
+  background-color: #4aa7cc;
+}

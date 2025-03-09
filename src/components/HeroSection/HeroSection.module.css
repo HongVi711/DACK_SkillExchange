@@ -1,51 +1,51 @@
 .heroSection {
-    position: relative; /* relative */
-    height: 100vh;        /* h-screen */
-    background-size: cover; /* bg-cover */
-    background-position: center; /* bg-center */
-    display: flex;        /* flex */
-    align-items: center;    /* items-center */
-    justify-content: center; /* justify-center */
-  }
-  
-  .overlay {
-    position: absolute;    /* absolute */
-    inset: 0;             /* inset-0 (top: 0, right: 0, bottom: 0, left: 0) */
-    background-color: black; /* bg-black */
-    opacity: 0.5;          /* bg-opacity-50 */
-  }
-  
-  .content {
-    text-align: center;    /* text-center */
-    color: rgb(255, 255, 255);          /* text-white */
-    position: relative;    /* relative */
-    z-index: 10;           /* z-10 */
-  }
-  
-  .heading {
-    font-size: 3rem;      /* text-5xl (3rem = 48px nếu font-size gốc là 16px) */
-    font-weight: bold;    /* font-bold */
-    margin-bottom: 0.5rem; /* Khoảng cách với description */
-  }
-  
-  .description {
-    margin-top: 1rem;      /* mt-4 */
-    font-size: 1.25rem;   /* text-lg (1.25rem = 20px nếu font-size gốc là 16px) */
-  }
-  
-  .ctaButton {
-    margin-top: 1.5rem;    /* mt-6 */
-    display: inline-block; /* inline-block */
-    background-color: green; /* bg-green-500 */
-    color: white;          /* text-white */
-    padding: 0.75rem 1.5rem; /* px-6 py-3 */
-    border-radius: 0.5rem;  /* rounded-lg */
-    font-size: 1.25rem;   /* text-lg */
-    font-weight: 600;      /* font-semibold */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* shadow-lg */
-    transition: background-color 0.2s; /* Tạo hiệu ứng chuyển màu */
-  }
-  
-  .ctaButton:hover {
-    background-color: darkgreen; /* hover:bg-green-600 */
-  }
+  position: relative; /* relative */
+  height: 100vh; /* h-screen */
+  background-size: cover; /* bg-cover */
+  background-position: center; /* bg-center */
+  display: flex; /* flex */
+  align-items: center; /* items-center */
+  justify-content: center; /* justify-center */
+}
+
+.overlay {
+  position: absolute; /* absolute */
+  inset: 0; /* inset-0 (top: 0, right: 0, bottom: 0, left: 0) */
+  background-color: black; /* bg-black */
+  opacity: 0.5; /* bg-opacity-50 */
+}
+
+.content {
+  text-align: center; /* text-center */
+  color: rgb(255, 255, 255); /* text-white */
+  position: relative; /* relative */
+  z-index: 10; /* z-10 */
+}
+
+.heading {
+  font-size: 3rem; /* text-5xl (3rem = 48px nếu font-size gốc là 16px) */
+  font-weight: bold; /* font-bold */
+  margin-bottom: 0.5rem; /* Khoảng cách với description */
+}
+
+.description {
+  margin-top: 1rem; /* mt-4 */
+  font-size: 1.25rem; /* text-lg (1.25rem = 20px nếu font-size gốc là 16px) */
+}
+
+.ctaButton {
+  margin-top: 1.5rem; /* mt-6 */
+  display: inline-block; /* inline-block */
+  background-color: green; /* bg-green-500 */
+  color: white; /* text-white */
+  padding: 0.75rem 1.5rem; /* px-6 py-3 */
+  border-radius: 0.5rem; /* rounded-lg */
+  font-size: 1.25rem; /* text-lg */
+  font-weight: 600; /* font-semibold */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* shadow-lg */
+  transition: background-color 0.2s; /* Tạo hiệu ứng chuyển màu */
+}
+
+.ctaButton:hover {
+  background-color: darkgreen; /* hover:bg-green-600 */
+}

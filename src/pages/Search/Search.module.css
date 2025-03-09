@@ -1,0 +1,207 @@
+/* src/pages/SearchPage/SearchPage.css */
+.searchPage {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #fff; /* Màu nền trắng cho toàn trang */
+}
+
+.searchContent {
+  flex-grow: 1;
+  padding: 50px 1rem 1rem 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+/* Style cho container chung */
+.searchContainer {
+  position: relative;
+  padding: 10px 15px;
+  background-color: #ffe8e8;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  margin-bottom: 0.5rem;
+}
+
+.title {
+  font-size: 20px;
+  text-align: left;
+  color: #000000;
+  margin-bottom: 0.5rem;
+}
+
+.searchBar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.searchInput {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 14px;
+  width: 100%;
+  margin-right: 8px;
+}
+
+.searchFilter {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+}
+
+.resultTitle {
+  display: flex;
+  color: #333;
+  margin-bottom: 1.5rem;
+  width: 80%;
+}
+
+.searchFilter > * {
+  margin-right: 10px;
+}
+
+.locationSelect {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+  color: black;
+}
+
+.locationSelect option {
+  color: black;
+  background-color: white;
+}
+
+.searchButton {
+  padding: 8px 15px;
+  background-color: #00e6ff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  width: 20%;
+}
+
+.searchButton:hover {
+  background-color: #4aa7cc;
+}
+
+.wrapper {
+  display: flex;
+  justify-content: center; /* Căn giữa container con */
+  width: 100%;
+}
+
+.resultsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.cardContainer {
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(250px, 1fr)
+  ); /* Tự động điều chỉnh số cột */
+  gap: 16px;
+  justify-content: center; /* Căn giữa toàn bộ lưới */
+  max-width: calc(6 * (250px + 16px) - 16px); /* Giới hạn tối đa 5 card */
+  padding: 0 10px;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  gap: 15px;
+}
+
+.pageButton {
+  padding: 8px 16px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.pageButton:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.pageButton:hover:not(:disabled) {
+  background-color: #0056b3;
+}
+
+.pageInfo {
+  font-size: 16px;
+  color: #333;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .searchContainer {
+    width: 100%;
+    padding: 8px;
+  }
+
+  .searchBar {
+    flex-direction: column;
+  }
+
+  .searchInput {
+    width: 100%;
+    margin-bottom: 8px;
+  }
+
+  .searchButton {
+    width: 100%;
+  }
+
+  .searchFilter {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .locationSelect {
+    width: 100%;
+    margin-bottom: 8px;
+  }
+
+  .searchContent {
+    padding: 50px 0.5rem 0.5rem 0.5rem;
+  }
+}
+
+/* Thêm style cho checkbox */
+.searchFilter label {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.searchFilter label span {
+  margin-left: 5px;
+}
+
+.searchBar,
+.searchFilter,
+.locationSelect,
+.searchButton,
+.title,
+.cardContainer {
+  color: #333;
+}

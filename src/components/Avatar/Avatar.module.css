@@ -1,0 +1,69 @@
+/* src/components/Avatar/Avatar.module.css */
+.avatarContainer {
+  position: relative;
+  display: inline-block;
+}
+
+.avatar {
+  width: 45px !important;
+  height: 45px !important;
+  min-width: 45px; /* Đảm bảo không nhỏ hơn */
+  min-height: 45px;
+  border-radius: 50%;
+  object-fit: cover;
+  cursor: pointer;
+  border: 1px solid black;
+}
+
+.avatar:hover {
+  box-shadow: 0 0 5px 2px #878484; /*box-shadow: x y mờ lan_toả màu */
+}
+
+.dropdownMenu {
+  position: absolute;
+  top: 110%;
+  right: 0;
+  background-color: #f9f9f9df;
+  min-width: 200px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  padding: 12px 16px;
+  z-index: 5;
+  text-align: right;
+  width: fit-content;
+  border-radius: 7px;
+}
+
+.dropdownMenu a,
+.dropdownMenu button {
+  color: black;
+  padding: 8px 5px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+  border: none;
+  border-radius: 7px;
+  background: none;
+  cursor: pointer;
+  width: 100%;
+}
+
+.dropdownMenu a:hover,
+.dropdownMenu button:hover {
+  background-color: #ddd;
+}
+
+@media (max-width: 768px) {
+  .avatarContainer {
+    position: absolute;
+    bottom: 10px;
+  }
+
+  .dropdownMenu {
+    position: fixed; /* Giữ fixed trên mobile */
+    top: auto;
+    bottom: 60px; /* Khoảng cách từ dưới lên, dựa trên avatar height + margin */
+    left: 10px;
+    right: auto;
+    z-index: 1000;
+  }
+}
