@@ -1,19 +1,48 @@
 // eslint-disable-next-line no-unused-vars
-import React from 'react';
-import styles from './Header.module.css';
-import logo from '../../assets/logo.svg'; 
-import { FaHome, FaSearch, FaBell, FaUser } from 'react-icons/fa';
-function Header(){
-    return(
-        <div className={styles.sidebar}>   
-            <img src={logo} alt="Logo" className={styles.logo} />
-            <ul className={styles.navbar}>
-                <li><a href="#"><FaHome />Home</a></li>
-                <li><a href="#"><FaSearch />About</a></li>
-                <li><a href="#"><FaBell />Services</a></li>
-                <li><a href="#"><FaUser />Contact</a></li>
-            </ul>      
-      </div >
-    );
+import React from "react";
+import styles from "./Header.module.css";
+import logo from "/skill_exchange_logo.svg";
+import { FaHome, FaSearch, FaCalendar, FaUserFriends } from "react-icons/fa";
+import RegisterButton from "../RegisterButton";
+
+function Header() {
+  const isMobile = window.innerWidth <= 768;
+  return (
+    <div className={styles.sidebar}>
+      <a href="/">
+        <div className={styles.logoContainer}>
+          <img src={logo} alt="Logo" className={styles.logo} />
+          <span className={styles.logoText}>Skill&nbsp;Exchange</span>
+        </div>
+      </a>
+      <ul className={styles.navbar}>
+        <li>
+          <a href="/">
+            <FaHome />
+            <span>Trang chủ</span>
+          </a>
+        </li>
+        <li>
+          <a href="/search">
+            <FaSearch />
+            Tìm kiếm
+          </a>
+        </li>
+        <li>
+          <a href="/calendar">
+            <FaCalendar />
+            Lịch
+          </a>
+        </li>
+        <li>
+          <a href="/network">
+            <FaUserFriends />
+            Bạn bè
+          </a>
+        </li>
+      </ul>
+      <RegisterButton />
+    </div>
+  );
 }
 export default Header;

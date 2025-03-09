@@ -1,7 +1,72 @@
-.sidebar{
-    display: block;
-    align-items: center;
-    padding: 0.5rem 1rem;
-    background-color: rgb(135, 233, 255);
+.footer {
+  background: #0f172a;
+  color: #e2e8f0;
+  padding: 50px 0;
+  text-align: center;
 }
 
+.container {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.section {
+  flex: 1;
+  min-width: 250px;
+  margin-bottom: 20px;
+}
+
+.title {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  font-size: 1.25rem;
+  margin-bottom: 10px;
+}
+
+.text {
+  font-size: 1rem;
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+}
+
+.link {
+  color: #93c5fd;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.link:hover {
+  color: #bfdbfe;
+}
+
+.icons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.icon {
+  color: #93c5fd;
+  font-size: 1.5rem;
+  transition: color 0.3s ease;
+}
+
+.icon:hover {
+  color: #bfdbfe;
+}
+
+.copy {
+  margin-top: 20px;
+  border-top: 1px solid #334155;
+  padding-top: 10px;
+  font-size: 0.9rem;
+}

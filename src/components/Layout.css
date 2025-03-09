@@ -1,0 +1,34 @@
+* {
+  margin: 0;
+  padding: 0;
+  /* font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; */
+}
+
+.overlayLayout {
+  inset: 0; /* inset-0 (top: 0, right: 0, bottom: 0, left: 0) */
+  /* opacity: 0.5;          */
+  background-image: url("/src/assets/images/banner.jpg");
+  background-repeat: no-repeat; /* Thêm dòng này */
+  background-size: cover; /* Để ảnh phủ kín */
+  background-position: center; /* Canh giữa ảnh */
+}
+
+.overlayLayout::after {
+  content: "";
+  position: absolute;
+  inset: 0; /* Trải đều khắp sidebar */
+  background-color: rgba(88, 88, 88, 0.3); /* Lớp phủ màu đen mờ */
+  z-index: 0; /* Đảm bảo nằm dưới nội dung */
+}
+
+.overlayLayout > * {
+  position: relative;
+  z-index: 1; /* Đảm bảo nội dung nằm trên lớp phủ */
+}
+
+@media (max-width: 768px) {
+  .content {
+    margin-left: 80px;
+    /* padding: 1.5rem; */
+  }
+}
