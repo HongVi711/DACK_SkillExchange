@@ -30,6 +30,19 @@ const searchUser = async (params) => {
   }
 };
 
+const searchUserInNetwork = async (params) => {
+  try {
+    const response = await axios.get(API_URL + "search-user-in-network", {
+      headers: auth_Header,
+      params, // Truyền params dưới dạng query string
+    });
+
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || { message: "Đã xảy ra lỗi khi tìm kiếm" };
+  }
+};
+
 const getAvatarUser = async (userId) => {
   const response = await axios.get(API_URL + "profile/image/" + userId, {
     headers: auth_Header,
@@ -50,6 +63,7 @@ const userService = {
   searchUser,
   getAvatarUser,
   getUserIDs,
+  searchUserInNetwork,
 };
 
 export default userService;

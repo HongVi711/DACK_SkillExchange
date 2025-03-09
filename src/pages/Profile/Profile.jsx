@@ -391,11 +391,11 @@ function Profile() {
               <>
                 <p className="text-gray-700">
                   <strong>Số điện thoại:</strong>{" "}
-                  {userData.phone ?? "0123 456 789"}
+                  {userData.phone ?? "Chưa cập nhật"}
                 </p>
                 <p className="text-gray-700">
                   <strong>Địa chỉ:</strong>{" "}
-                  {userData.address ?? "Hà Nội, Việt Nam"}
+                  {userData.address ?? "Chưa cập nhật"}
                 </p>
               </>
             )}

@@ -9,6 +9,7 @@ import Home from "./pages/Home";
 import SearchPage from "./pages/Search";
 import ResetPassword from "./pages/ResetPassword";
 import ChangePassword from "./pages/ChangePassword";
+import Network from "./pages/Network";
 
 function App() {
   return (
@@ -35,6 +36,14 @@ function App() {
           element={
             <Layout>
               <SearchPage />
+            </Layout>
+          }
+        />
+        <Route
+          path="/network"
+          element={
+            <Layout>
+              <Network />
             </Layout>
           }
         />
