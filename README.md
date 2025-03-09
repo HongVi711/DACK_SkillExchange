@@ -24,5 +24,5 @@
     │  ├─ services/
     │  └─ utils/
     └─ vite.config.js
-
+    
 **1. Home page**
