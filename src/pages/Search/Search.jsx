@@ -7,6 +7,8 @@ import Loading from "./../../components/Loading/index";
 
 function SearchPage() {
   const [skillName, setSkillName] = useState("");
+  const [name, setName] = useState(""); // Thêm state cho name
+  const [email, setEmail] = useState(""); // Thêm state cho email
   const [selectedOptions, setSelectedOptions] = useState([]);
   const [users, setUsers] = useState([]);
   const [photos, setPhotos] = useState(null);
@@ -60,6 +62,8 @@ function SearchPage() {
       limit: itemsPerPage,
     };
     if (skillName) params.skillName = skillName;
+    if (name) params.name = name; // Thêm name vào params
+    if (email) params.email = email; // Thêm email vào params
     if (selectedProvince) {
       const province = provinces.find(
         (p) => p.code === parseInt(selectedProvince)
@@ -72,8 +76,8 @@ function SearchPage() {
       const data = await userService.searchUser(params);
       if (data.status === "success") {
         setUsers(data.data.users);
-        setTotalPages(data.data.totalPages); // Sử dụng totalPages từ response
-        setCurrentPage(data.data.page); // Sử dụng page từ response
+        setTotalPages(data.data.totalPages);
+        setCurrentPage(data.data.page);
       } else {
         setError("Không thể tải dữ liệu");
       }
@@ -113,6 +117,20 @@ function SearchPage() {
             placeholder="Nhập kỹ năng bạn muốn học"
             value={skillName}
             onChange={(e) => setSkillName(e.target.value)}
+            className={styles.searchInput}
+          />
+          <input
+            type="text"
+            placeholder="Nhập tên người dùng"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            className={styles.searchInput}
+          />
+          <input
+            type="email"
+            placeholder="Nhập email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             className={styles.searchInput}
           />
           <button onClick={handleSearch} className={styles.searchButton}>
