@@ -1,13 +1,14 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
-import NotFound from "./pages/NotFound"; // Trang 404 (Tùy chọn)
-import Layout from "./components/Layout"; // Layout chứa header, footer
+import NotFound from "./pages/NotFound";
+import Layout from "./components/Layout";
 import Register from "./pages/Register";
 import Profile from "./pages/Profile";
 import LoginPage from "./pages/Login";
 import Home from "./pages/Home";
 import SearchPage from "./pages/Search";
 import ResetPassword from "./pages/ResetPassword";
+import ChangePassword from "./pages/ChangePassword";
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
             </Layout>
           }
         />
+        <Route path="/change-password" element={<ChangePassword />} />
         <Route path="/reset-password/:token" element={<ResetPassword />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<LoginPage />} />

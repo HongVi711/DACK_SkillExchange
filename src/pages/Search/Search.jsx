@@ -2,11 +2,11 @@
 import React, { useState, useEffect } from "react";
 import UserCard from "../../components/UserCard";
 import styles from "../Search/Search.module.css";
-import userService from "../../services/user.service"; // Điều chỉnh đường dẫn import
+import userService from "../../services/user.service";
 import Loading from "./../../components/Loading/index";
 
 function SearchPage() {
-  const [skillName, setSkillName] = useState(""); // Đổi tên setSearchTerm thành setSkillname cho đồng bộ
+  const [skillName, setSkillName] = useState("");
   const [selectedOptions, setSelectedOptions] = useState([]);
   const [users, setUsers] = useState([]);
   const [photos, setPhotos] = useState(null);
@@ -14,6 +14,9 @@ function SearchPage() {
   const [error, setError] = useState(null);
   const [provinces, setProvinces] = useState([]);
   const [selectedProvince, setSelectedProvince] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [itemsPerPage] = useState(10);
 
   useEffect(() => {
     const fetchProvinces = async () => {
@@ -43,15 +46,19 @@ function SearchPage() {
       setPhotos(photoMap);
     };
 
-    fetchPhotos();
-  }, [users]); // Re-run when users array changes
+    if (users.length > 0) {
+      fetchPhotos();
+    }
+  }, [users]);
 
-  const fetchUsers = async () => {
+  const fetchUsers = async (page = 1) => {
     setLoading(true);
     setError(null);
 
-    // Tạo object params để gửi request
-    const params = {};
+    const params = {
+      page: page,
+      limit: itemsPerPage,
+    };
     if (skillName) params.skillName = skillName;
     if (selectedProvince) {
       const province = provinces.find(
@@ -65,13 +72,14 @@ function SearchPage() {
       const data = await userService.searchUser(params);
       if (data.status === "success") {
         setUsers(data.data.users);
+        setTotalPages(data.data.totalPages); // Sử dụng totalPages từ response
+        setCurrentPage(data.data.page); // Sử dụng page từ response
       } else {
         setError("Không thể tải dữ liệu");
       }
     } catch (err) {
       if (err.status === 401) {
         setError("Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.");
-        // Có thể thêm logic để redirect về trang login
       } else {
         setError(err.message || "Đã xảy ra lỗi khi tải dữ liệu");
       }
@@ -81,13 +89,18 @@ function SearchPage() {
   };
 
   const handleSearch = () => {
-    fetchUsers();
+    fetchUsers(1);
   };
 
-  // Gửi request khi trang load
   useEffect(() => {
-    fetchUsers();
-  }, []); // Mảng rỗng để chỉ chạy 1 lần khi mount
+    fetchUsers(1);
+  }, []);
+
+  const handlePageChange = (newPage) => {
+    if (newPage >= 1 && newPage <= totalPages) {
+      fetchUsers(newPage);
+    }
+  };
 
   return (
     <>
@@ -98,8 +111,8 @@ function SearchPage() {
           <input
             type="text"
             placeholder="Nhập kỹ năng bạn muốn học"
-            value={skillName} // Đồng bộ với state skillname
-            onChange={(e) => setSkillName(e.target.value)} // Sửa setSearchTerm thành setSkillname
+            value={skillName}
+            onChange={(e) => setSkillName(e.target.value)}
             className={styles.searchInput}
           />
           <button onClick={handleSearch} className={styles.searchButton}>
@@ -128,38 +141,61 @@ function SearchPage() {
           <div>Không tìm thấy kết quả nào</div>
         )}
         {!loading && !error && users.length !== 0 && (
-          <div className={styles.cardContainer}>
-            {loading && (
-              <div
-                style={{
-                  position: "relative",
-                  top: 0,
-                  left: 0,
-                  width: "100vw",
-                  height: "100vh",
-                  backgroundColor: "rgba(0, 0, 0, 0.5)",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  zIndex: 1000, // Đảm bảo nó ở trên cùng
-                }}
+          <div className={styles.resultsContainer}>
+            <div className={styles.cardContainer}>
+              {users.map((user) => (
+                <UserCard
+                  key={user._id}
+                  name={user.name}
+                  skills={
+                    user.skills.length > 0
+                      ? user.skills.map((skill) => skill.name).join(", ")
+                      : "Chưa có kỹ năng"
+                  }
+                  address={user.address || "Chưa cập nhật địa chỉ"}
+                  avatar={(photos && photos[user._id]) || "default-avatar-url"}
+                  userid={user._id}
+                />
+              ))}
+            </div>
+            <div className={styles.pagination}>
+              <button
+                onClick={() => handlePageChange(currentPage - 1)}
+                disabled={currentPage === 1}
+                className={styles.pageButton}
               >
-                <Loading />
-              </div>
-            )}
-            {users.map((user) => (
-              <UserCard
-                key={user._id}
-                name={user.name}
-                skills={
-                  user.skills.map((skill) => skill.name).join(", ") ||
-                  "Chưa có kỹ năng"
-                }
-                address={user.address}
-                avatar={photos[user._id] || "default-avatar-url"} // Fallback image
-                userid={user._id}
-              />
-            ))}
+                Trước
+              </button>
+              <span className={styles.pageInfo}>
+                Trang {currentPage} / {totalPages}
+                (Tổng: {users.length} kết quả)
+              </span>
+              <button
+                onClick={() => handlePageChange(currentPage + 1)}
+                disabled={currentPage === totalPages}
+                className={styles.pageButton}
+              >
+                Sau
+              </button>
+            </div>
+          </div>
+        )}
+        {loading && (
+          <div
+            style={{
+              position: "fixed",
+              top: 0,
+              left: 0,
+              width: "100vw",
+              height: "100vh",
+              backgroundColor: "rgba(0, 0, 0, 0.5)",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              zIndex: 1000,
+            }}
+          >
+            <Loading />
           </div>
         )}
       </div>

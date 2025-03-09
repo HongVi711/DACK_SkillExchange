@@ -101,6 +101,20 @@ const resetPassword = async (token, formData) => {
   }
 };
 
+const changePassword = async (formData) => {
+  try {
+    const response = await axios.put(API_URL + "change-password", formData, {
+      headers: authHeader(),
+    });
+    return { success: true, message: "Thay đổi mật khẩu thành công!" };
+  } catch (error) {
+    return {
+      success: false,
+      message: error.response?.data?.message || "Lỗi kết nối!",
+    };
+  }
+};
+
 const authService = {
   register,
   login,
@@ -110,6 +124,7 @@ const authService = {
   sendEmaiResetPass,
   uploadAvatar,
   resetPassword,
+  changePassword,
 };
 
 export default authService;

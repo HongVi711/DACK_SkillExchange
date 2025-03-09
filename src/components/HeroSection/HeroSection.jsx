@@ -13,8 +13,8 @@ function HeroSection() {
           Kết nối với những người có kỹ năng bạn muốn học. Không cần tiền, chỉ
           cần trao đổi!
         </p>
-        <a href="/register" className={styles.ctaButton}>
-          Tham gia ngay
+        <a href="/profile" className={styles.ctaButton}>
+          Cập nhật thông tin ngay
         </a>
       </div>
     </section>

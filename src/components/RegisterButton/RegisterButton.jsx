@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import Loading from "../Loading";
 import Avatar from "../Avatar";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import Swal from "sweetalert2";
 
 function RegisterButton() {
   const [showModal, setShowModal] = useState(false);
@@ -83,6 +84,11 @@ function RegisterButton() {
         registerConfirmPassword
       );
       toggleModal(); // Ẩn modal sau khi đăng ký thành công
+      Toast.fire({
+        icon: "success",
+        title:
+          "Đăng kí tài khoản thành công, vui lòng xác nhận tài khoản bằng link trong email!",
+      });
       showLoginForm();
     } catch (error) {
       const message =
@@ -108,7 +114,11 @@ function RegisterButton() {
       toggleModal(); // Ẩn modal sau khi đăng nhập thành công
       setLoginEmail("");
       setLoginPassword("");
-      navigate("/"); // Chuyển đến trang profile
+      Toast.fire({
+        icon: "success",
+        title: "Đăng nhập thành công!",
+      });
+      navigate("/");
     } catch (error) {
       const message =
         (error.response &&
@@ -147,16 +157,31 @@ function RegisterButton() {
         icon: "error",
         title: "Lỗi khi gửi email đặt lại mật khẩu. Vui lòng thử lại!",
       });
-      console.log("Lỗi trong khi gửi mail:", error);
     } finally {
       setIsLoading(false); // Kết thúc loading dù thành công hay thất bại
     }
   };
 
   const handleLogout = () => {
-    authService.logout();
-    setUser(null); // Xóa thông tin người dùng khỏi state
-    navigate("/"); // Chuyển về trang chủ hoặc trang login
+    Swal.fire({
+      title: "Bạn có chắc muốn đăng xuất?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Đăng xuất",
+      cancelButtonText: "Không",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        authService.logout();
+        setUser(null);
+        navigate("/");
+        Toast.fire({
+          icon: "success",
+          title: "Đã đăng xuất thành công!",
+        });
+      }
+    });
   };
 
   return (
