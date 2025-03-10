@@ -3,15 +3,61 @@ import axios from "axios"; // Hoặc fetch API
 import authHeader from "./auth-header";
 
 const API_URL = "http://localhost:5008/api/users/"; // Thay đổi URL này
-const header = authHeader();
 
-const register = (name, email, password, confirmPassword) => {
-  return axios.post(API_URL + "register", {
-    name,
-    email,
-    password,
-    confirmPassword,
+const getCurrentAddress = () => {
+  return new Promise((resolve, reject) => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        async (position) => {
+          const lat = position.coords.latitude;
+          const lon = position.coords.longitude;
+
+          try {
+            const response = await axios.get(
+              `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json`
+            );
+
+            const address = response.data.address;
+            const ward = address.village || address.suburb || "";
+            const district = address.county || "";
+            const province = address.state || address.city || "";
+            const fullAddress = `${ward}, ${district}, ${province}`.trim();
+            resolve(fullAddress || "Không xác định");
+          } catch (error) {
+            reject(error);
+          }
+        },
+        (error) => {
+          reject(error);
+        }
+      );
+    } else {
+      reject(new Error("Trình duyệt không hỗ trợ Geolocation"));
+    }
   });
+};
+
+const register = async (name, email, password, confirmPassword) => {
+  try {
+    const address = await getCurrentAddress();
+    const response = await axios.post(API_URL + "register", {
+      name,
+      email,
+      password,
+      confirmPassword,
+      address, // Thêm address vào body
+    });
+
+    return {
+      success: true,
+      message: "Đăng kí thành công!",
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: error.response?.data?.message || "Lỗi kết nối!",
+    };
+  }
 };
 
 const login = async (email, password) => {

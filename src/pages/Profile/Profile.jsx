@@ -20,7 +20,6 @@ function Profile() {
     address: "",
     skills: [],
   });
-
   const fileInputRef = useRef(null);
 
   // Thêm state cho địa chỉ
