@@ -40,7 +40,6 @@ function RegisterButton() {
       .getCurrentUser()
       .then((currentUser) => {
         if (currentUser && currentUser.data && currentUser.data.user) {
-          // console.log("User photo:", currentUser.data.user.photo); // Truy cập đúng photo
           setUser(currentUser.data.user); // Lưu object user vào state
         }
       })
@@ -77,19 +76,27 @@ function RegisterButton() {
     }
 
     try {
-      await authService.register(
+      const response = await authService.register(
         registerDisplayName,
         registerEmail,
         registerPassword,
         registerConfirmPassword
       );
-      toggleModal(); // Ẩn modal sau khi đăng ký thành công
-      Toast.fire({
-        icon: "success",
-        title:
-          "Đăng kí tài khoản thành công, vui lòng xác nhận tài khoản bằng link trong email!",
-      });
-      showLoginForm();
+
+      if (response.success) {
+        toggleModal(); // Ẩn modal sau khi đăng ký thành công
+        Toast.fire({
+          icon: "success",
+          title:
+            "Đăng kí tài khoản thành công, vui lòng xác nhận tài khoản bằng link trong email!",
+        });
+        showLoginForm();
+      } else {
+        Toast.fire({
+          icon: "error",
+          title: response?.message,
+        });
+      }
     } catch (error) {
       const message =
         (error.response &&
@@ -110,15 +117,18 @@ function RegisterButton() {
 
     try {
       const response = await authService.login(loginEmail, loginPassword);
-      setUser(response);
-      toggleModal(); // Ẩn modal sau khi đăng nhập thành công
-      setLoginEmail("");
-      setLoginPassword("");
-      Toast.fire({
-        icon: "success",
-        title: "Đăng nhập thành công!",
-      });
-      navigate("/");
+      if (response.status === "success") {
+        const userInfo = await authService.getCurrentUser();
+        setUser(userInfo?.user);
+        toggleModal(); // Ẩn modal sau khi đăng nhập thành công
+        setLoginEmail("");
+        setLoginPassword("");
+        Toast.fire({
+          icon: "success",
+          title: "Đăng nhập thành công!",
+        });
+        navigate("/");
+      }
     } catch (error) {
       const message =
         (error.response &&
