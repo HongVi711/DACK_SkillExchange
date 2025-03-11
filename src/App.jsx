@@ -10,6 +10,7 @@ import SearchPage from "./pages/Search";
 import ResetPassword from "./pages/ResetPassword";
 import ChangePassword from "./pages/ChangePassword";
 import Network from "./pages/Network";
+import SchedulePage from "./pages/Schedule";
 
 function App() {
   return (
@@ -44,6 +45,14 @@ function App() {
           element={
             <Layout>
               <Network />
+            </Layout>
+          }
+        />
+        <Route
+          path="/calendar"
+          element={
+            <Layout>
+              <SchedulePage />
             </Layout>
           }
         />

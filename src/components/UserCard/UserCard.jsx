@@ -37,7 +37,10 @@ function UserCard({ avatar, name, address, skills, userid }) {
           Địa chỉ: <span>{address}</span>
         </p>
         {isConnected ? (
-          <button className={styles.connectButton}>Nhắn tin</button>
+          <div className={styles.chat}>
+            <button className={styles.connectButton}>Đặt lịch</button>
+            <button className={styles.connectButton}>Nhắn tin</button>
+          </div>
         ) : (
           <button className={styles.connectButton}>Kết nối</button>
         )}
