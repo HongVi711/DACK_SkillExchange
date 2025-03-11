@@ -9,6 +9,8 @@ import Home from "./pages/Home";
 import SearchPage from "./pages/Search";
 import ResetPassword from "./pages/ResetPassword";
 import ChangePassword from "./pages/ChangePassword";
+import ConnectionPage from "./pages/Connect";
+
 
 function App() {
   return (
@@ -38,6 +40,17 @@ function App() {
             </Layout>
           }
         />
+        
+        <Route
+          path="/connect"
+          element={
+            <Layout>
+              <ConnectionPage />
+            </Layout>
+          }
+        />
+
+
         <Route path="/change-password" element={<ChangePassword />} />
         <Route path="/reset-password/:token" element={<ResetPassword />} />
         <Route path="/register" element={<Register />} />

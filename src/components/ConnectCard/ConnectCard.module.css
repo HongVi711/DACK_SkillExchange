@@ -1,0 +1,53 @@
+.card {
+  background: white;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  width: 280px;
+  text-align: center;
+}
+
+.cardTop {
+  position: relative;
+}
+
+.cardAvatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.cardContent {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cardName {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.cardSkills, .cardAddress {
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.messageButton {
+  background: #007bff;
+  color: white;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.messageButton:hover {
+  background: #0056b3;
+}
