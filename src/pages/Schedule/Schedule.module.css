@@ -1,0 +1,273 @@
+.scheduleContainer {
+  text-align: center;
+  padding: 20px;
+}
+
+.scheduleTitle {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+/* Bộ lọc */
+.filterContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 10px auto;
+  width: 800px; /* Chiều rộng cố định mặc định */
+  padding: 15px;
+  background: #fff;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.filterContainer label {
+  font-size: 16px;
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.filterContainer select {
+  padding: 8px 12px;
+  font-size: 14px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  background: #fff;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.filterContainer select:hover {
+  border-color: #007bff;
+}
+
+.filterContainer select:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+/* Lịch dạng danh sách chia thành các tuần */
+.calendarContainer {
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  margin: 0 auto;
+  width: 800px; /* Chiều rộng cố định mặc định */
+}
+
+.monthNavigation {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.monthNavigation button {
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 0 10px;
+}
+
+.weeksContainer {
+  width: 100%;
+}
+
+.weekRow {
+  display: flex;
+  justify-content: flex-start; /* Căn trái */
+  margin-bottom: 10px;
+  gap: 10px; /* Khoảng cách giữa các ngày */
+}
+
+.dayTile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100px; /* Chiều rộng cố định mặc định */
+  height: 50px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s;
+  background: #f5f5f5; /* Màu nền mặc định */
+}
+
+.dayTile.selected {
+  border: 2px solid #007bff; /* Viền xanh khi ngày được chọn */
+}
+
+.weekday {
+  font-size: 12px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+.dayNumber {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.pendingClass {
+  background: #d1f7c4 !important; /* Màu xanh nhạt */
+  color: black !important;
+}
+
+.completedClass {
+  background: #0086da !important; /* Màu tím nhạt */
+  color: black !important;
+}
+
+.canceledClass {
+  background: #f8d7da !important; /* Màu đỏ nhạt */
+  color: black !important;
+}
+
+/* Danh sách buổi học */
+.scheduleList {
+  margin-top: 20px;
+  width: 800px; /* Chiều rộng cố định mặc định */
+  margin: 20px auto;
+}
+
+.noLesson {
+  color: gray;
+  font-style: italic;
+  margin-top: 10px;
+}
+
+/* Responsive cho tablet (768px - 1024px) */
+@media (max-width: 1024px) {
+  .filterContainer,
+  .calendarContainer,
+  .scheduleList {
+    width: 90%; /* Giảm chiều rộng xuống 90% màn hình */
+  }
+
+  .dayTile {
+    width: calc(
+      (100% - 60px) / 7
+    ); /* Điều chỉnh chiều rộng thẻ ngày cho 7 ngày, trừ khoảng cách */
+    height: 45px; /* Giảm chiều cao thẻ ngày */
+  }
+
+  .weekday {
+    font-size: 10px; /* Giảm kích thước chữ */
+  }
+
+  .dayNumber {
+    font-size: 12px; /* Giảm kích thước chữ */
+  }
+
+  .monthNavigation {
+    font-size: 14px; /* Giảm kích thước chữ điều hướng */
+  }
+}
+
+/* Responsive cho mobile (< 768px) */
+@media (max-width: 768px) {
+  .scheduleContainer {
+    padding: 10px; /* Giảm padding trên mobile */
+  }
+
+  .scheduleTitle {
+    font-size: 20px; /* Giảm kích thước tiêu đề */
+  }
+
+  .filterContainer {
+    width: 100%; /* Chiếm toàn bộ chiều rộng */
+    padding: 10px; /* Giảm padding */
+  }
+
+  .filterContainer label {
+    font-size: 14px; /* Giảm kích thước chữ */
+  }
+
+  .filterContainer select {
+    padding: 6px 10px; /* Giảm padding */
+    font-size: 12px; /* Giảm kích thước chữ */
+  }
+
+  .calendarContainer {
+    width: 100%; /* Chiếm toàn bộ chiều rộng */
+    padding: 10px; /* Giảm padding */
+    overflow-x: auto; /* Cho phép cuộn ngang lịch */
+  }
+
+  .weeksContainer {
+    width: 100%;
+  }
+
+  .weekRow {
+    display: flex;
+    flex-wrap: nowrap; /* Không xuống dòng */
+    min-width: calc(70px * 7); /* Đảm bảo chiều rộng tối thiểu cho 7 ngày */
+    gap: 5px; /* Giảm khoảng cách giữa các ngày */
+  }
+
+  .dayTile {
+    width: 70px; /* Giảm chiều rộng thẻ ngày */
+    height: 40px; /* Giảm chiều cao thẻ ngày */
+  }
+
+  .weekday {
+    font-size: 10px; /* Giảm kích thước chữ */
+  }
+
+  .dayNumber {
+    font-size: 12px; /* Giảm kích thước chữ */
+  }
+
+  .monthNavigation {
+    font-size: 14px; /* Giảm kích thước chữ */
+  }
+
+  .scheduleList {
+    width: 100%; /* Chiếm toàn bộ chiều rộng */
+    margin: 10px auto; /* Giảm margin */
+  }
+}
+
+/* Responsive cho mobile rất nhỏ (< 480px) */
+@media (max-width: 480px) {
+  .scheduleTitle {
+    font-size: 18px; /* Giảm kích thước tiêu đề */
+  }
+
+  .filterContainer {
+    flex-direction: column; /* Xếp dọc bộ lọc */
+    align-items: flex-start; /* Căn trái */
+    gap: 10px; /* Khoảng cách giữa label và select */
+  }
+
+  .filterContainer select {
+    width: 100%; /* Select chiếm toàn bộ chiều rộng */
+  }
+
+  .weekRow {
+    min-width: calc(60px * 7); /* Giảm chiều rộng tối thiểu cho 7 ngày */
+  }
+
+  .dayTile {
+    width: 60px; /* Giảm chiều rộng thẻ ngày */
+    height: 35px; /* Giảm chiều cao thẻ ngày */
+  }
+
+  .weekday {
+    font-size: 9px; /* Giảm kích thước chữ */
+  }
+
+  .dayNumber {
+    font-size: 11px; /* Giảm kích thước chữ */
+  }
+}

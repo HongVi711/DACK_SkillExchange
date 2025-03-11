@@ -1,0 +1,167 @@
+.card {
+  background: white;
+  border-radius: 12px;
+  padding: 15px;
+  margin: 10px auto;
+  width: 800px; /* Chiều rộng cố định mặc định */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.cardHeader div {
+  text-align: left; /* Căn trái tiêu đề "Buổi học" */
+}
+
+.cardHeader strong {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.cardHeader span {
+  font-size: 16px;
+}
+
+.cardContent {
+  font-size: 14px;
+  color: #333;
+  text-align: left; /* Căn trái "Giảng viên" và "Thời gian" */
+}
+
+.cardContent p {
+  margin: 5px 0;
+}
+
+.statusLabel {
+  font-size: 14px;
+  font-weight: normal;
+}
+
+/* Màu trạng thái */
+.Chờxácnhận .statusLabel {
+  color: #28a745; /* Màu xanh lá cho trạng thái "Chờ xác nhận" */
+}
+
+.Đãhoànthành .statusLabel {
+  color: #0086da; /* Màu xanh lá cho trạng thái "Đã hoàn thành" */
+}
+
+.Đãhủy .statusLabel {
+  color: #dc3545; /* Màu đỏ cho trạng thái "Đã hủy" */
+}
+
+/* Nút xác nhận & hủy lịch */
+.actionButtons {
+  display: flex;
+  justify-content: flex-end; /* Căn phải */
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.confirmButton,
+.cancelButton {
+  padding: 8px 12px;
+  font-size: 14px;
+  border-radius: 5px;
+  cursor: pointer;
+  border: none;
+  transition: 0.2s;
+}
+
+.confirmButton {
+  background-color: #28a745;
+  color: white;
+}
+
+.confirmButton:hover {
+  background-color: #218838;
+}
+
+.cancelButton {
+  background-color: #dc3545;
+  color: white;
+}
+
+.cancelButton:hover {
+  background-color: #c82333;
+}
+
+/* Responsive cho tablet (768px - 1024px) */
+@media (max-width: 1024px) {
+  .card {
+    width: 90%;
+  }
+
+  .cardHeader strong,
+  .cardHeader span {
+    font-size: 14px;
+  }
+
+  .cardContent {
+    font-size: 13px;
+  }
+
+  .confirmButton,
+  .cancelButton {
+    padding: 6px 10px;
+    font-size: 12px;
+  }
+}
+
+/* Responsive cho mobile (< 768px) */
+@media (max-width: 768px) {
+  .card {
+    width: 100%;
+    padding: 10px;
+  }
+
+  .cardHeader strong,
+  .cardHeader span {
+    font-size: 13px;
+  }
+
+  .cardContent {
+    font-size: 12px;
+  }
+
+  .statusLabel {
+    font-size: 12px;
+  }
+
+  .actionButtons {
+    gap: 8px;
+  }
+
+  .confirmButton,
+  .cancelButton {
+    padding: 6px 8px;
+    font-size: 11px;
+  }
+}
+
+/* Responsive cho mobile rất nhỏ (< 480px) */
+@media (max-width: 480px) {
+  .cardHeader strong,
+  .cardHeader span {
+    font-size: 12px;
+  }
+
+  .cardContent {
+    font-size: 11px;
+  }
+
+  .actionButtons {
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .confirmButton,
+  .cancelButton {
+    width: 100%;
+  }
+}

@@ -74,9 +74,9 @@
   padding: 5px 8px;
   border-radius: 15px;
   cursor: pointer;
-  font-size: 1.5rem;
+  font-size: 14px;
   font-weight: bold;
-  margin-top: 5px;
+  margin: 5px 10px;
   width: 100%;
   display: block;
   align-self: flex-end;
@@ -84,4 +84,8 @@
 
 .connectButton:hover {
   background-color: #4aa7cc;
+}
+
+.chat {
+  display: flex;
 }
