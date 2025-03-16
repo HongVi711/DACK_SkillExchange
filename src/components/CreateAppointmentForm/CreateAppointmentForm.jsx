@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import DatePicker from "react-datepicker"; // Hoặc bất kỳ thư viện date picker nào bạn thích
 import "react-datepicker/dist/react-datepicker.css";
 import styles from "./CreateAppointmentForm.module.css";
+import Toast from "../../utils/Toast";
 
 const CreateAppointmentForm = ({ isOpen, onClose, onSubmit }) => {
   const [startTime, setstartTime] = useState(new Date());
@@ -12,17 +13,26 @@ const CreateAppointmentForm = ({ isOpen, onClose, onSubmit }) => {
     return null; // Ẩn component nếu không mở
   }
 
+  const reset = () => {
+    setstartTime(new Date());
+    setendTime(new Date());
+    setDescription("");
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     // Validate dữ liệu nếu cần thiết
     if (!startTime || !endTime || !description) {
-      alert("Vui lòng điền đầy đủ thông tin!");
+      Toast.fire({
+        icon: "error",
+        title: "Vui lòng điền đầy đủ thông tin!"
+      });
       return;
     }
 
     // Gọi hàm onSubmit (truyền từ component cha) để xử lý dữ liệu
     onSubmit({ startTime, endTime, description });
-
+    reset();
     // Đóng modal sau khi submit
     onClose();
   };

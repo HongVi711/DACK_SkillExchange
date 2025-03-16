@@ -4,24 +4,24 @@ import authHeader from "./auth-header";
 const API_URL = "http://localhost:5008/api/chats/";
 
 const chatService = {
-    getChatRoom: async (chatRoomId) => {
-        try {
-            const response = await axios.get(`${API_URL}${chatRoomId}`, {
-              headers: authHeader(),
-            });
-            return response.data; // Trả về trực tiếp dữ liệu
-          } catch (error) {
-            console.error("Lỗi khi lấy chatroomid:", error);
-            throw error; // Re-throw lỗi để component xử lý
-          }
-    },
+  getChatRoom: async (chatRoomId) => {
+    try {
+      const response = await axios.get(`${API_URL}${chatRoomId}`, {
+        headers: authHeader()
+      });
+      return response.data; // Trả về trực tiếp dữ liệu
+    } catch (error) {
+      console.error("Lỗi khi lấy chatroomid:", error);
+      throw error; // Re-throw lỗi để component xử lý
+    }
+  },
 
   getMessages: async (chatRoomId) => {
     try {
       const response = await axios.get(`${API_URL}${chatRoomId}/messages`, {
-        headers: authHeader(),
+        headers: authHeader()
       });
-      return response.data; // Trả về trực tiếp dữ liệu
+      return response?.data; // Trả về trực tiếp dữ liệu
     } catch (error) {
       console.error("Lỗi khi lấy tin nhắn:", error);
       throw error; // Re-throw lỗi để component xử lý
@@ -34,7 +34,7 @@ const chatService = {
         `${API_URL}send`,
         { chatRoomId, content },
         {
-          headers: authHeader(),
+          headers: authHeader()
         }
       );
       return response.data; // Trả về trực tiếp dữ liệu
@@ -44,26 +44,24 @@ const chatService = {
     }
   },
 
-
-
   // Hàm base để xử lý request (ví dụ)
   _request: async (method, url, data = null) => {
     try {
       const config = {
-        headers: authHeader(),
+        headers: authHeader()
       };
       const response = await axios({
         method,
         url: `${API_URL}${url}`,
         data,
-        ...config,
+        ...config
       });
       return response.data;
     } catch (error) {
       console.error(`Lỗi request ${method} ${url}:`, error);
       throw error;
     }
-  },
+  }
 };
 
 export default chatService;
