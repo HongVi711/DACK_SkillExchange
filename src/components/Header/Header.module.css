@@ -58,6 +58,11 @@
   display: none;
 }
 
+.navbar a.active {
+  color: #007bff; /* Màu chữ khi active */
+  font-weight: bold; /* Chữ đậm khi active */
+}
+
 @media (max-width: 768px) {
   .sidebar {
     flex-direction: column;

@@ -2,20 +2,23 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
-import io from "socket.io-client";
 import userService from "../../services/user.service";
 import chatService from "../../services/chat.service";
 import authService from "../../services/auth.service";
 
-import iconcamera from '../../assets/ic_camera.svg'; 
-import iconImage from '../../assets/ic_image.svg';
-import iconAttach from '../../assets/ic_attach.svg';
-import iconSend from '../../assets/ic_send.svg';
-import iconEmoji from '../../assets/ic_emoji.svg';
+import iconcamera from "../../assets/ic_camera.svg";
+import iconImage from "../../assets/ic_image.svg";
+import iconAttach from "../../assets/ic_attach.svg";
+import iconSend from "../../assets/ic_send.svg";
 import "./Chat.css";
 
-
-const socket = io("http://localhost:5008"); // Connect to Socket.IO server
+import socket, {
+  joinChatRoom,
+  setUserOnline,
+  checkUserStatus,
+  cleanupSocket
+} from "../../configs/socket/socket"; // Import from socket.config
+import Loading from "../../components/Loading";
 
 const ChatRoom = () => {
   const { chatRoomId, userid, name } = useParams();
@@ -38,9 +41,9 @@ const ChatRoom = () => {
 
         if (isMounted) {
           setUser(userData);
-          socket.emit("userOnline", userData.id || userData._id); // Dùng id hoặc _id tùy cấu trúc
-          socket.emit("joinRoom", chatRoomId);
-          socket.emit("checkUserStatus", userid);
+          setUserOnline(userData.id || userData._id);
+          joinChatRoom(chatRoomId);
+          checkUserStatus(userid);
 
           socket.on("userStatusResponse", ({ userId, status }) => {
             if (userId === userid) setOnlineStatus(status);
@@ -57,7 +60,9 @@ const ChatRoom = () => {
 
           socket.on("receiveMessage", (newMessage) => {
             setMessages((prevMessages) => {
-              const exists = prevMessages.some((msg) => msg._id === newMessage._id);
+              const exists = prevMessages.some(
+                (msg) => msg._id === newMessage._id
+              );
               if (!exists) return [...prevMessages, newMessage];
               return prevMessages;
             });
@@ -81,9 +86,7 @@ const ChatRoom = () => {
 
     return () => {
       isMounted = false;
-      socket.off("receiveMessage");
-      socket.off("onlineStatusUpdate");
-      socket.off("userStatusResponse");
+      cleanupSocket();
     };
   }, [chatRoomId, userid]);
 
@@ -124,7 +127,25 @@ const ChatRoom = () => {
     fetchPhotos();
   }, [userid]);
 
-  if (!user) return <p>Loading user data...</p>;
+  if (!user)
+    return (
+      <div
+        style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          width: "100vw",
+          height: "100vh",
+          backgroundColor: "rgba(0, 0, 0, 0.5)",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          zIndex: 1
+        }}
+      >
+        <Loading />
+      </div>
+    );
 
   return (
     <div className="body-container">
@@ -132,7 +153,11 @@ const ChatRoom = () => {
       <div className="chat-container">
         <div className="header-chat">
           <div className="user-info">
-            <img className="avatar" src={photos || "default"} alt="User Avatar" />
+            <img
+              className="avatar"
+              src={photos || "default"}
+              alt="User Avatar"
+            />
             <div className="user-details">
               <div className="user-name">{name || "User"}</div>
               <div className={`user-status ${onlineStatus}`}>
@@ -165,7 +190,6 @@ const ChatRoom = () => {
                 />
               )}
               <div className="message-content">
-                {/* <strong>{message.sender?.name || "Unknown"}</strong> */}
                 <div className="message-text">{message.content}</div>
                 <small>
                   {new Date(message.createdAt || Date.now()).toLocaleTimeString(
@@ -196,9 +220,6 @@ const ChatRoom = () => {
                 placeholder="Nhập tin nhắn..."
                 onKeyDown={handleKeyDown}
               />
-              <button className="emoji-button">
-                <img src={iconEmoji} alt="Emoji Icon" />
-              </button>
             </div>
             <button className="send-button" onClick={sendMessage}>
               <img src={iconSend} alt="Send Icon" />

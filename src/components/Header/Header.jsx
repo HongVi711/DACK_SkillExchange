@@ -7,6 +7,7 @@ import RegisterButton from "../RegisterButton";
 
 function Header() {
   const isMobile = window.innerWidth <= 768;
+  const currentPath = window.location.pathname; // Lấy đường dẫn hiện tại
   return (
     <div className={styles.sidebar}>
       <a href="/">
@@ -17,25 +18,34 @@ function Header() {
       </a>
       <ul className={styles.navbar}>
         <li>
-          <a href="/">
+          <a href="/" className={currentPath === "/" ? styles.active : ""}>
             <FaHome />
             <span>Trang chủ</span>
           </a>
         </li>
         <li>
-          <a href="/search">
+          <a
+            href="/search"
+            className={currentPath === "/search" ? styles.active : ""}
+          >
             <FaSearch />
             Tìm kiếm
           </a>
         </li>
         <li>
-          <a href="/calendar">
+          <a
+            href="/calendar"
+            className={currentPath === "/calendar" ? styles.active : ""}
+          >
             <FaCalendar />
             Lịch
           </a>
         </li>
         <li>
-          <a href="/network">
+          <a
+            href="/network"
+            className={currentPath === "/network" ? styles.active : ""}
+          >
             <FaUserFriends />
             Bạn bè
           </a>
