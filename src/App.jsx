@@ -7,6 +7,7 @@ import Profile from "./pages/Profile";
 import LoginPage from "./pages/Login";
 import Home from "./pages/Home";
 import SearchPage from "./pages/Search";
+import ChatPage from "./pages/Chat";
 import ResetPassword from "./pages/ResetPassword";
 import ChangePassword from "./pages/ChangePassword";
 import Network from "./pages/Network";
@@ -53,6 +54,14 @@ function App() {
           element={
             <Layout>
               <SchedulePage />
+            </Layout>
+          }
+        />
+        <Route
+          path="/chat/:chatRoomId/:userid/:name"
+          element={
+            <Layout>
+              <ChatPage />
             </Layout>
           }
         />
