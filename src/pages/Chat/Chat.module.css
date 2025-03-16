@@ -1,0 +1,263 @@
+/* Main Container Styles */
+.body-container {
+    width: 100vw;
+    height: 100vh;
+    background-color: #F3F4F6;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+  }
+  
+  /* Button Styles */
+  .button-container {
+    position: fixed;
+    top: 2%; /* Thay đổi từ px sang % */
+    left: 2%; /* Thay đổi từ px sang % */
+    z-index: 10;
+  }
+  
+  .back-button {
+    background-color: #5bc0de;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 15px;
+    cursor: pointer;
+  }
+  
+  /* Chat Container Styles */
+  .chat-container {
+    width: 90%;
+    max-width: 1400px;
+    height: 85vh; /* Tăng chiều cao */
+    background-color: white;
+    border-radius: 15px;
+    margin-top: 70px; /* Thêm margin-top */
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Header Styles */
+  .header-chat {
+      background-color: #E4E0E0;
+      padding: 15px;
+      border: 1px solid #DEDEDE;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top-left-radius: 15px;
+      border-top-right-radius: 15px;
+      height: 8vh; /* Điều chỉnh theo chiều cao avatar */
+  }
+  
+  .user-info {
+    display: flex;
+  }
+  
+  .avatar {
+    width: 40px; /* Giữ nguyên kích thước cố định */
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+  
+  .user-details {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .user-name {
+    font-weight: bold;
+  }
+  
+  .user-status {
+    color: #888;
+    font-size: 0.8em;
+    text-align: left;
+  }
+  
+  .video-button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .video-button:hover {
+    background-color: #3e8e41;
+  }
+  
+  .camera-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+  }
+  
+  /* Body Styles */
+  .body-chat {
+    flex-grow: 1;
+    padding: 20px;
+    overflow-y: auto;
+    background-color: #FAF9F6;
+    border-left: 1px solid #DEDEDE;
+    border-right: 1px solid #DEDEDE;
+  }
+  
+  .message-left,
+  .message-right {
+    display: flex;
+    margin-bottom: 15px;
+    align-items: flex-start;
+  }
+  
+  .message-left {
+    text-align: left;
+  }
+  
+  .message-right {
+    text-align: right;
+    justify-content: flex-end;
+  }
+  
+  .message-right .message-text {
+    background-color: #dcf8c6;
+  }
+  
+  .message-text {
+    background-color: #FCE4EC;
+    border-radius: 15px;
+    padding: 10px 15px;
+    max-width: 70%;
+    word-wrap: break-word;
+  }
+  
+  /* Footer Styles */
+  .footer-chat {
+    background-color: #FAF9F6;
+    padding: 15px;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    border-bottom: 1px solid #DEDEDE;
+    border-left: 1px solid #DEDEDE;
+    border-right: 1px solid #DEDEDE;
+  }
+  
+  .input-area {
+    display: flex;
+    align-items: center;
+  }
+  
+  .image-button,
+  .file-button {
+    background-color: transparent;
+    border: none;
+    font-size: 1.5em;
+    cursor: pointer;
+    margin-right: 10px;
+  }
+  
+  .message-input-wrapper {
+    flex-grow: 1;
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: 32px;
+    padding: 4px;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+    overflow: hidden;
+    background-color: #E4E0E0;
+  }
+  
+  .message-input {
+    flex-grow: 1;
+    border: none;
+    outline: none;
+    height: 24px;
+    padding: 4px 10px;
+    padding-right: 30px;
+    margin-right: 5px;
+    font-size: 1em;
+    background-color: transparent;
+  }
+  
+  .emoji-button {
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: transparent;
+    border: none;
+    font-size: 1.2em;
+    cursor: pointer;
+  }
+  
+  .send-button {
+    background-color: transparent;
+    border: none;
+    font-size: 1.2em;
+    cursor: pointer;
+    margin-left: 5px;
+  }
+  
+  .send-button img {
+    width: 32px;
+    height: 32px;
+    vertical-align: middle;
+  }
+  
+  .image-button img,
+  .file-button img,
+  .emoji-button img {
+    width: 27px;
+    height: 27px;
+    vertical-align: middle;
+  }
+  
+  /* Media Queries */
+  @media (max-width: 1395px) {
+    .button-container {
+      top: 8vh; /* Điều chỉnh vị trí bằng vh */
+    }
+  }
+  
+  @media (max-width: 1400px) { /* Cho màn hình nhỏ hơn chiều rộng chat container */
+    .chat-container {
+      width: 95%; /* Tăng kích thước trên mobile */
+      height: 70vh;
+      margin-top: 3%;
+    }
+  }
+  
+  @media (max-width: 768px) { /* Cho tablet */
+    .chat-container {
+      width: 98%;
+      height: 60vh;
+      margin-top: 3%;
+    }
+  
+    .avatar {
+      width: 30px; /* Thay đổi kích thước avatar trên mobile */
+      height: 30px;
+    }
+  
+    .body-chat {
+      font-size: 0.9em; /* Chỉnh kích thước chữ nhỏ lại */
+    }
+  }
+  /* Media query cho điện thoại nhỏ */
+  @media (max-width: 480px) {
+    .body-chat {
+      font-size: 0.8em; /* Chỉnh kích thước chữ nhỏ lại */
+    }
+    .header-chat {
+      flex-direction: column; /* Thay đổi layout của header */
+      align-items: flex-start;
+    }
+  }

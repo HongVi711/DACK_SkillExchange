@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 // src/services/auth.service.js
 import axios from "axios"; // Hoặc fetch API
 import authHeader from "./auth-header";
@@ -87,17 +88,21 @@ const logout = async () => {
 
 const getCurrentUser = async () => {
   const token = localStorage.getItem("user");
-  if (token) {
+  if (!token) {
+    console.log("Không tìm thấy token trong localStorage");
+    return null; // Trả về null nếu không có token
+  }
     try {
       const response = await axios.get(API_URL + "me", {
         headers: authHeader(),
       });
+      // console.log("Dữ liệu từ API /me:", response.data);
       return response.data;
     } catch (error) {
       console.error("Lỗi trong getCurrentUser:", error);
       throw error;
     }
-  }
+  // }
 };
 
 const getAvatar = async () => {
