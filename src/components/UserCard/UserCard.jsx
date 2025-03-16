@@ -2,6 +2,10 @@
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect } from "react";
 import styles from "./UserCard.module.css";
+import userService from "../../services/user.service";
+import CreateAppointmentForm from "../CreateAppointmentForm/CreateAppointmentForm"; // Import component
+import appointmentService from "../../services/appointment.service";
+import Toast from "./../../utils/Toast";
 import { useNavigate } from "react-router-dom";
 import connectionService from "../../services/connection.service";
 
@@ -12,6 +16,8 @@ function UserCard({ avatar, name, address, skills, userid }) {
   const [connectionStatus, setConnectionStatus] = useState(null); // "pending_sent", "pending_received", "connected", "none"
   const [connectionId, setConnectionId] = useState(null);
   const [isReceivedRequest, setIsReceivedRequest] = useState(false);
+  const [userIds, setUserIds] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false); // State cho modal
 
   useEffect(() => {
     const fetchConnectionStatus = async () => {
@@ -28,6 +34,18 @@ function UserCard({ avatar, name, address, skills, userid }) {
     };
     fetchConnectionStatus();
   }, [userid]);
+  
+   useEffect(() => {
+    const fetchUserIds = async () => {
+      try {
+        const UserIds = await userService.getUserIDs();
+        setUserIds(UserIds.data?.userIds || []);
+      } catch (error) {
+        console.error("Error fetching user IDs:", error);
+      }
+    };
+    fetchUserIds();
+  }, []);
 
   const handleConnect = async () => {
     try {
@@ -76,7 +94,46 @@ function UserCard({ avatar, name, address, skills, userid }) {
       console.error("Không tìm thấy chatRoomId!");
     }
   };
+  
 
+  const isConnected = userIds.includes(userid);
+
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleAppointmentSubmit = async (appointmentData) => {
+    try {
+      const requestData = {
+        receiverId: userid, // Sử dụng userid từ props
+        startTime: new Date(appointmentData.startTime).toISOString(), // Chuyển đổi thành ISO string
+        endTime: new Date(appointmentData.endTime).toISOString(), // Chuyển đổi thành ISO string
+        description: appointmentData.description,
+      };
+      const response = await appointmentService.createAppointment(requestData);
+
+      if (response) {
+        Toast.fire({
+          icon: "success",
+          title: response.message,
+        });
+        setIsModalOpen(false);
+      } else {
+        Toast.fire({
+          icon: "error",
+          title: response.message,
+        });
+      }
+    } catch (error) {
+      console.error("Lỗi khi tạo lịch hẹn:", error);
+    } finally {
+      setIsModalOpen(false);
+    }
+  };
   return (
     <div className={styles.card}>
       <div className={styles.cardTop}>
@@ -98,7 +155,9 @@ function UserCard({ avatar, name, address, skills, userid }) {
 
         {connectionStatus === "connected" ? (
           <div className={styles.chat}>
-            <button className={styles.connectButton}>Đặt lịch</button>
+            <button className={styles.connectButton} onClick={handleOpenModal}>
+              Đặt lịch
+            </button>
             <button className={styles.connectButton} onClick={handleChat}>Nhắn tin</button>
           </div>
         ) : connectionStatus === "pending_sent" ? (
@@ -120,6 +179,13 @@ function UserCard({ avatar, name, address, skills, userid }) {
           </button>
         )}
       </div>
+
+      {/* Hiển thị modal nếu isModalOpen là true */}
+      <CreateAppointmentForm
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        onSubmit={handleAppointmentSubmit}
+      />
     </div>
   );
 }
