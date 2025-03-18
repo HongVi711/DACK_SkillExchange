@@ -16,6 +16,14 @@
   z-index: 10;
 }
 
+.message-file {
+  color: white;
+}
+
+.message-file:hover {
+  color: #ccc;
+}
+
 .back-button {
   background-color: #5bc0de;
   color: white;

@@ -19,6 +19,7 @@ import socket, {
   cleanupSocket
 } from "../../configs/socket/socket"; // Import from socket.config
 import Loading from "../../components/Loading";
+import { FaFilePdf } from "react-icons/fa";
 
 const ChatRoom = () => {
   const { chatRoomId, userid, name } = useParams();
@@ -32,6 +33,8 @@ const ChatRoom = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const imageInputRef = useRef(null);
   const fileInputRef = useRef(null);
+  const [selectedImage, setSelectedImage] = useState(null); // Để lưu ảnh đã chọn
+  const [selectedFile, setSelectedFile] = useState(null); // Để lưu file đã chọn
 
   useEffect(() => {
     let isMounted = true;
@@ -99,14 +102,27 @@ const ChatRoom = () => {
   }, [messages]);
 
   const sendMessage = async () => {
-    if (!message.trim()) return;
+    if (!message.trim() && !selectedImage && !selectedFile) return; // Không gửi nếu không có gì
 
     try {
-      const data = await chatService.sendMessage(chatRoomId, message); // Lấy dữ liệu trực tiếp
+      const formData = new FormData();
+      formData.append("chatRoomId", chatRoomId); // Thêm chatRoomId vào FormData
+      if (message.trim()) {
+        formData.append("content", message);
+      }
+      if (selectedImage) {
+        formData.append("image", selectedImage); // Gửi ảnh nếu có
+      }
+      if (selectedFile) {
+        formData.append("file", selectedFile); // Gửi file nếu có
+      }
+      const data = await chatService.sendMessage(formData);
       setMessage("");
+      setSelectedImage(null);
+      setSelectedFile(null);
     } catch (error) {
       console.error("Error sending message:", error);
-      setErrorMessage("Không thể gửi tin nhắn. Vui lòng thử lại sau."); // Hiển thị thông báo lỗi
+      setErrorMessage("Không thể gửi tin nhắn. Vui lòng thử lại sau.");
     }
   };
 
@@ -128,6 +144,24 @@ const ChatRoom = () => {
     };
     fetchPhotos();
   }, [userid]);
+
+  const handleImageChange = (event) => {
+    const file = event.target.files[0];
+    setSelectedImage(file);
+  };
+
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    setSelectedFile(file);
+  };
+
+  const triggerImageUpload = () => {
+    imageInputRef.current.click();
+  };
+
+  const triggerFileUpload = () => {
+    fileInputRef.current.click();
+  };
 
   if (!user)
     return (
@@ -192,7 +226,28 @@ const ChatRoom = () => {
                 />
               )}
               <div className="message-content">
-                <div className="message-text">{message.content}</div>
+                <div className="message-text">
+                  {message.content}
+                  {message.image && (
+                    <img
+                      src={message.image}
+                      alt="Hình ảnh"
+                      style={{ maxWidth: "200px" }}
+                    />
+                  )}
+                  {message.file && (
+                    <a
+                      className="message-file"
+                      href={message.file}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      download="file.pdf"
+                    >
+                      <FaFilePdf size={64} />
+                    </a>
+                  )}
+                </div>
+
                 <small>
                   {new Date(message.createdAt || Date.now()).toLocaleTimeString(
                     "vi-VN",
@@ -206,12 +261,27 @@ const ChatRoom = () => {
 
         <div className="footer-chat">
           <div className="input-area">
-            <button className="image-button">
+            <button className="image-button" onClick={triggerImageUpload}>
               <img src={iconImage} alt="Image Icon" />
             </button>
-            <button className="file-button">
+            <button className="file-button" onClick={triggerFileUpload}>
               <img src={iconAttach} alt="Attach Icon" />
             </button>
+
+            <input
+              type="file"
+              style={{ display: "none" }}
+              onChange={handleImageChange}
+              ref={imageInputRef}
+              accept="image/*"
+            />
+            <input
+              type="file"
+              style={{ display: "none" }}
+              onChange={handleFileChange}
+              ref={fileInputRef}
+            />
+
             <div className="message-input-wrapper">
               <input
                 type="text"
@@ -223,10 +293,26 @@ const ChatRoom = () => {
                 onKeyDown={handleKeyDown}
               />
             </div>
+
             <button className="send-button" onClick={sendMessage}>
               <img src={iconSend} alt="Send Icon" />
             </button>
           </div>
+          {/* Hiển thị ảnh và file đã chọn  */}
+          {selectedImage && (
+            <div>
+              <img
+                src={URL.createObjectURL(selectedImage)}
+                alt="Ảnh đã chọn"
+                style={{ maxWidth: "100px", marginTop: "5px" }}
+              />
+            </div>
+          )}
+          {selectedFile && (
+            <div>
+              <p>Đã chọn file: {selectedFile.name}</p>
+            </div>
+          )}
         </div>
       </div>
     </div>
