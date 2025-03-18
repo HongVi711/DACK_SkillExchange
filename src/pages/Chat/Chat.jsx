@@ -30,6 +30,8 @@ const ChatRoom = () => {
   const [loading, setLoading] = useState(true);
   const chatBoxRef = useRef(null);
   const [errorMessage, setErrorMessage] = useState("");
+  const imageInputRef = useRef(null);
+  const fileInputRef = useRef(null);
 
   useEffect(() => {
     let isMounted = true;

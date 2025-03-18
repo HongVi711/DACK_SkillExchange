@@ -4,7 +4,7 @@ import ScheduleCard from "../../components/ScheduleCard";
 import appointmentService from "../../services/appointment.service";
 import Toast from "../../utils/Toast";
 
-const formatDate = (date) => date.toLocaleDateString("en-CA");
+const formatDate = (date) => date.toLocaleDateString("vi-VN");
 
 const SchedulePage = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -39,7 +39,7 @@ const SchedulePage = () => {
     if (response.status) {
       Toast.fire({
         icon: "success",
-        title: response.message,
+        title: response.message
       });
       setScheduleData((prevData) =>
         prevData.map((item) =>
@@ -49,7 +49,7 @@ const SchedulePage = () => {
     } else {
       Toast.fire({
         icon: "error",
-        title: response.message,
+        title: response.message
       });
     }
   };
@@ -79,7 +79,7 @@ const SchedulePage = () => {
         weekday: currentDate
           .toLocaleString("vi-VN", { weekday: "short" })
           .toUpperCase(),
-        date: formatDate(currentDate),
+        date: formatDate(currentDate)
       });
     }
     return days;
@@ -128,7 +128,7 @@ const SchedulePage = () => {
   const statusMap = {
     pending: "Chờ xác nhận",
     accepted: "Đã hoàn thành",
-    rejected: "Đã hủy",
+    rejected: "Đã hủy"
   };
 
   return (
@@ -222,11 +222,11 @@ const SchedulePage = () => {
             const formattedTime = `${startTimeUTC.toLocaleTimeString([], {
               hour: "2-digit",
               minute: "2-digit",
-              timeZone: "Asia/Ho_Chi_Minh", // Chỉ định múi giờ UTC khi format
+              timeZone: "Asia/Ho_Chi_Minh" // Chỉ định múi giờ UTC khi format
             })} - ${endTimeUTC.toLocaleTimeString([], {
               hour: "2-digit",
               minute: "2-digit",
-              timeZone: "Asia/Ho_Chi_Minh", // Chỉ định múi giờ UTC khi format
+              timeZone: "Asia/Ho_Chi_Minh" // Chỉ định múi giờ UTC khi format
             })}`;
 
             return (
@@ -235,7 +235,7 @@ const SchedulePage = () => {
                 lesson={{
                   ...lesson,
                   time: formattedTime,
-                  status: statusMap[lesson.status] || lesson.status, // Translate status
+                  status: statusMap[lesson.status] || lesson.status // Translate status
                 }}
                 onUpdateStatus={updateLessonStatus}
               />

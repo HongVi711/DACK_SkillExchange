@@ -44,17 +44,18 @@ const ScheduleCard = ({ lesson, onUpdateStatus }) => {
         </p>
       </div>
       {/* Hiển thị nút nếu trạng thái là "Chờ xác nhận" */}
-      {currentUser?.data?.user?._id === lesson.receiverId &&
-        lesson.status === "Chờ xác nhận" && (
-          <div className={styles.actionButtons}>
-            <button className={styles.cancelButton} onClick={handleCancel}>
-              Hủy lịch
-            </button>
+      {lesson.status === "Chờ xác nhận" && (
+        <div className={styles.actionButtons}>
+          {currentUser?.data?.user?._id === lesson.receiverId && (
             <button className={styles.confirmButton} onClick={handleConfirm}>
               Xác nhận
             </button>
-          </div>
-        )}
+          )}
+          <button className={styles.cancelButton} onClick={handleCancel}>
+            Hủy lịch
+          </button>
+        </div>
+      )}
     </div>
   );
 };
