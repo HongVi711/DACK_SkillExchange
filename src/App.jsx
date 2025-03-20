@@ -1,5 +1,4 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-
 import NotFound from "./pages/NotFound";
 import Layout from "./components/Layout";
 import Register from "./pages/Register";
@@ -12,10 +11,15 @@ import ResetPassword from "./pages/ResetPassword";
 import ChangePassword from "./pages/ChangePassword";
 import Network from "./pages/Network";
 import SchedulePage from "./pages/Schedule";
+import { useState } from "react";
+import AuthHandler from "./components/AuthHandler"; // Thêm AuthHandler vào
 
 function App() {
+  const [currentUser, setCurrentUser] = useState(null);
+
   return (
     <Router>
+      <AuthHandler setCurrentUser={setCurrentUser} />
       <Routes>
         <Route
           path="/"

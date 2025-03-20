@@ -52,7 +52,7 @@
   background-color: #ddd;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .avatarContainer {
     position: absolute;
     bottom: 10px;

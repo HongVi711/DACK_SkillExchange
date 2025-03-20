@@ -3,8 +3,9 @@ import styles from "./Schedule.module.css";
 import ScheduleCard from "../../components/ScheduleCard";
 import appointmentService from "../../services/appointment.service";
 import Toast from "../../utils/Toast";
+import socket from "../../configs/socket/socket";
 
-const formatDate = (date) => date.toLocaleDateString("en-CA");
+const formatDate = (date) => date.toLocaleDateString("vi-VN");
 
 const SchedulePage = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -27,6 +28,13 @@ const SchedulePage = () => {
 
   useEffect(() => {
     fetchScheduleData(); // Fetch data when the component mounts
+    socket.on("receive-notify-book-appointment", (data) => {
+      Toast.fire({
+        icon: "info",
+        title: data.message || "Bạn có 1 cuộc hẹn mới!"
+      });
+      fetchScheduleData();
+    });
   }, []);
 
   // Hàm cập nhật trạng thái buổi học
@@ -39,7 +47,7 @@ const SchedulePage = () => {
     if (response.status) {
       Toast.fire({
         icon: "success",
-        title: response.message,
+        title: response.message
       });
       setScheduleData((prevData) =>
         prevData.map((item) =>
@@ -49,7 +57,7 @@ const SchedulePage = () => {
     } else {
       Toast.fire({
         icon: "error",
-        title: response.message,
+        title: response.message
       });
     }
   };
@@ -79,7 +87,7 @@ const SchedulePage = () => {
         weekday: currentDate
           .toLocaleString("vi-VN", { weekday: "short" })
           .toUpperCase(),
-        date: formatDate(currentDate),
+        date: formatDate(currentDate)
       });
     }
     return days;
@@ -128,7 +136,7 @@ const SchedulePage = () => {
   const statusMap = {
     pending: "Chờ xác nhận",
     accepted: "Đã hoàn thành",
-    rejected: "Đã hủy",
+    rejected: "Đã hủy"
   };
 
   return (
@@ -211,23 +219,47 @@ const SchedulePage = () => {
             const startTime = new Date(lesson.startTime);
             const endTime = new Date(lesson.endTime); // Lấy từ API nếu có
 
-            // Chuyển đổi sang UTC
-            const startTimeUTC = new Date(
-              startTime.getTime() + startTime.getTimezoneOffset() * 60000
-            );
-            const endTimeUTC = new Date(
-              endTime.getTime() + endTime.getTimezoneOffset() * 60000
-            );
+            const formattedTime = `${Intl.DateTimeFormat("vi-VN", {
+              hour: "2-digit",
+              minute: "2-digit",
+              day: "2-digit",
+              month: "2-digit",
+              year: "numeric",
+              timeZone: "Asia/Ho_Chi_Minh" // Bảo đảm giữ múi giờ VN
+            }).format(new Date(startTime))} - ${Intl.DateTimeFormat("vi-VN", {
+              hour: "2-digit",
+              minute: "2-digit",
+              day: "2-digit",
+              month: "2-digit",
+              year: "numeric",
+              timeZone: "Asia/Ho_Chi_Minh" // Bảo đảm giữ múi giờ VN
+            }).format(new Date(endTime))}`;
 
-            const formattedTime = `${startTimeUTC.toLocaleTimeString([], {
-              hour: "2-digit",
-              minute: "2-digit",
-              timeZone: "Asia/Ho_Chi_Minh", // Chỉ định múi giờ UTC khi format
-            })} - ${endTimeUTC.toLocaleTimeString([], {
-              hour: "2-digit",
-              minute: "2-digit",
-              timeZone: "Asia/Ho_Chi_Minh", // Chỉ định múi giờ UTC khi format
-            })}`;
+            // // Chuyển đổi sang UTC
+            // const startTimeUTC = new Date(
+            //   startTime.getTime() + startTime.getTimezoneOffset() * 60000
+            // );
+            // const endTimeUTC = new Date(
+            //   endTime.getTime() + endTime.getTimezoneOffset() * 60000
+            // );
+
+            // const formattedTime = `${startTimeUTC.toLocaleTimeString("vi-VN", {
+            //   hour: "2-digit",
+            //   minute: "2-digit",
+            //   second: "2-digit",
+            //   day: "2-digit",
+            //   month: "2-digit",
+            //   year: "numeric",
+            //   timeZone: "Asia/Ho_Chi_Minh" // Đảm bảo hiển thị theo múi giờ Việt Nam
+            // })} - ${endTimeUTC.toLocaleTimeString("vi-VN", {
+            //   hour: "2-digit",
+            //   minute: "2-digit",
+            //   second: "2-digit",
+            //   day: "2-digit",
+            //   month: "2-digit",
+            //   year: "numeric",
+            //   timeZone: "Asia/Ho_Chi_Minh" // Đảm bảo hiển thị theo múi giờ Việt Nam
+            // })}`;
 
             return (
               <ScheduleCard
@@ -235,7 +267,7 @@ const SchedulePage = () => {
                 lesson={{
                   ...lesson,
                   time: formattedTime,
-                  status: statusMap[lesson.status] || lesson.status, // Translate status
+                  status: statusMap[lesson.status] || lesson.status // Translate status
                 }}
                 onUpdateStatus={updateLessonStatus}
               />
