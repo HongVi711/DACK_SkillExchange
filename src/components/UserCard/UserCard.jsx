@@ -8,6 +8,7 @@ import appointmentService from "../../services/appointment.service";
 import Toast from "./../../utils/Toast";
 import { useNavigate } from "react-router-dom";
 import connectionService from "../../services/connection.service";
+import socket from "../../configs/socket/socket";
 
 function UserCard({ avatar, name, address, skills, userid }) {
   const navigate = useNavigate();
@@ -34,8 +35,8 @@ function UserCard({ avatar, name, address, skills, userid }) {
     };
     fetchConnectionStatus();
   }, [userid]);
-  
-   useEffect(() => {
+
+  useEffect(() => {
     const fetchUserIds = async () => {
       try {
         const UserIds = await userService.getUserIDs();
@@ -69,8 +70,8 @@ function UserCard({ avatar, name, address, skills, userid }) {
   const handleAcceptRequest = async () => {
     try {
       await connectionService.acceptRequest(connectionId);
-      setConnectionStatus("connected"); 
-      setIsReceivedRequest(false);// Cập nhật UI ngay lập tức
+      setConnectionStatus("connected");
+      setIsReceivedRequest(false); // Cập nhật UI ngay lập tức
     } catch (error) {
       console.error("Error accepting request:", error);
     }
@@ -78,10 +79,10 @@ function UserCard({ avatar, name, address, skills, userid }) {
 
   const handleRejectRequest = async () => {
     try {
-       await connectionService.rejectRequest(connectionId);
-        setConnectionStatus("none"); // Cập nhật UI ngay lập tức
-        setIsReceivedRequest(false);
-        setConnectionId(null);
+      await connectionService.rejectRequest(connectionId);
+      setConnectionStatus("none"); // Cập nhật UI ngay lập tức
+      setIsReceivedRequest(false);
+      setConnectionId(null);
     } catch (error) {
       console.error("Error rejecting request:", error);
     }
@@ -94,7 +95,6 @@ function UserCard({ avatar, name, address, skills, userid }) {
       console.error("Không tìm thấy chatRoomId!");
     }
   };
-  
 
   const isConnected = userIds.includes(userid);
 
@@ -112,20 +112,21 @@ function UserCard({ avatar, name, address, skills, userid }) {
         receiverId: userid, // Sử dụng userid từ props
         startTime: new Date(appointmentData.startTime).toISOString(), // Chuyển đổi thành ISO string
         endTime: new Date(appointmentData.endTime).toISOString(), // Chuyển đổi thành ISO string
-        description: appointmentData.description,
+        description: appointmentData.description
       };
       const response = await appointmentService.createAppointment(requestData);
 
       if (response) {
+        socket.emit("send-notify-book-appointment", requestData.receiverId);
         Toast.fire({
           icon: "success",
-          title: response.message,
+          title: response.message
         });
         setIsModalOpen(false);
       } else {
         Toast.fire({
           icon: "error",
-          title: response.message,
+          title: response.message
         });
       }
     } catch (error) {
@@ -158,18 +159,29 @@ function UserCard({ avatar, name, address, skills, userid }) {
             <button className={styles.connectButton} onClick={handleOpenModal}>
               Đặt lịch
             </button>
-            <button className={styles.connectButton} onClick={handleChat}>Nhắn tin</button>
+            <button className={styles.connectButton} onClick={handleChat}>
+              Nhắn tin
+            </button>
           </div>
         ) : connectionStatus === "pending_sent" ? (
-          <button className={styles.connectButton} onClick={handleCancelRequest}>
+          <button
+            className={styles.connectButton}
+            onClick={handleCancelRequest}
+          >
             Hủy yêu cầu
           </button>
         ) : connectionStatus === "pending_received" ? (
           <div className={styles.chat}>
-            <button className={styles.connectButton} onClick={handleAcceptRequest}>
+            <button
+              className={styles.connectButton}
+              onClick={handleAcceptRequest}
+            >
               Chấp nhận
             </button>
-            <button className={styles.connectButton} onClick={handleRejectRequest}>
+            <button
+              className={styles.connectButton}
+              onClick={handleRejectRequest}
+            >
               Từ chối
             </button>
           </div>

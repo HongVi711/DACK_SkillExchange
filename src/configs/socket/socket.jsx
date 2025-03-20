@@ -1,5 +1,6 @@
 // socket.config.js
 import io from "socket.io-client";
+import Toast from "../../utils/Toast";
 
 // Initialize socket connection
 const socket = io("http://localhost:5008", {
@@ -19,6 +20,13 @@ socket.on("disconnect", (reason) => {
 
 socket.on("connect_error", (error) => {
   console.error("Connection error:", error);
+});
+
+socket.on("receive-notify-book-appointment", (data) => {
+  Toast.fire({
+    icon: "info",
+    title: data.message || "Bạn có 1 cuộc hẹn mới!"
+  });
 });
 
 // Function to join a chat room
@@ -41,6 +49,7 @@ export const cleanupSocket = () => {
   socket.off("receiveMessage");
   socket.off("onlineStatusUpdate");
   socket.off("userStatusResponse");
+  socket.off("receive-notify-book-appointment");
 };
 
 export default socket;
