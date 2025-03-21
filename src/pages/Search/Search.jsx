@@ -59,7 +59,7 @@ function SearchPage() {
 
     const params = {
       page: page,
-      limit: itemsPerPage,
+      limit: itemsPerPage
     };
     if (skillName) params.skillName = skillName;
     if (name) params.name = name; // Thêm name vào params
@@ -210,7 +210,7 @@ function SearchPage() {
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              zIndex: 1000,
+              zIndex: 1000
             }}
           >
             <Loading />

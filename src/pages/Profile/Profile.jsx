@@ -126,7 +126,10 @@ function Profile() {
           );
         }
       } catch (error) {
-        console.log("Lỗi khi lấy dữ liệu:", error);
+        Toast.fire({
+          icon: "error",
+          title: "Vui lòng đăng nhập để thực hiện chức năng này!"
+        });
         setError(error.message || "Đã xảy ra lỗi khi tải dữ liệu.");
         if (
           error.response?.status === 401 ||
@@ -163,7 +166,6 @@ function Profile() {
           });
         }
       } catch (error) {
-        console.error("Lỗi khi upload avatar:", error);
         Toast.fire({
           icon: "error",
           title: "Cập nhật ảnh thất bại!"
