@@ -193,9 +193,9 @@ function RegisterButton() {
       cancelButtonColor: "#d33",
       confirmButtonText: "Đăng xuất",
       cancelButtonText: "Không"
-    }).then((result) => {
+    }).then(async (result) => {
       if (result.isConfirmed) {
-        authService.logout();
+        await authService.logout();
         setUser(null);
         navigate("/");
         Toast.fire({

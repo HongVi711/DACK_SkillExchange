@@ -58,11 +58,26 @@ const cancelReport = async (id) => {
     };
   }
 };
+
+const createReport = async (formData) => {
+  try {
+    const response = await axios.post(API_URL, formData, {
+      headers: authHeader()
+    });
+    return response?.data?.data;
+  } catch (error) {
+    return {
+      success: false,
+      message: error.response?.data?.message || "Lỗi kết nối!"
+    };
+  }
+};
 const reportService = {
   getAllReports,
   changeStatus,
   getWarningReport,
-  cancelReport
+  cancelReport,
+  createReport
 };
 
 export default reportService;
