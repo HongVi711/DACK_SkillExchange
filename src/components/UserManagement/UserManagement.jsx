@@ -1,14 +1,41 @@
-import { Lock, Trash, UserCheck } from "lucide-react";
+import { Lock, Unlock, Trash } from "lucide-react";
 import Swal from "sweetalert2";
 import adminService from "../../services/admin.service";
+import { useState } from "react";
+import { TbUserDown, TbUserUp } from "react-icons/tb";
 
-const UserManagement = ({ users }) => {
-  // Add state to manage users
+const UserManagement = ({ users: initialUsers, onActionSuccess }) => {
+  const [users, setUsers] = useState(initialUsers);
 
-  // Handler for suspending/locking a user
-  const handleLockUser = (userId) => {};
+  const handleLockUser = async (userId, currentLockStatus) => {
+    try {
+      const newLockStatus = !currentLockStatus;
+      const response = await adminService.lockUser(userId, newLockStatus);
 
-  // Handler for deleting a user
+      if (response.status) {
+        setUsers((prevUsers) =>
+          prevUsers.map((user) =>
+            user._id === userId ? { ...user, lock: newLockStatus } : user
+          )
+        );
+        Swal.fire({
+          title: "Success",
+          text: `User account has been ${
+            newLockStatus ? "locked" : "unlocked"
+          }`,
+          icon: "success"
+        });
+        if (onActionSuccess) onActionSuccess(); // Chỉ fetch lại users
+      }
+    } catch (error) {
+      Swal.fire({
+        title: "Error",
+        text: "Failed to update user lock status",
+        icon: "error"
+      });
+    }
+  };
+
   const handleDeleteUser = (userId) => {
     const swalWithBootstrapButtons = Swal.mixin({
       customClass: {
@@ -17,6 +44,7 @@ const UserManagement = ({ users }) => {
       },
       buttonsStyling: false
     });
+
     swalWithBootstrapButtons
       .fire({
         title: "Bạn có chắc?",
@@ -31,11 +59,15 @@ const UserManagement = ({ users }) => {
         if (result.isConfirmed) {
           const response = await adminService.deleteUser(userId);
           if (response.status) {
+            setUsers((prevUsers) =>
+              prevUsers.filter((user) => user._id !== userId)
+            );
             swalWithBootstrapButtons.fire({
               title: response.message,
               text: "User đã được xoá khỏi hệ thống.",
               icon: "success"
             });
+            if (onActionSuccess) onActionSuccess(); // Chỉ fetch lại users
           } else {
             swalWithBootstrapButtons.fire({
               title: "Lỗi!",
@@ -47,8 +79,34 @@ const UserManagement = ({ users }) => {
       });
   };
 
-  // Handler for verifying a user
-  const handleVerifyUser = (userId) => {};
+  const handleVerifyUser = async (userId, currentRole) => {
+    try {
+      const newRole = currentRole === "admin" ? "user" : "admin";
+      const response = await adminService.changeRole(userId, newRole);
+
+      if (response.status) {
+        setUsers((prevUsers) =>
+          prevUsers.map((user) =>
+            user._id === userId ? { ...user, role: newRole } : user
+          )
+        );
+        Swal.fire({
+          title: "Success",
+          text: response.message,
+          icon: "success"
+        });
+        if (onActionSuccess) onActionSuccess(); // Chỉ fetch lại users
+      } else {
+        throw new Error(response.message);
+      }
+    } catch (error) {
+      Swal.fire({
+        title: "Error",
+        text: error.message || "Failed to update role",
+        icon: "error"
+      });
+    }
+  };
 
   return (
     <>
@@ -60,20 +118,19 @@ const UserManagement = ({ users }) => {
           <div>
             <p className="text-lg font-semibold">{user.name}</p>
             <p className="text-gray-600">email: {user.email}</p>
-            <p className="text-gray-600">Violations: {user.violations}</p>
+            <p className="text-gray-600">Violations: {user?.reportCount}</p>
             <p className="text-gray-600">Role: {user.role}</p>
-            {user.isLocked && <p className="text-red-600">Account Locked</p>}
-            {user.isVerified && <p className="text-green-600">Verified</p>}
+            {user.lock && <p className="text-red-600">Account Locked</p>}
           </div>
           <div>
             <button
               className={`px-3 py-2 ${
-                user.isLocked ? "bg-green-500" : "bg-yellow-500"
+                user?.lock ? "bg-green-500" : "bg-yellow-500"
               } text-white rounded mr-2`}
-              onClick={() => handleLockUser(user._id)}
-              title={user.isLocked ? "Unlock User" : "Lock User"}
+              onClick={() => handleLockUser(user._id, user.lock)}
+              title={user?.lock ? "Unlock User" : "Lock User"}
             >
-              <Lock size={16} />
+              {user?.lock ? <Unlock size={16} /> : <Lock size={16} />}
             </button>
             <button
               className="px-3 py-2 bg-red-500 text-white rounded mr-2"
@@ -84,12 +141,16 @@ const UserManagement = ({ users }) => {
             </button>
             <button
               className={`px-3 py-2 ${
-                user.isVerified ? "bg-gray-500" : "bg-blue-500"
+                user.role === "admin" ? "bg-gray-500" : "bg-blue-500"
               } text-white rounded mr-2`}
-              onClick={() => handleVerifyUser(user._id)}
-              title={user.isVerified ? "Remove Verification" : "Verify User"}
+              onClick={() => handleVerifyUser(user._id, user.role)}
+              title={user.role === "admin" ? "Demote" : "Promote"}
             >
-              <UserCheck size={16} />
+              {user.role === "admin" ? (
+                <TbUserDown size={16} />
+              ) : (
+                <TbUserUp size={16} />
+              )}
             </button>
           </div>
         </div>

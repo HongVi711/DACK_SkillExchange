@@ -4,6 +4,7 @@ import authService from "../../services/auth.service";
 import socket, { setUserOnline } from "../../configs/socket/socket";
 import Toast from "../../utils/Toast";
 import Loading from "../Loading";
+import reportService from "../../services/report.service";
 
 const AuthHandler = ({ setCurrentUser, children }) => {
   const navigate = useNavigate();
@@ -12,19 +13,25 @@ const AuthHandler = ({ setCurrentUser, children }) => {
 
   useEffect(() => {
     const initializeUser = async () => {
-      // Cho phép truy cập trang chủ mà không cần kiểm tra storedUser
-      if (location.pathname === "/") {
+      const storedUser = JSON.parse(localStorage.getItem("user"));
+
+      // Nếu không có storedUser, yêu cầu đăng nhập (trừ reset-password)
+      if (!storedUser && !location.pathname.includes("/reset-password")) {
+        console.log("Không có storedUser, chuyển hướng về /");
+        Toast.fire({
+          icon: "error",
+          title: "Vui lòng đăng nhập để thực hiện chức năng này!"
+        });
+        navigate("/");
         setIsLoading(false);
         return;
       }
 
       // Loại trừ trang reset-password (nếu cần)
-      if (location.pathname.includes("/reset-password")) {
+      if (!storedUser && location.pathname.includes("/reset-password")) {
         setIsLoading(false);
         return;
       }
-
-      const storedUser = JSON.parse(localStorage.getItem("user"));
 
       // Nếu không có storedUser và không phải trang chủ, điều hướng về "/"
       if (!storedUser) {
@@ -44,6 +51,24 @@ const AuthHandler = ({ setCurrentUser, children }) => {
 
         setCurrentUser(user);
         setUserOnline(user.id || user._id);
+
+        // Kiểm tra và xử lý report warning
+
+        const warning = await reportService.getWarningReport();
+        if (warning?.data?.totalReports > 0) {
+          Toast.fire({
+            icon: "warning",
+            title:
+              "Bạn bị cảnh cáo vì vi phạm chính sách cộng đồng, nếu tái phạm nhiều lần tài khoản của bạn sẽ bị khóa!"
+          });
+          // Cập nhật trạng thái report từ "Warning" thành "Warned"
+          const reports = warning?.data?.reports || [];
+          for (const report of reports) {
+            if (report.status === "Warning") {
+              await reportService.changeStatus(report._id, "Warned");
+            }
+          }
+        }
 
         if (!Array.isArray(user.skills) || user.skills.length === 0) {
           navigate("/profile");
