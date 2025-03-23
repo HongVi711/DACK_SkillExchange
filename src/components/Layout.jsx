@@ -16,9 +16,7 @@ function Layout({ children }) {
         <Header />
         {isHomePage && <HeroSection />}
       </div>
-      <main style={{ marginTop: "65px", width: "100%", minHeight: "100vh" }}>
-        {children}
-      </main>
+      <main className="mainBody">{children}</main>
       <Footer />
     </div>
   );

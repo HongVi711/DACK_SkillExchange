@@ -1,6 +1,7 @@
 /* eslint-disable react/no-unescaped-entities */
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState, useRef } from "react";
+import Modal from "react-modal";
 import { useParams } from "react-router-dom";
 import userService from "../../services/user.service";
 import chatService from "../../services/chat.service";
@@ -20,6 +21,9 @@ import socket, {
 } from "../../configs/socket/socket"; // Import from socket.config
 import Loading from "../../components/Loading";
 import { FaFilePdf } from "react-icons/fa";
+import { MdOutlineReport } from "react-icons/md";
+import reportService from "../../services/report.service";
+import Toast from "../../utils/Toast";
 
 const ChatRoom = () => {
   const { chatRoomId, userid, name } = useParams();
@@ -35,6 +39,9 @@ const ChatRoom = () => {
   const fileInputRef = useRef(null);
   const [selectedImage, setSelectedImage] = useState(null); // Để lưu ảnh đã chọn
   const [selectedFile, setSelectedFile] = useState(null); // Để lưu file đã chọn
+  const [isModalOpen, setIsModalOpen] = useState(false); // State để mở/đóng modal
+  const [reportReason, setReportReason] = useState(""); // Lý do báo cáo
+  const [reportStatus, setReportStatus] = useState(""); // Trạng thái báo cáo
 
   useEffect(() => {
     let isMounted = true;
@@ -163,6 +170,47 @@ const ChatRoom = () => {
     fileInputRef.current.click();
   };
 
+  // Mở modal khi nhấn nút Report
+  const openReportModal = () => {
+    setIsModalOpen(true);
+    setReportReason(""); // Reset lý do khi mở modal
+    setReportStatus(""); // Reset trạng thái
+  };
+
+  // Đóng modal
+  const closeReportModal = () => {
+    setIsModalOpen(false);
+  };
+
+  // Xử lý submit báo cáo
+  const handleReportSubmit = async () => {
+    if (!reportReason.trim()) {
+      setReportStatus("Vui lòng chọn lý do báo cáo.");
+      return;
+    }
+
+    try {
+      const reportData = {
+        userId: userid,
+        reason: reportReason
+      };
+      await reportService.createReport(reportData); // Gọi API báo cáo
+      Toast.fire({
+        icon: "success",
+        title: "Báo cáo đã được gửi thành công!"
+      });
+      setTimeout(() => {
+        setIsModalOpen(false);
+        setReportStatus("");
+      }, 1000); // Đóng modal sau 2 giây
+    } catch (error) {
+      Toast.fire({
+        icon: "error",
+        title: "Không thể gửi báo cáo. Vui lòng thử lại sau."
+      });
+    }
+  };
+
   if (!user)
     return (
       <div
@@ -201,10 +249,19 @@ const ChatRoom = () => {
               </div>
             </div>
           </div>
-          <button className="video-button">
-            <img src={iconcamera} alt="Icon Camera" className="camera-icon" />
-            Gọi Video
-          </button>
+          <div style={{ display: "flex" }}>
+            <button
+              className="video-button mr-2"
+              style={{ backgroundColor: "yellow" }}
+              onClick={openReportModal} // Mở modal khi nhấn Report
+            >
+              <MdOutlineReport size={24} color="black" />
+            </button>
+            <button className="video-button">
+              <img src={iconcamera} alt="Icon Camera" className="camera-icon" />
+              Gọi Video
+            </button>
+          </div>
         </div>
 
         <div className="body-chat" ref={chatBoxRef}>
@@ -315,6 +372,49 @@ const ChatRoom = () => {
           )}
         </div>
       </div>
+      {/* Modal báo cáo */}
+      <Modal
+        isOpen={isModalOpen}
+        onRequestClose={closeReportModal}
+        className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50"
+      >
+        <div className="bg-white p-6 rounded-lg shadow-lg w-96">
+          <h2 className="text-lg font-semibold mb-2">Báo cáo người dùng</h2>
+          <p className="text-sm text-gray-600 mb-2">
+            Vui lòng chọn lý do báo cáo:
+          </p>
+          <select
+            value={reportReason}
+            onChange={(e) => setReportReason(e.target.value)}
+            className="w-full p-2 border rounded-lg mb-3"
+          >
+            <option value="">Chọn lý do</option>
+            <option value="Hành vi không phù hợp">Hành vi không phù hợp</option>
+            <option value="Spam">Spam</option>
+            <option value="Quấy rối">Quấy rối</option>
+            <option value="Nội dung không phù hợp">
+              Nội dung không phù hợp
+            </option>
+          </select>
+          {reportStatus && (
+            <p className="text-sm text-red-500 mb-3">{reportStatus}</p>
+          )}
+          <div className="flex justify-end gap-3">
+            <button
+              onClick={closeReportModal}
+              className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600"
+            >
+              Hủy
+            </button>
+            <button
+              onClick={handleReportSubmit}
+              className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+            >
+              Gửi
+            </button>
+          </div>
+        </div>
+      </Modal>
     </div>
   );
 };

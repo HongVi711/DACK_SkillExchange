@@ -26,9 +26,20 @@
   z-index: 1; /* Đảm bảo nội dung nằm trên lớp phủ */
 }
 
-@media (max-width: 768px) {
+.mainBody {
+  margin-top: 65px;
+  width: 100%;
+  min-height: 100vh;
+}
+
+@media (max-width: 1024px) {
   .content {
     margin-left: 80px;
     /* padding: 1.5rem; */
+  }
+
+  .mainBody {
+    margin-top: 0;
+    margin-left: 0;
   }
 }
