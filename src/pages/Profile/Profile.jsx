@@ -233,6 +233,13 @@ function Profile() {
           ...userResponse.data.data.user,
           skills: skillsResponse.data.data.user.skills
         };
+        if (updatedUser.phone.length != 10) {
+          Toast.fire({
+            icon: "error",
+            title: "Số điện thoại phải có 10 chữ số"
+          });
+          return;
+        }
         setUserData(updatedUser);
         setFormData({
           name: updatedUser.name || "",
@@ -246,7 +253,10 @@ function Profile() {
           title: "Cập nhật thông tin thành công!"
         });
       } else {
-        throw new Error("Invalid response from server");
+        Toast.fire({
+          icon: "success",
+          title: "Cập nhật thông tin thất bại!"
+        });
       }
     } catch (error) {
       Toast.fire({

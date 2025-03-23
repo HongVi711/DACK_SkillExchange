@@ -15,6 +15,16 @@ const AuthHandler = ({ setCurrentUser, children }) => {
     const initializeUser = async () => {
       const storedUser = JSON.parse(localStorage.getItem("user"));
 
+      // Loại trừ trang reset-password (nếu cần)
+      if (
+        !storedUser &&
+        (location.pathname.includes("/reset-password") ||
+          location.pathname === "/")
+      ) {
+        setIsLoading(false);
+        return;
+      }
+
       // Nếu không có storedUser, yêu cầu đăng nhập (trừ reset-password)
       if (!storedUser && !location.pathname.includes("/reset-password")) {
         console.log("Không có storedUser, chuyển hướng về /");
@@ -23,12 +33,6 @@ const AuthHandler = ({ setCurrentUser, children }) => {
           title: "Vui lòng đăng nhập để thực hiện chức năng này!"
         });
         navigate("/");
-        setIsLoading(false);
-        return;
-      }
-
-      // Loại trừ trang reset-password (nếu cần)
-      if (!storedUser && location.pathname.includes("/reset-password")) {
         setIsLoading(false);
         return;
       }
