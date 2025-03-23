@@ -101,6 +101,12 @@
   width: 100%;
 }
 
+.resultsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
 .cardContainer {
   display: grid;
   grid-template-columns: repeat(
@@ -111,6 +117,38 @@
   justify-content: center; /* Căn giữa toàn bộ lưới */
   max-width: calc(6 * (250px + 16px) - 16px); /* Giới hạn tối đa 5 card */
   padding: 0 10px;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  gap: 15px;
+}
+
+.pageButton {
+  padding: 8px 16px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.pageButton:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.pageButton:hover:not(:disabled) {
+  background-color: #0056b3;
+}
+
+.pageInfo {
+  font-size: 16px;
+  color: #333;
 }
 
 /* Responsive */

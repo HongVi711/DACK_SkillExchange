@@ -1,0 +1,115 @@
+/* modal.css */
+
+/* Overlay (nền mờ) */
+.modal {
+  position: fixed;
+  z-index: 1000; /* Đảm bảo modal luôn ở trên cùng */
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4); /* Nền mờ hơn */
+  display: flex; /* Để căn giữa modal */
+  align-items: center; /* Căn giữa theo chiều dọc */
+  justify-content: center; /* Căn giữa theo chiều ngang */
+}
+
+/* Nội dung modal */
+.modalContent {
+  background-color: #fff;
+  margin: 0 auto; /* Căn giữa theo chiều ngang */
+  padding: 20px;
+  border-radius: 8px; /* Bo tròn góc */
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); /* Tạo bóng đổ */
+  width: 50%; /* Chiều rộng modal (có thể tùy chỉnh) */
+  max-width: 600px; /* Giới hạn chiều rộng tối đa */
+  animation: fadeIn 0.3s; /* Hiệu ứng fade-in */
+}
+
+/* Tiêu đề modal */
+.modalContent h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  text-align: center; /* Căn giữa tiêu đề */
+  color: #333;
+}
+
+/* Form */
+.modalContent form {
+  display: flex;
+  flex-direction: column; /* Sắp xếp các phần tử form theo chiều dọc */
+}
+
+/* Label */
+.modalContent label {
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #555;
+}
+
+/* Input, Textarea, DatePicker */
+.modalContent input[type="text"],
+.modalContent textarea,
+.modalContent .react-datepicker-wrapper input {
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  width: 100%; /* Để input chiếm toàn bộ chiều rộng */
+  box-sizing: border-box; /* Để padding không làm thay đổi kích thước */
+}
+
+/* Textarea */
+.modalContent textarea {
+  resize: vertical; /* Cho phép kéo giãn theo chiều dọc */
+  min-height: 100px; /* Chiều cao tối thiểu */
+}
+
+/* DatePicker */
+.modalContent .react-datepicker-wrapper {
+  margin-bottom: 15px;
+}
+
+/* Button */
+.modalContent button[type="submit"] {
+  background-color: #4caf50;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s; /* Hiệu ứng hover */
+}
+
+.modalContent button[type="submit"]:hover {
+  background-color: #3e8e41;
+}
+
+/* Nút đóng */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: color 0.3s; /* Hiệu ứng hover */
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

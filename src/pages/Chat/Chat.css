@@ -1,0 +1,263 @@
+.body-container {
+  min-width: 50vw;
+  min-height: 100vh;
+  background-color: #f3f4f6;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: Arial, sans-serif;
+}
+
+/* Button Styles */
+.button-container {
+  position: fixed;
+  top: 2%; /* Thay đổi từ px sang % */
+  left: 2%; /* Thay đổi từ px sang % */
+  z-index: 10;
+}
+
+.message-file {
+  color: white;
+}
+
+.message-file:hover {
+  color: #ccc;
+}
+
+.back-button {
+  background-color: #5bc0de;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 15px;
+  cursor: pointer;
+}
+
+/* Chat Container Styles */
+.chat-container {
+  width: 90%;
+  /* max-width: 1400px; */
+  height: 85vh; /* Tăng chiều cao */
+  background-color: white;
+  border-radius: 15px;
+  margin-top: 20px; /* Thêm margin-top */
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header Styles */
+.header-chat {
+  background-color: #e4e0e0;
+  padding: 15px;
+  border: 1px solid #dedede;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  height: 8vh; /* Điều chỉnh theo chiều cao avatar */
+}
+
+.user-info {
+  display: flex;
+}
+
+.avatar {
+  width: 40px; /* Giữ nguyên kích thước cố định */
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+  object-fit: cover;
+}
+
+.user-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-name {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.user-status {
+  font-size: 0.8em;
+}
+
+.user-status.online {
+  color: #00ff00;
+}
+
+.user-status.offline {
+  color: #888;
+}
+
+.video-button {
+  background-color: #4caf50;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.video-button:hover {
+  background-color: #3e8e41;
+}
+
+.camera-icon {
+  width: 20px;
+  height: 20px;
+  margin-right: 5px;
+}
+
+.body-chat {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+  background-color: #f7f7f7;
+}
+
+.message {
+  display: flex;
+  margin-bottom: 15px;
+  max-width: 60%;
+}
+
+.message .avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+  flex-shrink: 0;
+}
+
+.message-left {
+  justify-content: flex-start;
+}
+
+.message-right {
+  justify-content: flex-end;
+  margin-left: auto;
+}
+
+.message-text {
+  padding: 8px 12px;
+  border-radius: 10px;
+  font-size: 14px;
+  background-color: #e0e0e0; /* Màu nền tin nhắn người khác */
+}
+
+.message-right .message-text {
+  background-color: #007bff;
+  color: white;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.message-right .avatar {
+  display: none;
+}
+.message-content {
+  display: inline-block;
+  padding: 0px 10px;
+  word-wrap: break-word;
+}
+
+/* Footer Styles */
+.footer-chat {
+  background-color: #faf9f6;
+  padding: 15px;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+  border-bottom: 1px solid #dedede;
+  border-left: 1px solid #dedede;
+  border-right: 1px solid #dedede;
+}
+
+.input-area {
+  display: flex;
+  align-items: center;
+}
+
+.image-button,
+.file-button {
+  background-color: transparent;
+  border: none;
+  font-size: 1.5em;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.message-input-wrapper {
+  flex-grow: 1;
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 40px;
+  padding: 4px;
+  border: 1px solid #ccc;
+  border-radius: 30px;
+  overflow: hidden;
+  background-color: #e4e0e0;
+}
+
+.message-input {
+  flex-grow: 1;
+  border: none;
+  outline: none;
+  height: 30px;
+  padding: 0px 10px;
+  padding-right: 30px;
+  margin-right: 5px;
+  font-size: 1em;
+  background-color: transparent;
+}
+
+.emoji-button {
+  position: absolute;
+  right: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: transparent;
+  border: none;
+  font-size: 1.2em;
+  cursor: pointer;
+}
+
+.send-button {
+  background-color: transparent;
+  border: none;
+  font-size: 1.2em;
+  cursor: pointer;
+  margin-left: 5px;
+}
+
+.send-button img {
+  width: 32px;
+  height: 32px;
+  vertical-align: middle;
+}
+
+.image-button img,
+.file-button img,
+.emoji-button img {
+  width: 27px;
+  height: 27px;
+  vertical-align: middle;
+}
+
+.user-status.online {
+  color: green;
+}
+.user-status.offline {
+  color: gray;
+}

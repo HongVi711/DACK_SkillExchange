@@ -8,6 +8,7 @@ import Loading from "../Loading";
 import Avatar from "../Avatar";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import Swal from "sweetalert2";
+import reportService from "../../services/report.service";
 
 function RegisterButton() {
   const [showModal, setShowModal] = useState(false);
@@ -40,7 +41,6 @@ function RegisterButton() {
       .getCurrentUser()
       .then((currentUser) => {
         if (currentUser && currentUser.data && currentUser.data.user) {
-          // console.log("User photo:", currentUser.data.user.photo); // Truy cập đúng photo
           setUser(currentUser.data.user); // Lưu object user vào state
         }
       })
@@ -77,19 +77,27 @@ function RegisterButton() {
     }
 
     try {
-      await authService.register(
+      const response = await authService.register(
         registerDisplayName,
         registerEmail,
         registerPassword,
         registerConfirmPassword
       );
-      toggleModal(); // Ẩn modal sau khi đăng ký thành công
-      Toast.fire({
-        icon: "success",
-        title:
-          "Đăng kí tài khoản thành công, vui lòng xác nhận tài khoản bằng link trong email!",
-      });
-      showLoginForm();
+
+      if (response.success) {
+        toggleModal(); // Ẩn modal sau khi đăng ký thành công
+        Toast.fire({
+          icon: "success",
+          title:
+            "Đăng kí tài khoản thành công, vui lòng xác nhận tài khoản bằng link trong email!"
+        });
+        showLoginForm();
+      } else {
+        Toast.fire({
+          icon: "error",
+          title: response?.message
+        });
+      }
     } catch (error) {
       const message =
         (error.response &&
@@ -110,15 +118,29 @@ function RegisterButton() {
 
     try {
       const response = await authService.login(loginEmail, loginPassword);
-      setUser(response);
-      toggleModal(); // Ẩn modal sau khi đăng nhập thành công
-      setLoginEmail("");
-      setLoginPassword("");
-      Toast.fire({
-        icon: "success",
-        title: "Đăng nhập thành công!",
-      });
-      navigate("/");
+      if (response.status === "success") {
+        const userInfo = await authService.getCurrentUser();
+        setUser(userInfo?.data?.user);
+        toggleModal(); // Ẩn modal sau khi đăng nhập thành công
+        setLoginEmail("");
+        setLoginPassword("");
+        Toast.fire({
+          icon: "success",
+          title: "Đăng nhập thành công!"
+        });
+        const warning = await reportService.getWarningReport();
+        if (warning?.data?.totalReports > 0) {
+          Toast.fire({
+            icon: "warning",
+            title:
+              "Bạn bị cảnh cáo vì vi phạm chính sách cộng đồng, nếu tái hiện nhiều lần tài khoản của bạn sẽ bị khoá!"
+          });
+          (warning?.data?.reports).forEach(async (report) => {
+            await reportService.changeStatus(report._id, "Warned");
+          });
+        }
+        navigate("/");
+      }
     } catch (error) {
       const message =
         (error.response &&
@@ -136,7 +158,7 @@ function RegisterButton() {
     if (!loginEmail) {
       Toast.fire({
         icon: "error",
-        title: "Vui lòng nhập địa chỉ email",
+        title: "Vui lòng nhập địa chỉ email"
       });
       return;
     }
@@ -147,7 +169,7 @@ function RegisterButton() {
       await authService.sendEmaiResetPass(loginEmail); // Giả sử đây là hàm gửi email
       Toast.fire({
         icon: "success",
-        title: "Email đặt lại mật khẩu đã được gửi! Vui lòng kiểm tra hộp thư.",
+        title: "Email đặt lại mật khẩu đã được gửi! Vui lòng kiểm tra hộp thư."
       });
 
       toggleModal(); // Ẩn modal sau khi gửi thành công
@@ -155,7 +177,7 @@ function RegisterButton() {
     } catch (error) {
       Toast.fire({
         icon: "error",
-        title: "Lỗi khi gửi email đặt lại mật khẩu. Vui lòng thử lại!",
+        title: "Lỗi khi gửi email đặt lại mật khẩu. Vui lòng thử lại!"
       });
     } finally {
       setIsLoading(false); // Kết thúc loading dù thành công hay thất bại
@@ -170,15 +192,15 @@ function RegisterButton() {
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
       confirmButtonText: "Đăng xuất",
-      cancelButtonText: "Không",
-    }).then((result) => {
+      cancelButtonText: "Không"
+    }).then(async (result) => {
       if (result.isConfirmed) {
-        authService.logout();
+        await authService.logout();
         setUser(null);
         navigate("/");
         Toast.fire({
           icon: "success",
-          title: "Đã đăng xuất thành công!",
+          title: "Đã đăng xuất thành công!"
         });
       }
     });
@@ -207,7 +229,7 @@ function RegisterButton() {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            zIndex: 1000, // Đảm bảo nó ở trên cùng
+            zIndex: 1000 // Đảm bảo nó ở trên cùng
           }}
         >
           <Loading />
@@ -226,7 +248,7 @@ function RegisterButton() {
             backgroundColor: "rgba(0, 0, 0, 0.5)",
             display: "flex",
             justifyContent: "center",
-            alignItems: "center",
+            alignItems: "center"
           }}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -241,7 +263,7 @@ function RegisterButton() {
               borderRadius: "8px",
               width: "350px",
               textAlign: "left",
-              boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+              boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)"
             }}
             initial={{ scale: 0.8 }}
             animate={{ scale: 1 }}
@@ -254,28 +276,31 @@ function RegisterButton() {
                     textAlign: "center",
                     color: "#00bcd4",
                     fontWeight: "bold",
-                    fontSize: "28px",
+                    fontSize: "28px"
                   }}
                 >
                   ĐĂNG NHẬP
                 </h2>
                 <form onSubmit={handleLogin}>
                   {loginError && (
-                    <div style={{ color: "red", marginBottom: "10px" }}>
+                    <div
+                      id="error"
+                      style={{ color: "red", marginBottom: "10px" }}
+                    >
                       {loginError}
                     </div>
                   )}
                   <div style={{ marginBottom: "10px" }}>
                     <label>Email</label>
                     <input
-                      type="email"
+                      type="text"
                       name="email"
-                      required
+                      // required
                       style={{
                         width: "100%",
                         padding: "8px",
                         border: "1px solid #ccc",
-                        borderRadius: "4px",
+                        borderRadius: "4px"
                       }}
                       value={loginEmail}
                       onChange={(e) => setLoginEmail(e.target.value)}
@@ -287,12 +312,12 @@ function RegisterButton() {
                       <input
                         type={showLoginPassword ? "text" : "password"} // Toggle giữa text và password
                         name="password"
-                        required
+                        // required
                         style={{
                           width: "100%",
                           padding: "8px",
                           border: "1px solid #ccc",
-                          borderRadius: "4px",
+                          borderRadius: "4px"
                         }}
                         value={loginPassword}
                         onChange={(e) => setLoginPassword(e.target.value)}
@@ -311,7 +336,7 @@ function RegisterButton() {
                           padding: "0",
                           color: "#666",
                           outline: "none",
-                          transition: "color 0.2s", // Hiệu ứng chuyển màu
+                          transition: "color 0.2s" // Hiệu ứng chuyển màu
                         }}
                         onMouseEnter={(e) => (e.target.style.color = "#000")} // Hover
                         onMouseLeave={(e) => (e.target.style.color = "#666")} // Rời chuột
@@ -346,7 +371,7 @@ function RegisterButton() {
                         color: "#00bcd4",
                         fontWeight: "bold",
                         pointerEvents: isLoading ? "none" : "auto", // Vô hiệu hóa click khi loading
-                        opacity: isLoading ? 0.6 : 1, // Làm mờ nút khi loading
+                        opacity: isLoading ? 0.6 : 1 // Làm mờ nút khi loading
                       }}
                     >
                       {isLoading ? "Đang gửi..." : "Lấy lại mật khẩu!"}
@@ -364,7 +389,7 @@ function RegisterButton() {
                         display: "flex",
                         justifyContent: "center",
                         alignItems: "center",
-                        zIndex: 1000,
+                        zIndex: 1000
                       }}
                     >
                       <Loading />
@@ -380,7 +405,7 @@ function RegisterButton() {
                       border: "none",
                       borderRadius: "4px",
                       fontSize: "16px",
-                      cursor: "pointer",
+                      cursor: "pointer"
                     }}
                   >
                     Đăng nhập
@@ -394,7 +419,7 @@ function RegisterButton() {
                     textAlign: "center",
                     color: "#00bcd4",
                     fontWeight: "bold",
-                    fontSize: "28px",
+                    fontSize: "28px"
                   }}
                 >
                   ĐĂNG KÍ TÀI KHOẢN
@@ -412,7 +437,7 @@ function RegisterButton() {
                         display: "flex",
                         alignItems: "center",
                         border: "1px solid #ccc",
-                        borderRadius: "4px",
+                        borderRadius: "4px"
                       }}
                     >
                       <input
@@ -433,7 +458,7 @@ function RegisterButton() {
                         display: "flex",
                         alignItems: "center",
                         border: "1px solid #ccc",
-                        borderRadius: "4px",
+                        borderRadius: "4px"
                       }}
                     >
                       <input
@@ -455,7 +480,7 @@ function RegisterButton() {
                         alignItems: "center",
                         border: "1px solid #ccc",
                         borderRadius: "4px",
-                        position: "relative",
+                        position: "relative"
                       }}
                     >
                       <input
@@ -482,7 +507,7 @@ function RegisterButton() {
                           padding: "0",
                           color: "#666",
                           outline: "none",
-                          transition: "color 0.2s", // Hiệu ứng chuyển màu
+                          transition: "color 0.2s" // Hiệu ứng chuyển màu
                         }}
                         onMouseEnter={(e) => (e.target.style.color = "#000")} // Hover
                         onMouseLeave={(e) => (e.target.style.color = "#666")} // Rời chuột
@@ -503,7 +528,7 @@ function RegisterButton() {
                         alignItems: "center",
                         border: "1px solid #ccc",
                         borderRadius: "4px",
-                        position: "relative",
+                        position: "relative"
                       }}
                     >
                       <input
@@ -534,7 +559,7 @@ function RegisterButton() {
                           padding: "0",
                           color: "#666",
                           outline: "none",
-                          transition: "color 0.2s", // Hiệu ứng chuyển màu
+                          transition: "color 0.2s" // Hiệu ứng chuyển màu
                         }}
                         onMouseEnter={(e) => (e.target.style.color = "#000")} // Hover
                         onMouseLeave={(e) => (e.target.style.color = "#666")} // Rời chuột
@@ -567,7 +592,7 @@ function RegisterButton() {
                       border: "none",
                       borderRadius: "4px",
                       fontSize: "16px",
-                      cursor: "pointer",
+                      cursor: "pointer"
                     }}
                   >
                     Đăng kí
