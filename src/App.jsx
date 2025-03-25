@@ -8,6 +8,7 @@ import LoginPage from "./pages/Login";
 import Home from "./pages/Home";
 import SearchPage from "./pages/Search";
 import ChatPage from "./pages/Chat";
+import VideoCall from "./pages/VideoCall";
 import ResetPassword from "./pages/ResetPassword";
 import ChangePassword from "./pages/ChangePassword";
 import Network from "./pages/Network";
@@ -65,6 +66,15 @@ function App() {
             </Layout>
           }
         />
+        <Route
+          path="/video-call/:chatRoomId/:userid/:name"
+          element={
+            <Layout>
+              <VideoCall />
+            </Layout>
+          }
+        />
+
         <Route path="/change-password" element={<ChangePassword />} />
         <Route path="/reset-password/:token" element={<ResetPassword />} />
         <Route path="/register" element={<Register />} />
