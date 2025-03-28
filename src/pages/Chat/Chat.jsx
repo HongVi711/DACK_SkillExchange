@@ -5,16 +5,13 @@ import React, { useEffect, useState, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import io from "socket.io-client";
 import Modal from "react-modal";
-import { useParams } from "react-router-dom";
 import userService from "../../services/user.service";
 import chatService from "../../services/chat.service";
 import authService from "../../services/auth.service";
-
 import iconcamera from "../../assets/ic_camera.svg";
 import iconImage from "../../assets/ic_image.svg";
 import iconAttach from "../../assets/ic_attach.svg";
 import iconSend from "../../assets/ic_send.svg";
-import iconEmoji from "../../assets/ic_emoji.svg";
 import { IoLogoWechat } from "react-icons/io5";
 import { FaPhone } from "react-icons/fa";
 import { LuScreenShare } from "react-icons/lu";
