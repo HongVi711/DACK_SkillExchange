@@ -1,0 +1,32 @@
+/* src/components/VideoCall.css */
+.video-call-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+  padding: 20px;
+}
+
+.local-video {
+  width: 200px;
+  height: 150px;
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  border: 2px solid #fff;
+}
+
+.remote-video {
+  width: 80%;
+  max-height: 70vh;
+}
+
+.end-call-button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: red;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
