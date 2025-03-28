@@ -58,7 +58,31 @@
   display: none;
 }
 
-@media (max-width: 768px) {
+.navbar a.active {
+  color: #007bff; /* Màu chữ khi active */
+  font-weight: bold; /* Chữ đậm khi active */
+}
+
+.calendarItem {
+  position: relative;
+}
+
+.badge {
+  position: absolute;
+  top: 2px;
+  right: 100px;
+  background-color: red;
+  color: white;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+}
+
+@media (max-width: 1024px) {
   .sidebar {
     flex-direction: column;
     align-items: center;
@@ -73,6 +97,11 @@
     height: 100vh;
     overflow-y: auto;
     justify-content: flex-start;
+  }
+
+  .badge {
+    right: -5px;
+    top: -10px;
   }
 
   .logo {

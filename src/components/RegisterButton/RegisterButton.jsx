@@ -8,6 +8,7 @@ import Loading from "../Loading";
 import Avatar from "../Avatar";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import Swal from "sweetalert2";
+import reportService from "../../services/report.service";
 
 function RegisterButton() {
   const [showModal, setShowModal] = useState(false);
@@ -127,6 +128,17 @@ function RegisterButton() {
           icon: "success",
           title: "Đăng nhập thành công!"
         });
+        const warning = await reportService.getWarningReport();
+        if (warning?.data?.totalReports > 0) {
+          Toast.fire({
+            icon: "warning",
+            title:
+              "Bạn bị cảnh cáo vì vi phạm chính sách cộng đồng, nếu tái hiện nhiều lần tài khoản của bạn sẽ bị khoá!"
+          });
+          (warning?.data?.reports).forEach(async (report) => {
+            await reportService.changeStatus(report._id, "Warned");
+          });
+        }
         navigate("/");
       }
     } catch (error) {
@@ -181,9 +193,9 @@ function RegisterButton() {
       cancelButtonColor: "#d33",
       confirmButtonText: "Đăng xuất",
       cancelButtonText: "Không"
-    }).then((result) => {
+    }).then(async (result) => {
       if (result.isConfirmed) {
-        authService.logout();
+        await authService.logout();
         setUser(null);
         navigate("/");
         Toast.fire({

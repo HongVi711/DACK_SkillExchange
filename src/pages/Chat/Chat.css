@@ -1,576 +1,262 @@
-
-.body-container {
-    min-width: 50vw;
-    min-height: 100vh;
-    background-color: #F3F4F6;
-    display: flex;
-    flex-direction: column; 
-    align-items: center;
-    font-family: Arial, sans-serif;
-    position: relative;
-  }
-  
-
-  .button-container {
-    position: fixed;
-    top: 2%; 
-    left: 2%; 
-    z-index: 10;
-  }
-  
-  .back-button {
-    background-color: #5bc0de;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    padding: 8px 15px;
-    cursor: pointer;
-  }
-  
-
-  .chat-container {
-    width: 90%;
-
-    height: 85vh; 
-    background-color: white;
-    border-radius: 15px;
-    margin-top: 20px; 
-    display: flex;
-    flex-direction: column;
-  }
-  
-
-  .header-chat {
-      background-color: #E4E0E0;
-      padding: 15px;
-      border: 1px solid #DEDEDE;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-top-left-radius: 15px;
-      border-top-right-radius: 15px;
-      height: 8vh; 
-  }
-  .user-info {
-    display: flex;
-  }
-  
-  .avatar {
-    width: 40px; 
-    height: 40px;
-    border-radius: 50%;
-    margin-right: 10px;
-    object-fit: cover;
-  }
-  
-  .user-details {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .user-name {
-    font-weight: bold;
-    font-size: 16px;
-  }
-  
-  .user-status {
-    font-size: 0.8em;
-  }
-
-  .user-status.online {
-    color: #00ff00;
-  }
-  
-  .user-status.offline {
-    color: #888;
-  }
-
-  .video-button {
-    background-color: #4CAF50;
-    color: white;
-    padding: 8px 16px;
-    border: none;
-    border-radius: 15px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .video-button:hover {
-    background-color: #3e8e41;
-  }
-  
-  .camera-icon {
-    width: 20px;
-    height: 20px;
-    margin-right: 5px;
-  }
-  
-
-  .body-chat {
-    flex: 1;
-    padding: 20px;
-    overflow-y: auto;
-    background-color: #f7f7f7;
-  }
-  
-  .message {
-    display: flex;
-
-    margin-bottom: 15px;
-    max-width: 60%;
-  }
-  
-  .message .avatar {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    margin-right: 10px;
-    flex-shrink: 0;
-  }
-  
-  .message-left {
-    justify-content: flex-start;
-  }
-  
-  .message-right {
-    justify-content: flex-end;
-    margin-left: auto;
-  }
-  
-  .message-text {
-    padding: 8px 12px;
-    border-radius: 10px;
-    font-size: 14px;
-    background-color: #e0e0e0; 
-  }
-  
-  .message-right .message-text {
-    background-color: #007bff; 
-    color: white;
-  }
-  
-  .avatar {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    margin-right: 10px;
-  }
-  
-  .message-right .avatar {
-    display: none;
-  }
-  .message-content {
-    display: inline-block;
-    padding: 0px 10px;
-    word-wrap: break-word;
-  }
-
-  .footer-chat {
-    background-color: #FAF9F6;
-    padding: 15px;
-    border-bottom-left-radius: 15px;
-    border-bottom-right-radius: 15px;
-    border-bottom: 1px solid #DEDEDE;
-    border-left: 1px solid #DEDEDE;
-    border-right: 1px solid #DEDEDE;
-  }
-  
-  .input-area {
-    display: flex;
-    align-items: center;
-  }
-  
-  .image-button,
-  .file-button {
-    background-color: transparent;
-    border: none;
-    font-size: 1.5em;
-    cursor: pointer;
-    margin-right: 10px;
-  }
-  
-  .message-input-wrapper {
-    flex-grow: 1;
-    position: relative;
-    display: flex;
-    align-items: center;
-    height: 40px;
-    padding: 4px;
-    border: 1px solid #ccc;
-    border-radius: 30px;
-    overflow: hidden;
-    background-color: #E4E0E0;
-  }
-  
-  .message-input {
-    flex-grow: 1;
-    border: none;
-    outline: none;
-    height: 30px;
-    padding: 0px 10px;
-    padding-right: 30px;
-    margin-right: 5px;
-    font-size: 1em;
-    background-color: transparent;
-  }
-  
-  .emoji-button {
-    position: absolute;
-    right: 5px;
-    top: 50%;
-    transform: translateY(-50%);
-    background-color: transparent;
-    border: none;
-    font-size: 1.2em;
-    cursor: pointer;
-  }
-  
-  .send-button {
-    background-color: transparent;
-    border: none;
-    font-size: 1.2em;
-    cursor: pointer;
-    margin-left: 5px;
-  }
-  
-  .send-button img {
-    width: 32px;
-    height: 32px;
-    vertical-align: middle;
-  }
-  
-  .image-button img,
-  .file-button img,
-  .emoji-button img {
-    width: 27px;
-    height: 27px;
-    vertical-align: middle;
-  }
-
-  .user-status.online {
-    color: green;
-  }
-  .user-status.offline {
-    color: gray;
-  }
-
-  .video-call-container {
-    position: fixed; /* Hoặc absolute tùy vào bố cục mong muốn */
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
-    background-color: rgb(0, 0, 0);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
-    transition: width 0.3s ease;
-  }
-  
-  .video-call-container.visible {
-    opacity: 1;
-    visibility: visible;
-  }
-  
-  .video-call-container.hidden {
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none; /* Ngăn tương tác khi ẩn */
-  }
-
-  .video-call-container.with-chat {
-    width: calc(100% - 320px); /* Thu hẹp để chừa 320px cho chat */
-  }
-  
-  .local-video {
-    width: 200px;
-    height: 150px;
-    position: absolute;
-    bottom: 20px;
-    right: 20px;
-    border-radius: 10px;
-    object-fit: cover;
-    z-index: 1002;
-    border: 2px solid #fff;
-  }
-  
-  .remotes-video {
-    width: 200px;
-    height: 150px;
-    position: absolute;
-    bottom: 180px; /* Nằm trên local-video */
-    right: 20px;
-    z-index: 2; /* Đặt trên local-video */
-    border: 2px solid #fff;
-    border-radius: 10px;
-  }
-
-  .screen-video {
-    /* object-fit: cover; */
-    position: relative;
-    width: 800px;
-    height: 500px;
-    border: 2px solid #fff;
-    border-radius: 5px;
-    z-index: -1;
-  }
-
-  .button-screen {
-    display: flex;
-    flex-direction: row; /* Đặt các nút nằm ngang */
-    gap: 25px; /* Khoảng cách giữa các nút */
-    justify-content: center; /* Canh giữa nếu muốn */
-    margin-top: 70px; /* Khoảng cách với video phía trên */
-  }
-
-  .button-end{
-    background-color: #ff0000;
-    border: none;
-    border-radius: 50%;
-    width: 60px;
-    height: 60px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    padding: 0;
-  }
-
-  .button-share{
-    background-color: rgba(63, 63, 63, 0.738);
-    border: none;
-    border-radius: 50%;
-    width: 60px;
-    height: 60px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    padding: 0;
-  }
-
-  .call-notification {
-    position: fixed;
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    padding: 15px;
-    z-index: 1000;
-    width: 300px;
-    text-align: center;
-  }
-
-.call-notification-content {
+ min-width: 50vw;
+  min-height: 100vh;
+  background-color: #f3f4f6;
   display: flex;
   flex-direction: column;
   align-items: center;
+  font-family: Arial, sans-serif;
 }
 
-.caller-avatar {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  margin-bottom: 10px;
+/* Button Styles */
+.button-container {
+  position: fixed;
+  top: 2%; /* Thay đổi từ px sang % */
+  left: 2%; /* Thay đổi từ px sang % */
+  z-index: 10;
 }
 
-.call-notification p {
-  margin: 0 0 15px;
-  font-size: 16px;
-  font-weight: 500;
+.message-file {
+  color: white;
 }
 
-.call-buttons {
-  display: flex;
-  gap: 10px;
+.message-file:hover {
+  color: #ccc;
 }
 
-.accept-button {
-  background-color: #00ddeb;
+.back-button {
+  background-color: #5bc0de;
   color: white;
   border: none;
-  padding: 8px 16px;
-  border-radius: 20px;
+  border-radius: 5px;
+  padding: 8px 15px;
   cursor: pointer;
-  font-weight: 500;
 }
 
-.accept-button:hover {
-  background-color: #00c4d1;
-}
-
-.decline-button {
-  background-color: #ff4444;
-  color: white;
-  border: none;
-  padding: 8px 16px;
-  border-radius: 20px;
-  cursor: pointer;
-  font-weight: 500;
-}
-
-.decline-button:hover {
-  background-color: #cc0000;
-}
-
-.chat-bubble-button {
-  transition: background-color 0.3s ease;
-  border: none;
-  border-radius: 50%;
-  width: 60px;
-  height: 60px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  padding: 0;
-}
-
-.chat-bubble-button.bg-blue-600 {
-  background-color: #0084ff; 
-}
-
-.chat-bubble-button.bg-gray-500 {
-  background-color:  rgba(63, 63, 63, 0.738);
-}
-
-.chat-icon {
-  width: 36px;
-  height: 36px;
-  color:white;
-}
-
-.mini-chat-container {
-  position: fixed; /* Đặt cố định bên phải */
-  top: 0; /* Từ đỉnh màn hình */
-  right: 0; /* Căn phải */
-  width: 320px; /* Chiều rộng giống Google Meet */
-  height: 100vh; /* Cao bằng màn hình */
-  background-color: #fff;
-  border-left: 1px solid #dadce0; /* Viền trái giống Google Meet */
+/* Chat Container Styles */
+.chat-container {
+  width: 90%;
+  /* max-width: 1400px; */
+  height: 85vh; /* Tăng chiều cao */
+  background-color: white;
+  border-radius: 15px;
+  margin-top: 20px; /* Thêm margin-top */
   display: flex;
   flex-direction: column;
-  z-index: 1001;
 }
 
-/* Mini Chat Header */
-.mini-chat-header {
-  padding: 12px 16px;
-  background-color: #f1f3f4; /* Xám nhạt giống Google Meet */
-  color: #202124; /* Màu chữ đậm */
+/* Header Styles */
+.header-chat {
+  background-color: #e4e0e0;
+  padding: 15px;
+  border: 1px solid #dedede;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid #dadce0;
-  font-size: 16px;
-  font-weight: 500;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  height: 8vh; /* Điều chỉnh theo chiều cao avatar */
 }
 
-.close-chat-button {
-  background: none;
-  border: none;
-  color: #5f6368; /* Màu xám đậm */
-  font-size: 20px;
-  cursor: pointer;
-  padding: 0 10px;
-}
-
-.close-chat-button:hover {
-  color: #202124; /* Đậm hơn khi hover */
-}
-
-/* Mini Chat Body */
-.mini-chat-body {
-  flex: 1; /* Chiếm hết không gian còn lại */
-  overflow-y: auto; /* Cuộn dọc */
-  padding: 16px;
-  background-color: #fff; /* Nền trắng */
-}
-
-/* Thanh cuộn giống Google Meet */
-.mini-chat-body::-webkit-scrollbar {
-  width: 8px;
-}
-
-.mini-chat-body::-webkit-scrollbar-thumb {
-  background-color: #dadce0; /* Màu xám nhạt */
-  border-radius: 4px;
-}
-
-.mini-chat-body::-webkit-scrollbar-thumb:hover {
-  background-color: #a0a0a0; /* Đậm hơn khi hover */
-}
-
-/* Mini Message */
-.mini-message {
+.user-info {
   display: flex;
-  margin-bottom: 12px;
 }
 
-.mini-message.message-right {
-  justify-content: flex-end;
+.avatar {
+  width: 40px; /* Giữ nguyên kích thước cố định */
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+  object-fit: cover;
 }
 
-.mini-message.message-left {
+.user-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-name {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.user-status {
+  font-size: 0.8em;
+}
+
+.user-status.online {
+  color: #00ff00;
+}
+
+.user-status.offline {
+  color: #888;
+}
+
+.video-button {
+  background-color: #4caf50;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.video-button:hover {
+  background-color: #3e8e41;
+}
+
+.camera-icon {
+  width: 20px;
+  height: 20px;
+  margin-right: 5px;
+}
+
+.body-chat {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+  background-color: #f7f7f7;
+}
+
+.message {
+  display: flex;
+  margin-bottom: 15px;
+  max-width: 60%;
+}
+
+.message .avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+  flex-shrink: 0;
+}
+
+.message-left {
   justify-content: flex-start;
 }
 
-.mini-message .message-text {
-  max-width: 80%;
+.message-right {
+  justify-content: flex-end;
+  margin-left: auto;
+}
+
+.message-text {
   padding: 8px 12px;
-  border-radius: 12px;
-  background-color: #f1f3f4; /* Xám nhạt cho tin nhắn nhận */
-  color: #202124;
+  border-radius: 10px;
   font-size: 14px;
-  line-height: 1.4;
+  background-color: #e0e0e0; /* Màu nền tin nhắn người khác */
 }
 
-.mini-message.message-right .message-text {
-  background-color: #0084ff; /* Xanh cho tin nhắn gửi */
-  color: #fff;
+.message-right .message-text {
+  background-color: #007bff;
+  color: white;
 }
 
-/* Mini Chat Footer */
-.mini-chat-footer {
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.message-right .avatar {
+  display: none;
+}
+.message-content {
+  display: inline-block;
+  padding: 0px 10px;
+  word-wrap: break-word;
+}
+
+/* Footer Styles */
+.footer-chat {
+  background-color: #faf9f6;
+  padding: 15px;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+  border-bottom: 1px solid #dedede;
+  border-left: 1px solid #dedede;
+  border-right: 1px solid #dedede;
+}
+
+.input-area {
   display: flex;
   align-items: center;
-  padding: 12px 16px;
-  border-top: 1px solid #dadce0;
-  background-color: #fff;
 }
 
-.mini-message-input {
-  flex: 1;
-  padding: 8px 12px;
-  border: 1px solid #dadce0;
-  border-radius: 20px;
-  outline: none;
-  font-size: 14px;
-  color: #202124;
-}
-
-.mini-message-input:focus {
-  border-color: #0084ff;
-}
-
-.mini-send-button {
-  background: none;
+.image-button,
+.file-button {
+  background-color: transparent;
   border: none;
+  font-size: 1.5em;
   cursor: pointer;
-  margin-left: 10px;
+  margin-right: 10px;
 }
 
-.mini-send-button img {
-  width: 20px;
-  height: 20px;
+.message-input-wrapper {
+  flex-grow: 1;
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 40px;
+  padding: 4px;
+  border: 1px solid #ccc;
+  border-radius: 30px;
+  overflow: hidden;
+  background-color: #e4e0e0;
 }
 
-.mini-send-button:hover img {
-  opacity: 0.8;
+.message-input {
+  flex-grow: 1;
+  border: none;
+  outline: none;
+  height: 30px;
+  padding: 0px 10px;
+  padding-right: 30px;
+  margin-right: 5px;
+  font-size: 1em;
+  background-color: transparent;
+}
+
+.emoji-button {
+  position: absolute;
+  right: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: transparent;
+  border: none;
+  font-size: 1.2em;
+  cursor: pointer;
+}
+
+.send-button {
+  background-color: transparent;
+  border: none;
+  font-size: 1.2em;
+  cursor: pointer;
+  margin-left: 5px;
+}
+
+.send-button img {
+  width: 32px;
+  height: 32px;
+  vertical-align: middle;
+}
+
+.image-button img,
+.file-button img,
+.emoji-button img {
+  width: 27px;
+  height: 27px;
+  vertical-align: middle;
+}
+
+.user-status.online {
+  color: green;
+}
+.user-status.offline {
+  color: gray;
 }

@@ -18,7 +18,7 @@ function Profile() {
     name: "",
     phone: "",
     address: "",
-    skills: [],
+    skills: []
   });
   const fileInputRef = useRef(null);
 
@@ -109,7 +109,7 @@ function Profile() {
             name: user.name || "",
             phone: user.phone || "",
             address: user.address || "",
-            skills: user.skills || [],
+            skills: user.skills || []
           });
           if (user.address) {
             const addressParts = user.address.split(", ");
@@ -126,7 +126,10 @@ function Profile() {
           );
         }
       } catch (error) {
-        console.log("Lỗi khi lấy dữ liệu:", error);
+        Toast.fire({
+          icon: "error",
+          title: "Vui lòng đăng nhập để thực hiện chức năng này!"
+        });
         setError(error.message || "Đã xảy ra lỗi khi tải dữ liệu.");
         if (
           error.response?.status === 401 ||
@@ -159,14 +162,13 @@ function Profile() {
           setAvatar(response.data.image);
           Toast.fire({
             icon: "success",
-            title: "Cập nhật ảnh đại diện thành công!",
+            title: "Cập nhật ảnh đại diện thành công!"
           });
         }
       } catch (error) {
-        console.error("Lỗi khi upload avatar:", error);
         Toast.fire({
           icon: "error",
-          title: "Cập nhật ảnh thất bại!",
+          title: "Cập nhật ảnh thất bại!"
         });
         setAvatar(userData.avatar || null);
       } finally {
@@ -217,40 +219,49 @@ function Profile() {
       const userInfo = {
         name: formData.name,
         phone: formData.phone,
-        address: fullAddress || formData.address,
+        address: fullAddress || formData.address
       };
       const skills = formData.skills;
 
       const [userResponse, skillsResponse] = await Promise.all([
         userService.updateUser(userInfo),
-        userService.updateUserSkills({ skills }),
+        userService.updateUserSkills({ skills })
       ]);
 
       if (userResponse?.data?.data.user && skillsResponse?.data?.data.user) {
         const updatedUser = {
           ...userResponse.data.data.user,
-          skills: skillsResponse.data.data.user.skills,
+          skills: skillsResponse.data.data.user.skills
         };
+        if (updatedUser.phone.length != 10) {
+          Toast.fire({
+            icon: "error",
+            title: "Số điện thoại phải có 10 chữ số"
+          });
+          return;
+        }
         setUserData(updatedUser);
         setFormData({
           name: updatedUser.name || "",
           phone: updatedUser.phone || "",
           address: updatedUser.address || "",
-          skills: updatedUser.skills,
+          skills: updatedUser.skills
         });
         setIsEditing(false);
         Toast.fire({
           icon: "success",
-          title: "Cập nhật thông tin thành công!",
+          title: "Cập nhật thông tin thành công!"
         });
       } else {
-        throw new Error("Invalid response from server");
+        Toast.fire({
+          icon: "success",
+          title: "Cập nhật thông tin thất bại!"
+        });
       }
     } catch (error) {
-      console.error("Error:", error);
       Toast.fire({
         icon: "error",
-        title: "Cập nhật thông tin thất bại!",
+        title: error.response.data.message
       });
     } finally {
       setLoading(false);
@@ -263,18 +274,18 @@ function Profile() {
       <div
         style={{
           position: "fixed",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          width: "100%",
-          height: "100%",
+          top: 0,
+          left: 0,
+          width: "100vw",
+          height: "100vh",
           backgroundColor: "rgba(0, 0, 0, 0.5)",
-          zIndex: 9999,
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          zIndex: 1000
         }}
       >
-        <div>
-          <Loading />
-        </div>
+        <Loading />
       </div>
     );
   }
@@ -459,7 +470,7 @@ function Profile() {
                       name: userData.name || "",
                       phone: userData.phone || "",
                       address: userData.address || "",
-                      skills: userData.skills || [],
+                      skills: userData.skills || []
                     });
                   }}
                   className="inline-block px-5 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 transition-colors"

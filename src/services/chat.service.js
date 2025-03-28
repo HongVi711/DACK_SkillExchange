@@ -28,16 +28,15 @@ const chatService = {
     }
   },
 
-  sendMessage: async (chatRoomId, content) => {
+  sendMessage: async (formData) => {
     try {
-      const response = await axios.post(
-        `${API_URL}send`,
-        { chatRoomId, content },
-        {
-          headers: authHeader()
+      const response = await axios.post(`${API_URL}send`, formData, {
+        headers: {
+          ...authHeader(), // Giữ lại header xác thực
+          "Content-Type": "multipart/form-data" // Quan trọng: Báo cho server biết đang gửi FormData
         }
-      );
-      return response.data; // Trả về trực tiếp dữ liệu
+      });
+      return response?.data; // Trả về trực tiếp dữ liệu
     } catch (error) {
       console.error("Lỗi khi gửi tin nhắn:", error);
       throw error; // Re-throw lỗi để component xử lý

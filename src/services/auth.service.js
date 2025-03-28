@@ -46,17 +46,17 @@ const register = async (name, email, password, confirmPassword) => {
       email,
       password,
       confirmPassword,
-      address, // Thêm address vào body
+      address // Thêm address vào body
     });
 
     return {
       success: true,
-      message: "Đăng kí thành công!",
+      message: "Đăng kí thành công!"
     };
   } catch (error) {
     return {
       success: false,
-      message: error.response?.data?.message || "Lỗi kết nối!",
+      message: error.response?.data?.message || "Lỗi kết nối!"
     };
   }
 };
@@ -64,7 +64,7 @@ const register = async (name, email, password, confirmPassword) => {
 const login = async (email, password) => {
   const response = await axios.post(API_URL + "login", {
     email,
-    password,
+    password
   });
   if (response.data.token) {
     localStorage.setItem("user", JSON.stringify(response.data.token)); // Lưu thông tin người dùng vào localStorage
@@ -92,16 +92,16 @@ const getCurrentUser = async () => {
     console.log("Không tìm thấy token trong localStorage");
     return null; // Trả về null nếu không có token
   }
-    try {
-      const response = await axios.get(API_URL + "me", {
-        headers: authHeader(),
-      });
-      // console.log("Dữ liệu từ API /me:", response.data);
-      return response.data;
-    } catch (error) {
-      console.error("Lỗi trong getCurrentUser:", error);
-      throw error;
-    }
+  try {
+    const response = await axios.get(API_URL + "me", {
+      headers: authHeader()
+    });
+    // console.log("Dữ liệu từ API /me:", response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Lỗi trong getCurrentUser:", error);
+    throw error;
+  }
   // }
 };
 
@@ -110,7 +110,7 @@ const getAvatar = async () => {
   if (token) {
     try {
       const response = await axios.get(API_URL + "profile/image", {
-        headers: authHeader(),
+        headers: authHeader()
       });
       return response.data;
     } catch (error) {
@@ -122,7 +122,7 @@ const getAvatar = async () => {
 
 const sendEmaiResetPass = (email) => {
   return axios.post(API_URL + "forgot-password", {
-    email,
+    email
   });
 };
 
@@ -130,8 +130,8 @@ const uploadAvatar = (formData) => {
   return axios.put(API_URL + "upload-photo", formData, {
     headers: {
       "Content-Type": "multipart/form-data",
-      ...authHeader(), // Gộp thêm các header khác nếu cần
-    },
+      ...authHeader() // Gộp thêm các header khác nếu cần
+    }
   });
 };
 
@@ -147,7 +147,7 @@ const resetPassword = async (token, formData) => {
     return {
       success: false,
       message:
-        error.response?.data?.message || "Error connecting to the server!",
+        error.response?.data?.message || "Error connecting to the server!"
     };
   }
 };
@@ -155,13 +155,13 @@ const resetPassword = async (token, formData) => {
 const changePassword = async (formData) => {
   try {
     const response = await axios.put(API_URL + "change-password", formData, {
-      headers: authHeader(),
+      headers: authHeader()
     });
     return { success: true, message: "Thay đổi mật khẩu thành công!" };
   } catch (error) {
     return {
       success: false,
-      message: error.response?.data?.message || "Lỗi kết nối!",
+      message: error.response?.data?.message || "Lỗi kết nối!"
     };
   }
 };
@@ -175,7 +175,7 @@ const authService = {
   sendEmaiResetPass,
   uploadAvatar,
   resetPassword,
-  changePassword,
+  changePassword
 };
 
 export default authService;

@@ -50,7 +50,6 @@ function Avatar({ user, onLogout }) {
       navigate("/"); // Chuyển hướng
     } catch (error) {
       console.error("Logout failed:", error);
-      // Có thể thêm thông báo lỗi: alert("Logout failed!");
     }
   };
 
