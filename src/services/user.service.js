@@ -2,7 +2,9 @@
 import axios from "axios";
 import authHeader from "./auth-header"; //Để gửi token
 
-const API_URL = "http://localhost:5008/api/users/"; //Thay đổi URL này
+const API_URL = `https://${window.location.hostname}:${
+  import.meta.env.VITE_PORT
+}/api/users/`; //Thay đổi URL này
 const auth_Header = authHeader();
 
 const updateUser = (formData) => {

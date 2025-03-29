@@ -1,11 +1,13 @@
 import axios from "axios"; // Hoặc fetch API
 import authHeader from "./auth-header";
 
-const API_URL = "http://localhost:5008/api/appointments/"; // Thay đổi URL này
+const API_URL = `https://${window.location.hostname}:${
+  import.meta.env.VITE_PORT
+}/api/appointments/`; // Thay đổi URL này
 
 const getAppointments = async () => {
   const response = await axios.get(API_URL, {
-    headers: authHeader(),
+    headers: authHeader()
   });
   return response.data;
 };
@@ -16,14 +18,14 @@ const updateStatus = async (newStatus, id) => {
       API_URL + id,
       { status: newStatus },
       {
-        headers: authHeader(),
+        headers: authHeader()
       }
     );
     return { status: true, message: "Cập nhật trạng thái thành công" };
   } catch (error) {
     return {
       success: false,
-      message: error.response?.data?.message || "Lỗi kết nối!",
+      message: error.response?.data?.message || "Lỗi kết nối!"
     };
   }
 };
@@ -31,13 +33,13 @@ const updateStatus = async (newStatus, id) => {
 const createAppointment = async (formData) => {
   try {
     const response = await axios.post(API_URL, formData, {
-      headers: authHeader(),
+      headers: authHeader()
     });
     return { status: true, message: "Đặt lịch thành công!" };
   } catch (error) {
     return {
       success: false,
-      message: error.response?.data?.message || "Lỗi kết nối!",
+      message: error.response?.data?.message || "Lỗi kết nối!"
     };
   }
 };
@@ -45,7 +47,7 @@ const createAppointment = async (formData) => {
 const appointmentService = {
   getAppointments,
   updateStatus,
-  createAppointment,
+  createAppointment
 };
 
 export default appointmentService;

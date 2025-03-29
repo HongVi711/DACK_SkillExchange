@@ -190,6 +190,9 @@ const ChatRoom = () => {
 
   const handleVideoCall = async () => {
     try {
+      if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+        throw new Error("Trình duyệt không hỗ trợ WebRTC hoặc getUserMedia.");
+      }
       const stream = await navigator.mediaDevices.getUserMedia({
         video: true,
         audio: true

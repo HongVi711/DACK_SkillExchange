@@ -155,7 +155,7 @@
 @media (max-width: 768px) {
   .cardContainer {
     grid-template-columns: repeat(
-      2,
+      1,
       minmax(266px, 1fr)
     ); /* 2 card trên 1 dòng */
     gap: 10px;

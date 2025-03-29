@@ -3,11 +3,14 @@ import io from "socket.io-client";
 import Toast from "../../utils/Toast";
 
 // Initialize socket connection
-const socket = io("http://localhost:5008", {
-  reconnection: true,
-  reconnectionAttempts: 5,
-  reconnectionDelay: 1000
-});
+const socket = io(
+  `https://${window.location.hostname}:${import.meta.env.VITE_PORT}`,
+  {
+    reconnection: true,
+    reconnectionAttempts: 5,
+    reconnectionDelay: 1000
+  }
+);
 
 // Connection event handlers
 socket.on("connect", () => {

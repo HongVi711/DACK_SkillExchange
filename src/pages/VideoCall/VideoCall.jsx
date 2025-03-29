@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useRef, useState } from "react";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
-import socket from "../../socket";
+import socket from "../../configs/socket/socket";
 
 import "./VideoCall.css";
 
@@ -41,7 +41,7 @@ import "./VideoCall.css";
 //     };
 
 //     peerConnectionRef.current.onconnectionstatechange = () => {
-//       if (peerConnectionRef.current.connectionState === "disconnected" || 
+//       if (peerConnectionRef.current.connectionState === "disconnected" ||
 //           peerConnectionRef.current.connectionState === "closed") {
 //         endCall();
 //       }
