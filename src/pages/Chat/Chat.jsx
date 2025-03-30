@@ -54,7 +54,6 @@ const ChatRoom = () => {
   const remoteVideoRef = useRef(null);
   const screenVideoRef = useRef(null);
   const peerConnectionRef = useRef(null);
-  const navigate = useNavigate();
 
   const servers = {
     iceServers: [{ urls: "stun:stun.l.google.com:19302" }]
@@ -66,6 +65,8 @@ const ChatRoom = () => {
   const [isModalOpen, setIsModalOpen] = useState(false); // State để mở/đóng modal
   const [reportReason, setReportReason] = useState(""); // Lý do báo cáo
   const [reportStatus, setReportStatus] = useState(""); // Trạng thái báo cáo
+  const [customReason, setCustomReason] = useState("");
+  const [showCustomInput, setShowCustomInput] = useState(false);
 
   useEffect(() => {
     let isMounted = true;
@@ -190,9 +191,6 @@ const ChatRoom = () => {
 
   const handleVideoCall = async () => {
     try {
-      if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-        throw new Error("Trình duyệt không hỗ trợ WebRTC hoặc getUserMedia.");
-      }
       const stream = await navigator.mediaDevices.getUserMedia({
         video: true,
         audio: true
@@ -569,17 +567,42 @@ const ChatRoom = () => {
     setIsModalOpen(false);
   };
 
+  // Sửa handler cho report reason
+  const handleReasonChange = (e) => {
+    const value = e.target.value;
+    setReportReason(value);
+
+    if (value === "Khác") {
+      setShowCustomInput(true);
+    } else {
+      setShowCustomInput(false);
+      setCustomReason("");
+    }
+  };
+
+  const handleCustomReasonChange = (e) => {
+    setCustomReason(e.target.value);
+    setReportReason(e.target.value); // Cập nhật reportReason bằng nội dung người dùng nhập
+  };
+
   // Xử lý submit báo cáo
   const handleReportSubmit = async () => {
-    if (!reportReason.trim()) {
-      setReportStatus("Vui lòng chọn lý do báo cáo.");
+    const finalReason = reportReason === "Khác" ? customReason : reportReason;
+
+    if (!finalReason.trim()) {
+      Toast.fire({
+        icon: "error",
+        title: "Vui lòng chọn hoặc nhập lý do báo cáo."
+      });
+      setReportStatus("Vui lòng chọn hoặc nhập lý do báo cáo.");
+
       return;
     }
 
     try {
       const reportData = {
         userId: userid,
-        reason: reportReason
+        reason: finalReason
       };
       await reportService.createReport(reportData); // Gọi API báo cáo
       Toast.fire({
@@ -590,6 +613,7 @@ const ChatRoom = () => {
         setIsModalOpen(false);
         setReportStatus("");
       }, 1000); // Đóng modal sau 2 giây
+      setCustomReason("");
     } catch (error) {
       Toast.fire({
         icon: "error",
@@ -783,7 +807,10 @@ const ChatRoom = () => {
                         rel="noopener noreferrer"
                         download="file.pdf"
                       >
-                        <FaFilePdf size={64} />
+                        <FaFilePdf
+                          size={64}
+                          className="fill-white hover:fill-red-700"
+                        />
                       </a>
                     )}
                   </div>
@@ -871,7 +898,7 @@ const ChatRoom = () => {
           </p>
           <select
             value={reportReason}
-            onChange={(e) => setReportReason(e.target.value)}
+            onChange={handleReasonChange}
             className="w-full p-2 border rounded-lg mb-3"
           >
             <option value="">Chọn lý do</option>
@@ -881,7 +908,18 @@ const ChatRoom = () => {
             <option value="Nội dung không phù hợp">
               Nội dung không phù hợp
             </option>
+            <option value="Khác">Khác</option>
           </select>
+
+          {showCustomInput && (
+            <input
+              type="text"
+              value={customReason}
+              onChange={handleCustomReasonChange}
+              placeholder="Nhập lý do khác"
+              className="w-full p-2 border rounded-lg mb-3"
+            />
+          )}
           {reportStatus && (
             <p className="text-sm text-red-500 mb-3">{reportStatus}</p>
           )}
