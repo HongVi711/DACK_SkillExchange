@@ -14,7 +14,6 @@ function Header() {
   // Lắng nghe sự kiện thông báo từ socket
   useEffect(() => {
     socket.on("receive-notify-book-appointment", (data) => {
-      // Giả sử server gửi thông báo qua sự kiện "receiveNotification"
       setNotificationCount((prevCount) => prevCount + 1); // Tăng số đếm
     });
 
