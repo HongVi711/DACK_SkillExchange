@@ -90,20 +90,22 @@ function Profile() {
         setLoading(true);
         setError(null);
 
-        const requests = [authService.getAvatar()];
+        // const requests = [authService.getAvatar()];
+        const requests = [];
         if (!initialUser) {
           requests.push(authService.getCurrentUser());
         }
 
         const responses = await Promise.all(requests);
-        const avatarResponse = responses[0];
-        const userResponse = responses[1];
+        // const avatarResponse = responses[0];
+        const userResponse = responses[0];
 
-        if (avatarResponse?.data?.image) {
-          setAvatar(avatarResponse.data.image);
-        }
+        // if (avatarResponse?.data?.image) {
+        //   setAvatar(avatarResponse.data.image);
+        // }
         const user = userResponse?.data?.user || initialUser;
         if (user) {
+          setAvatar(user.photo);
           setUserData(user);
           setFormData({
             name: user.name || "",
