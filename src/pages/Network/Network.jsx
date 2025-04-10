@@ -11,7 +11,7 @@ function SearchPage() {
   const [email, setEmail] = useState(""); // Thêm state cho email
   const [selectedOptions, setSelectedOptions] = useState([]);
   const [users, setUsers] = useState([]);
-  const [photos, setPhotos] = useState(null);
+  // const [photos, setPhotos] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [provinces, setProvinces] = useState([]);
@@ -33,25 +33,25 @@ function SearchPage() {
     fetchProvinces();
   }, []);
 
-  useEffect(() => {
-    const fetchPhotos = async () => {
-      const photoPromises = users.map(async (user) => {
-        const avatar = await userService.getAvatarUser(user._id);
-        return { id: user._id, avatar };
-      });
+  // useEffect(() => {
+  //   const fetchPhotos = async () => {
+  //     const photoPromises = users.map(async (user) => {
+  //       const avatar = await userService.getAvatarUser(user._id);
+  //       return { id: user._id, avatar };
+  //     });
 
-      const photoResults = await Promise.all(photoPromises);
-      const photoMap = photoResults.reduce((acc, { id, avatar }) => {
-        acc[id] = avatar;
-        return acc;
-      }, {});
-      setPhotos(photoMap);
-    };
+  //     const photoResults = await Promise.all(photoPromises);
+  //     const photoMap = photoResults.reduce((acc, { id, avatar }) => {
+  //       acc[id] = avatar;
+  //       return acc;
+  //     }, {});
+  //     setPhotos(photoMap);
+  //   };
 
-    if (users.length > 0) {
-      fetchPhotos();
-    }
-  }, [users]);
+  //   if (users.length > 0) {
+  //     fetchPhotos();
+  //   }
+  // }, [users]);
 
   const fetchUsers = async (page = 1) => {
     setLoading(true);
