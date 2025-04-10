@@ -1,7 +1,7 @@
 import axios from "axios";
 import authHeader from "./auth-header"; //Để gửi token
 
-const API_URL = `https://${import.meta.env.VITE_HOST}/api/reports/`; //Thay đổi URL này
+const API_URL = `${import.meta.env.VITE_HOST}/api/reports/`; //Thay đổi URL này
 
 const getAllReports = async () => {
   try {
