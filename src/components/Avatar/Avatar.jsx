@@ -8,7 +8,7 @@ function Avatar({ user, onLogout }) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
   const navigate = useNavigate();
-  const [avatar, setAvatar] = useState(null);
+  // const [avatar, setAvatar] = useState(null);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -24,18 +24,18 @@ function Avatar({ user, onLogout }) {
     };
   }, []);
 
-  useEffect(() => {
-    authService
-      .getAvatar()
-      .then((response) => {
-        if (response && response.data) {
-          setAvatar(response.data.image); // Dùng trực tiếp Base64
-        }
-      })
-      .catch((error) => {
-        console.log("Lỗi khi lấy ảnh:", error);
-      });
-  }, [user]);
+  // useEffect(() => {
+  //   authService
+  //     .getAvatar()
+  //     .then((response) => {
+  //       if (response && response.data) {
+  //         setAvatar(response.data.image); // Dùng trực tiếp Base64
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       console.log("Lỗi khi lấy ảnh:", error);
+  //     });
+  // }, [user]);
 
   const toggleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
