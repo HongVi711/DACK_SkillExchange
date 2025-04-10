@@ -39,7 +39,7 @@ const ChatRoom = () => {
   const [message, setMessage] = useState("");
   const [user, setUser] = useState(null);
   const [onlineStatus, setOnlineStatus] = useState("offline");
-  const [photos, setPhotos] = useState(null);
+  // const [photos, setPhotos] = useState(null);
   const [loading, setLoading] = useState(true);
   const [showChat, setShowChat] = useState(false);
   const [incomingCall, setIncomingCall] = useState(null);
@@ -145,17 +145,17 @@ const ChatRoom = () => {
     }
   }, [messages]);
 
-  useEffect(() => {
-    const fetchPhotos = async () => {
-      try {
-        const avatar = await userService.getAvatarUser(userid);
-        setPhotos(avatar.data?.image);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchPhotos();
-  }, [userid]);
+  // useEffect(() => {
+  //   const fetchPhotos = async () => {
+  //     try {
+  //       const avatar = await userService.getAvatarUser(userid);
+  //       setPhotos(avatar.data?.image);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
+  //   fetchPhotos();
+  // }, [userid]);
 
   const sendMessage = async () => {
     if (!message.trim() && !selectedImage && !selectedFile) return; // Không gửi nếu không có gì
@@ -521,7 +521,7 @@ const ChatRoom = () => {
         <div className="call-notification-content">
           <img
             className="caller-avatar"
-            src={photos || "default"}
+            src={user.photo || "default"}
             alt="Caller Avatar"
           />
           <p>{`${name || "User"} đang gọi bạn...`}</p>
@@ -711,7 +711,7 @@ const ChatRoom = () => {
                       {message.sender._id !== (user.id || user._id) && (
                         <img
                           className="avatar"
-                          src={photos || "default"}
+                          src={user.photo || "default"}
                           alt="Receiver Avatar"
                         />
                       )}
@@ -745,7 +745,7 @@ const ChatRoom = () => {
           <div className="user-info">
             <img
               className="avatar"
-              src={photos || "default"}
+              src={user.photo || "default"}
               alt="User Avatar"
             />
             <div className="user-details">
@@ -785,7 +785,7 @@ const ChatRoom = () => {
                 {message.sender._id !== (user.id || user._id) && (
                   <img
                     className="avatar"
-                    src={photos || "default"}
+                    src={user.photo || "default"}
                     alt="Receiver Avatar"
                   />
                 )}
