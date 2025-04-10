@@ -1,9 +1,7 @@
 import axios from "axios";
 import authHeader from "./auth-header";
 
-const API_URL = `https://${window.location.hostname}:${
-  import.meta.env.VITE_PORT
-}/api/connections/`;
+const API_URL = `https://${import.meta.env.VITE_HOST}/api/connections/`;
 
 const connectionService = {
   sendRequest: async (receiverId) => {

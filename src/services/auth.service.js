@@ -3,9 +3,7 @@
 import axios from "axios"; // Hoặc fetch API
 import authHeader from "./auth-header";
 
-const API_URL = `https://${window.location.hostname}:${
-  import.meta.env.VITE_PORT
-}/api/users/`; // Thay đổi URL này
+const API_URL = `https://${import.meta.env.VITE_HOST}/api/users/`; // Thay đổi URL này
 
 const getCurrentAddress = () => {
   return new Promise((resolve, reject) => {

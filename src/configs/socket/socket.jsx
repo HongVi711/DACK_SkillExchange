@@ -4,7 +4,8 @@ import Toast from "../../utils/Toast";
 
 // Initialize socket connection
 const socket = io(
-  `https://${window.location.hostname}:${import.meta.env.VITE_PORT}`,
+  // `https://${window.location.hostname}:${import.meta.env.VITE_PORT}`,
+  `${import.meta.env.VITE_HOST}`,
   {
     reconnection: true,
     reconnectionAttempts: 5,
