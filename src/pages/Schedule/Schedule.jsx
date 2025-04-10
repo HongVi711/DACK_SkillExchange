@@ -10,9 +10,8 @@ const formatDate = (date) => date.toLocaleDateString("vi-VN");
 const SchedulePage = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [filterStatus, setFilterStatus] = useState("Tất cả");
-  const [scheduleData, setScheduleData] = useState([]); // Initialize as empty array
+  const [scheduleData, setScheduleData] = useState([]);
 
-  // Mock API call - replace with your actual API call
   const fetchScheduleData = async () => {
     // Simulate API response
     const mockApiResponse = await appointmentService.getAppointments();
@@ -27,7 +26,7 @@ const SchedulePage = () => {
   };
 
   useEffect(() => {
-    fetchScheduleData(); // Fetch data when the component mounts
+    fetchScheduleData();
     socket.on("receive-notify-book-appointment", (data) => {
       Toast.fire({
         icon: "info",
@@ -37,7 +36,6 @@ const SchedulePage = () => {
     });
   }, []);
 
-  // Hàm cập nhật trạng thái buổi học
   const updateLessonStatus = async (lesson, newStatus) => {
     const response = await appointmentService.updateStatus(
       newStatus,
@@ -62,7 +60,6 @@ const SchedulePage = () => {
     }
   };
 
-  // Lấy danh sách ngày trong tháng
   const getDaysInMonth = () => {
     const days = [];
     const date = new Date(
@@ -93,7 +90,6 @@ const SchedulePage = () => {
     return days;
   };
 
-  // Chia danh sách ngày thành các tuần (mỗi tuần 7 ngày)
   const chunkDaysIntoWeeks = (days) => {
     const weeks = [];
     for (let i = 0; i < days.length; i += 7) {
@@ -102,7 +98,6 @@ const SchedulePage = () => {
     return weeks;
   };
 
-  // Lọc các buổi học theo ngày và trạng thái
   const filteredLessons = scheduleData.filter((lesson) => {
     const selectedFormattedDate = formatDate(selectedDate);
     const lessonDate = formatDate(new Date(lesson.startTime)); // Format lesson date
@@ -120,7 +115,6 @@ const SchedulePage = () => {
   const daysInMonth = getDaysInMonth();
   const weeks = chunkDaysIntoWeeks(daysInMonth);
 
-  // Hàm điều hướng tháng
   const prevMonth = () => {
     setSelectedDate(
       new Date(selectedDate.getFullYear(), selectedDate.getMonth() - 1, 1)
@@ -141,7 +135,6 @@ const SchedulePage = () => {
 
   return (
     <>
-      {/* Bộ lọc trạng thái */}
       <div className={styles.filterContainer}>
         <label>Bộ lọc: </label>
         <select
@@ -155,7 +148,6 @@ const SchedulePage = () => {
         </select>
       </div>
 
-      {/* Lịch dạng danh sách chia thành các tuần */}
       <div className={styles.calendarContainer}>
         <div className={styles.monthNavigation}>
           <button onClick={prevMonth}>{"<"}</button>
@@ -211,7 +203,6 @@ const SchedulePage = () => {
         </div>
       </div>
 
-      {/* Danh sách buổi học */}
       <div className={styles.scheduleList}>
         <h2>Chi tiết buổi học</h2>
         {filteredLessons.length > 0 ? (
@@ -234,32 +225,6 @@ const SchedulePage = () => {
               year: "numeric",
               timeZone: "Asia/Ho_Chi_Minh" // Bảo đảm giữ múi giờ VN
             }).format(new Date(endTime))}`;
-
-            // // Chuyển đổi sang UTC
-            // const startTimeUTC = new Date(
-            //   startTime.getTime() + startTime.getTimezoneOffset() * 60000
-            // );
-            // const endTimeUTC = new Date(
-            //   endTime.getTime() + endTime.getTimezoneOffset() * 60000
-            // );
-
-            // const formattedTime = `${startTimeUTC.toLocaleTimeString("vi-VN", {
-            //   hour: "2-digit",
-            //   minute: "2-digit",
-            //   second: "2-digit",
-            //   day: "2-digit",
-            //   month: "2-digit",
-            //   year: "numeric",
-            //   timeZone: "Asia/Ho_Chi_Minh" // Đảm bảo hiển thị theo múi giờ Việt Nam
-            // })} - ${endTimeUTC.toLocaleTimeString("vi-VN", {
-            //   hour: "2-digit",
-            //   minute: "2-digit",
-            //   second: "2-digit",
-            //   day: "2-digit",
-            //   month: "2-digit",
-            //   year: "numeric",
-            //   timeZone: "Asia/Ho_Chi_Minh" // Đảm bảo hiển thị theo múi giờ Việt Nam
-            // })}`;
 
             return (
               <ScheduleCard

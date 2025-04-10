@@ -1,10 +1,10 @@
 // src/services/user.service.js
 import axios from "axios";
-import authHeader from "./auth-header"; //Để gửi token
+import authHeader from "./auth-header";
 
 const API_URL = `https://${window.location.hostname}:${
   import.meta.env.VITE_PORT
-}/api/users/`; //Thay đổi URL này
+}/api/users/`;
 const auth_Header = authHeader();
 
 const updateUser = (formData) => {
@@ -23,7 +23,7 @@ const searchUser = async (params) => {
   try {
     const response = await axios.get(API_URL + "search-user", {
       headers: auth_Header,
-      params // Truyền params dưới dạng query string
+      params
     });
 
     return response.data;
@@ -36,7 +36,7 @@ const searchUserInNetwork = async (params) => {
   try {
     const response = await axios.get(API_URL + "search-user-in-network", {
       headers: auth_Header,
-      params // Truyền params dưới dạng query string
+      params
     });
 
     return response.data;
