@@ -53,7 +53,7 @@ function SearchPage() {
     }
   }, [users]);
 
-  const fetchUsers = async (page = 1) => {
+  const fetchUsers = async (page) => {
     setLoading(true);
     setError(null);
 
@@ -62,8 +62,8 @@ function SearchPage() {
       limit: itemsPerPage
     };
     if (skillName) params.skillName = skillName;
-    if (name) params.name = name; // Thêm name vào params
-    if (email) params.email = email; // Thêm email vào params
+    if (name) params.name = name;
+    if (email) params.email = email;
     if (selectedProvince) {
       const province = provinces.find(
         (p) => p.code === parseInt(selectedProvince)

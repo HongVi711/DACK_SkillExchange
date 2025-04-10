@@ -204,7 +204,6 @@ function Profile() {
     e.preventDefault();
     try {
       setLoading(true);
-      // Tạo chuỗi address từ các combobox
       const province = provinces.find(
         (p) => p.code === parseInt(selectedProvince)
       );

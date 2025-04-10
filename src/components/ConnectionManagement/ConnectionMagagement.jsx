@@ -12,7 +12,7 @@ const ConnectionManagement = ({ connectionStats }) => {
   return (
     <>
       <h2 className="text-xl font-bold mb-4">
-        Thống kê tổng số lượng kết nối năm {year}
+        Thống kê tổng số kết nối năm {year}
       </h2>
       <ResponsiveContainer width="100%" height={300}>
         <LineChart data={connectionStats}>

@@ -89,7 +89,7 @@ const AuthHandler = ({ setCurrentUser, children }) => {
       }
       setIsLoading(false); // Đánh dấu là đã load xong
     };
-
+    initializeUser();
     socket.on("connect", () => {
       const storedUser = JSON.parse(localStorage.getItem("user"));
       if (storedUser) {
@@ -103,8 +103,6 @@ const AuthHandler = ({ setCurrentUser, children }) => {
         title: data.message || "Bạn có 1 cuộc hẹn mới!"
       });
     });
-
-    initializeUser();
 
     return () => {
       socket.off("connect");

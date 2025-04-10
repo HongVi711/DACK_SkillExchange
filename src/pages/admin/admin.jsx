@@ -34,7 +34,7 @@ export default function AdminDashboard() {
   const [users, setUsers] = useState([]);
   const [connectionStats, setConnectionStats] = useState([]);
   const [reports, setReports] = useState([]);
-  const [activeTab, setActiveTab] = useState("reports");
+  const [activeTab, setActiveTab] = useState("connections");
   const [loadingReports, setLoadingReports] = useState(true);
   const [loadingUsers, setLoadingUsers] = useState(true);
   const [loadingConnections, setLoadingConnections] = useState(true);
@@ -132,18 +132,18 @@ export default function AdminDashboard() {
         <Tabs.List className="flex gap-4 mb-4">
           <Tabs.Trigger
             className="px-4 py-2 bg-gray-200 rounded"
+            value="connections"
+          >
+            Quản lý Kết nối
+          </Tabs.Trigger>
+          <Tabs.Trigger
+            className="px-4 py-2 bg-gray-200 rounded"
             value="reports"
           >
             Quản lý Report
           </Tabs.Trigger>
           <Tabs.Trigger className="px-4 py-2 bg-gray-200 rounded" value="users">
             Quản lý User
-          </Tabs.Trigger>
-          <Tabs.Trigger
-            className="px-4 py-2 bg-gray-200 rounded"
-            value="connections"
-          >
-            Quản lý Kết nối
           </Tabs.Trigger>
         </Tabs.List>
 
