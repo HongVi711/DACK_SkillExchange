@@ -1,9 +1,7 @@
 import axios from "axios";
 import authHeader from "./auth-header";
 
-const API_URL = `https://${window.location.hostname}:${
-  import.meta.env.VITE_PORT
-}/api/chats/`;
+const API_URL = `https://${import.meta.env.VITE_HOST}/api/chats/`;
 
 const chatService = {
   getChatRoom: async (chatRoomId) => {
