@@ -135,11 +135,13 @@ function UserCard({ avatar, name, address, skills, userid }) {
       setIsModalOpen(false);
     }
   };
+
   return (
     <div className={styles.card}>
       <div className={styles.cardTop}>
         <img
-          src={avatar.data?.image}
+          // src={avatar.data?.image}
+          src={avatar}
           alt={name}
           className={styles.cardAvatar}
         />

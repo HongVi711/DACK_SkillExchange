@@ -56,7 +56,8 @@ function Avatar({ user, onLogout }) {
   return (
     <div className={styles.avatarContainer} ref={dropdownRef}>
       <img
-        src={avatar || "default-avatar.png"} // Sử dụng optional chaining để tránh lỗi nếu user là null
+        // src={avatar || "default-avatar.png"} // Sử dụng optional chaining để tránh lỗi nếu user là null
+        src={user.photo}
         alt="Avatar"
         className={styles.avatar}
         onClick={toggleDropdown}

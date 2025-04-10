@@ -59,7 +59,7 @@ function SearchPage() {
 
     const params = {
       page: page,
-      limit: itemsPerPage,
+      limit: itemsPerPage
     };
     if (skillName) params.skillName = skillName;
     if (name) params.name = name; // Thêm name vào params
@@ -171,7 +171,8 @@ function SearchPage() {
                       : "Chưa có kỹ năng"
                   }
                   address={user.address || "Chưa cập nhật địa chỉ"}
-                  avatar={(photos && photos[user._id]) || "default-avatar-url"}
+                  // avatar={(photos && photos[user._id]) || "default-avatar-url"}
+                  avatar={user.photo || "default-avatar-url"}
                   userid={user._id}
                 />
               ))}
@@ -210,7 +211,7 @@ function SearchPage() {
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              zIndex: 1000,
+              zIndex: 1000
             }}
           >
             <Loading />

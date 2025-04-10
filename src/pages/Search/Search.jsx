@@ -171,7 +171,8 @@ function SearchPage() {
                       : "Chưa có kỹ năng"
                   }
                   address={user.address || "Chưa cập nhật địa chỉ"}
-                  avatar={(photos && photos[user._id]) || "default-avatar-url"}
+                  // avatar={(photos && photos[user._id]) || "default-avatar-url"}
+                  avatar={user.photo || "default-avatar-url"}
                   userid={user._id}
                 />
               ))}
